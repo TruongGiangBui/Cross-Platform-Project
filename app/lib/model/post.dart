@@ -1,7 +1,21 @@
-class Post {
-  final String name;
-  final String content;
-  final String imagePath;
+import 'package:app/model/user.dart';
 
-  Post({required this.name, required this.content, required this.imagePath});
+class Post {
+  final User user;
+  final String caption;
+  final String timeAgo;
+  final String imageUrl;
+  final int likes;
+  final int comments;
+  final int shares;
+
+  Post({
+    required this.user,
+    required this.caption,
+    required this.timeAgo,
+    required this.imageUrl,
+    required this.likes,
+    required this.comments,
+    required this.shares,
+  });
 }

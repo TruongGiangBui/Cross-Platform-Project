@@ -11,14 +11,17 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   @override
   Widget build(BuildContext context) {
     User currentUser = widget.user;
-    TextEditingController nameController = TextEditingController(text: currentUser.name);
-    TextEditingController ageController = TextEditingController(text: currentUser.age.toString());
-    TextEditingController phoneNumberController = TextEditingController(text: currentUser.phoneNumber);
-    TextEditingController sexController = TextEditingController(text: currentUser.sex);
+    TextEditingController nameController =
+        TextEditingController(text: currentUser.name);
+    TextEditingController ageController =
+        TextEditingController(text: currentUser.age.toString());
+    TextEditingController phoneNumberController =
+        TextEditingController(text: currentUser.phoneNumber);
+    TextEditingController sexController =
+        TextEditingController(text: currentUser.sex);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,8 +34,14 @@ class _EditProfileState extends State<EditProfile> {
         padding: EdgeInsets.symmetric(horizontal: 32),
         physics: BouncingScrollPhysics(),
         children: [
-          ProfileWidget(user: currentUser, isEdit: true, onClicked: () {},),
-          const SizedBox(height: 20,),
+          ProfileWidget(
+            user: currentUser,
+            isEdit: true,
+            onClicked: () {},
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Text(
             "Tên",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -46,8 +55,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 hintText: "Tên",
               ),
-              maxLines: 1
-          ),
+              maxLines: 1),
           const SizedBox(height: 8),
           Text(
             "Tuổi",
@@ -62,8 +70,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 hintText: "Tuổi",
               ),
-              maxLines: 1
-          ),
+              maxLines: 1),
           const SizedBox(height: 8),
           Text(
             "Điện thoại",
@@ -78,8 +85,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 hintText: "Điện thoại",
               ),
-              maxLines: 1
-          ),
+              maxLines: 1),
           const SizedBox(height: 8),
           Text(
             "Giới tính",
@@ -94,8 +100,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 hintText: "Giới tính",
               ),
-              maxLines: 1
-          ),
+              maxLines: 1),
           // TextFieldWidget(label: 'Tên',
           //     text: currentUser.name,
           //     onChanged: (name) {}
@@ -115,7 +120,9 @@ class _EditProfileState extends State<EditProfile> {
           //     text: currentUser.sex,
           //     onChanged: (sex) {}
           // ),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -128,15 +135,11 @@ class _EditProfileState extends State<EditProfile> {
                 child: Text(
                   "Cancel",
                   style: TextStyle(
-                      fontSize: 14,
-                      letterSpacing: 2.2,
-                      color: Colors.blue
-                  ),
-
+                      fontSize: 14, letterSpacing: 2.2, color: Colors.blue),
                 ),
               ),
               RaisedButton(
-                onPressed: (){},
+                onPressed: () {},
                 color: Colors.blue,
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 shape: RoundedRectangleBorder(
@@ -145,10 +148,7 @@ class _EditProfileState extends State<EditProfile> {
                 child: Text(
                   "Save",
                   style: TextStyle(
-                      fontSize: 14,
-                      letterSpacing: 2.2,
-                      color: Colors.white
-                  ),
+                      fontSize: 14, letterSpacing: 2.2, color: Colors.white),
                 ),
               )
             ],
@@ -158,4 +158,3 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 }
-
