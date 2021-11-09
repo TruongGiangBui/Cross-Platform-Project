@@ -15,7 +15,7 @@ class CircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.purple,
         shape: BoxShape.circle,
       ),
       child: IconButton(
