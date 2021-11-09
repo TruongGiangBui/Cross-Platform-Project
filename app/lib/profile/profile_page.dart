@@ -8,11 +8,12 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final User userTemp = User(name: "Đào Minh Khánh",
-        age: 20,
-        phoneNumber: '0366928050',
-        sex: 'Male',
-        imagePath: 'assets/images/image.jpg');
+    final User userTemp = User(
+        username: "Đào Minh Khánh", phoneNumber: "0366928055",
+        password: '111', firstName: "Khánh", lastName: "Đào",
+        gender: "GENDER_MALE", birthday: DateTime.parse("2000-02-20"), description: "Study computer science",
+        address: "Nghệ an", city: "Nghệ An", country: "Việt Nam", imagePath: "assets/images/image.jpg"
+    );
 
     return Scaffold(
 
@@ -66,7 +67,7 @@ class Profile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(user.name,
+        Text(user.username,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         )
       ],
