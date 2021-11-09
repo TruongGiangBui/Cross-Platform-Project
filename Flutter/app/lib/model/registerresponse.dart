@@ -1,8 +1,8 @@
 class RegisterResponse {
-  final String id;
-  final String phonenumber;
-  final String username;
-  final String token;
+  final String? id;
+  final String? phonenumber;
+  final String? username;
+  final String? token;
   final AvatarModel avatarModel;
   final CoverImageModel coverImageModel;
   RegisterResponse(
@@ -31,16 +31,16 @@ class RegisterResponse {
 }
 
 class AvatarModel {
-  final String type;
-  final String id;
-  final String fileName;
+  final String? type;
+  final String? id;
+  final String? fileName;
   AvatarModel({required this.type, required this.id, required this.fileName});
 }
 
 class CoverImageModel {
-  final String type;
-  final String id;
-  final String fileName;
+  final String? type;
+  final String? id;
+  final String? fileName;
   CoverImageModel(
       {required this.type, required this.id, required this.fileName});
 }

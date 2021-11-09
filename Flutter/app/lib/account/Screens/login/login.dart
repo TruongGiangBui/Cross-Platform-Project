@@ -7,13 +7,14 @@ import 'package:app/account/components/background.dart';
 import 'package:app/account/Screens/login/loginfunction.dart';
 
 class LoginScreen extends StatelessWidget {
-  void showAlert(BuildContext context,String message) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                content: Text(message),
-              ));
-    }
+  void showAlert(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(message),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -70,15 +71,25 @@ class LoginScreen extends StatelessWidget {
               child: RaisedButton(
                 onPressed: () {
                   login(new LoginForm(
-                      phonenumber: phoneController.text,
-                      password: passwordController.text)).then((value) => {
-                            if(value.token!=""){
-                              Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context)=> ViewPost()),)
-                            }else{
-                              showAlert(context, "wrong phone number or password")
-                            }
-                        });
+                          phonenumber: phoneController.text,
+                          password: passwordController.text))
+                      .then((value) => {
+                            if (value.token != "")
+                              {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewPost()),
+                                )
+                              }
+                            else
+                              {
+                                showAlert(
+                                    context, "wrong phone number or password")
+                              }
+                          })
+                      .catchError((err) {
+                    showAlert(context, '$err');
+                  });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),

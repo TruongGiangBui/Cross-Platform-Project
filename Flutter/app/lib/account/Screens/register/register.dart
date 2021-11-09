@@ -84,6 +84,7 @@ class RegisterScreen extends StatelessWidget {
                           phonenumber: phoneController.text,
                           password: passwordController.text))
                       .then((value) => {
+
                             if (value.token != "")
                               {
                                 Navigator.of(context).push(
@@ -92,8 +93,11 @@ class RegisterScreen extends StatelessWidget {
                                 )
                               }
                             else
-                              {showAlert(context, value.username)}
-                          });
+                              {showAlert(context, "something wrong")}
+                          })
+                      .catchError((err) {
+                    showAlert(context, '$err');
+                  });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),
