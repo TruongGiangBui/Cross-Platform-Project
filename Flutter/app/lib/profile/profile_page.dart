@@ -1,3 +1,4 @@
+import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 import 'setting_profile.dart';
 import 'package:app/model/user.dart';
@@ -9,12 +10,12 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final User userTemp = User(
+        "",
         username: "Đào Minh Khánh", phoneNumber: "0366928055",
         password: '111', firstName: "Khánh", lastName: "Đào",
-        gender: "GENDER_MALE", birthday: DateTime.parse("2000-02-20"), description: "Study computer science",
+        gender: "Nam", birthday: DateTime.parse("2000-02-20"), description: "Study computer science",
         address: "Nghệ an", city: "Nghệ An", country: "Việt Nam", imagePath: "assets/images/image.jpg"
     );
-
     return Scaffold(
 
       appBar: AppBar(
@@ -27,7 +28,12 @@ class Profile extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert),
-            onPressed: () {
+            onPressed: () async {
+              String token = await getTokenId(userTemp.phoneNumber, userTemp.password, userTemp.username);
+              userTemp.setToken(token);
+              print("\n\n\n");
+              print(token);
+              print("Token id: ${userTemp.token}");
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>ProfileSetting(user: userTemp,))

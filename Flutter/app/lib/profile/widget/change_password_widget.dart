@@ -193,11 +193,13 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                               child: Text("ok"),
                               onPressed: () async {
                                 print(user.password);
-                                String token = await getTokenId(user.phoneNumber, user.password, user.username);
-                                print(token);
-                                bool success = await changePassword(currentPassword, newPassword, token);
+                                print("Current password: $currentPassword");
+                                print("Current password: $newPassword");
+                                print("Token id: ${widget.currentUser.token}");
+
+                                bool success = await changePassword(currentPassword, newPassword, widget.currentUser.token);
                                 if(success==true){
-                                  user.password = newPassword;
+                                  user.setPassword(newPassword);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                 }

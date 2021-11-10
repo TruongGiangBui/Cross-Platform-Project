@@ -1,6 +1,7 @@
 import 'package:app/model/user.dart';
 import 'package:app/profile/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatefulWidget {
   final User user;
@@ -16,7 +17,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     User currentUser = widget.user;
     TextEditingController nameController = TextEditingController(text: currentUser.username);
-    TextEditingController birthdayController = TextEditingController(text: currentUser.birthday.toString());
+    TextEditingController birthdayController = TextEditingController(text: DateFormat('dd-MM-yyyy').format(currentUser.birthday));
     TextEditingController phoneNumberController = TextEditingController(text: currentUser.phoneNumber);
     TextEditingController sexController = TextEditingController(text: currentUser.gender);
 
