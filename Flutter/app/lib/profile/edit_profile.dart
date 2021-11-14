@@ -12,15 +12,16 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
+  final listGender = ["Nam", "Nữ", "None"];
+  String? value = "";
   @override
   Widget build(BuildContext context) {
     User currentUser = widget.user;
     TextEditingController nameController = TextEditingController(text: currentUser.username);
     TextEditingController birthdayController = TextEditingController(text: DateFormat('dd-MM-yyyy').format(currentUser.birthday));
     TextEditingController phoneNumberController = TextEditingController(text: currentUser.phoneNumber);
-    TextEditingController sexController = TextEditingController(text: currentUser.gender);
-
+    // TextEditingController sexController = TextEditingController(text: currentUser.gender);
+    this.value = currentUser.gender;
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -82,21 +83,40 @@ class _EditProfileState extends State<EditProfile> {
               maxLines: 1
           ),
           const SizedBox(height: 8),
-          Text(
-            "Giới tính",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          TextField(
-              obscureText: false,
-              controller: sexController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                hintText: "Giới tính",
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Giới tính",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              maxLines: 1
+              DropdownButton<String>(
+                value: this.value,
+                items: listGender.map(
+                        (String item) => DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    )
+                ).toList(),
+                onChanged: (value) => setState(() => this.value =value),
+              ),
+            ],
           ),
+          // TextField(
+          //     obscureText: false,
+          //     controller: sexController,
+          //     decoration: InputDecoration(
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(12),
+          //       ),
+          //       hintText: "Giới tính",
+          //     ),
+          //     maxLines: 1
+          // ),
+
           const SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
