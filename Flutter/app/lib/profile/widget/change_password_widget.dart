@@ -1,30 +1,24 @@
+import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:app/server/server.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
-  const ChangePasswordWidget({Key? key}) : super(key: key);
+  final User currentUser;
+  const ChangePasswordWidget({Key? key, required this.currentUser}) : super(key: key);
 
   @override
   _ChangePasswordWidgetState createState() => _ChangePasswordWidgetState();
 }
-Future changePassword(String currentPassword, String newPassword) async{
-  var response = await http.post(
-    Uri.http('localhost:8080', '/api/v1/users/change-password'),
-    body: {currentPassword : currentPassword, newPassword : newPassword}
-  );
-  if(response.statusCode == 201){
-    print("Success");
-  }
-}
+
 class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
   bool showPassword = true;
   TextEditingController currentPasswordController = TextEditingController(text: "");
   TextEditingController newPasswordController = TextEditingController(text: "");
   TextEditingController reNewPasswordController = TextEditingController(text: "");
-
   @override
   Widget build(BuildContext context) {
+    User user = widget.currentUser;
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
@@ -135,7 +129,91 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                 ),
               ),
               RaisedButton(
-                onPressed: (){
+                onPressed: () async {
+                  String currentPassword = currentPasswordController.text;
+                  String newPassword = newPasswordController.text;
+                  String reNewPassword = reNewPasswordController.text;
+                  print(currentPassword);
+                  print(newPassword);
+                  print(reNewPassword);
+                  if (newPassword!= reNewPassword){
+                    print("The new passowrd isn't match");
+                    showDialog(
+                        context: context,
+                        builder: (context){
+                          return Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0)
+                              ),
+                              child: Stack(
+                                overflow: Overflow.visible,
+                                alignment: Alignment.topCenter,
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
+                                      child: Column(
+                                        children: [
+                                          Text('Warning !!!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                          SizedBox(height: 5,),
+                                          Text('Mật khẩu không khớp', style: TextStyle(fontSize: 20),),
+                                          SizedBox(height: 20,),
+                                          RaisedButton(onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                            color: Colors.red,
+                                            child: Text('Okay', style: TextStyle(color: Colors.white),),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      top: -60,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.redAccent,
+                                        radius: 60,
+                                        child: Icon(Icons.assistant_photo, color: Colors.white, size: 50,),
+                                      )
+                                  ),
+                                ],
+                              )
+                          );
+                        }
+                    );
+                  }
+                  else{
+                    showDialog(context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Thay đổi mật khẩu"),
+                          content: Text("Bạn có muốn thay đổi mật khẩu không"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("ok"),
+                              onPressed: () async {
+                                print(user.password);
+                                print("Current password: $currentPassword");
+                                print("Current password: $newPassword");
+                                print("Token id: ${widget.currentUser.token}");
+
+                                bool success = await changePassword(currentPassword, newPassword, widget.currentUser.token);
+                                if(success==true){
+                                  user.setPassword(newPassword);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }
+                              },
+                            ),
+                            FlatButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Cancel")
+                            )
+                          ],
+                        )
+                    );
+
+                  }
 
                 },
                 color: Colors.blue,

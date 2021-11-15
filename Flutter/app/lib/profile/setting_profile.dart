@@ -12,7 +12,7 @@ class ProfileSetting extends StatelessWidget {
     User currentUser = this.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.user.name),
+        title: Text(this.user.username),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
       ),
@@ -55,7 +55,7 @@ class ProfileSetting extends StatelessWidget {
             title: Text("Thay đổi mật khẩu"),
             onTap: (){
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context)=> ChangePasswordWidget())
+                MaterialPageRoute(builder: (context)=> ChangePasswordWidget(currentUser: user,))
               );
             },
           ),

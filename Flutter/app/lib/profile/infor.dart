@@ -8,7 +8,7 @@ class Information extends StatelessWidget {
   Information({required this.user});
   @override
   Widget build(BuildContext context) {
-    print(this.user.name);
+    print(this.user.username);
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -39,7 +39,7 @@ class Information extends StatelessWidget {
     children: [
       ListTile(
         minVerticalPadding: 2,
-        title: Text('Tên zalo'+' '*(30 - 8) +'${user.name}'),
+        title: Text('Tên zalo'+' '*(30 - 8) +'${user.username}'),
       ),
       Divider(
         height: 10,
@@ -47,7 +47,7 @@ class Information extends StatelessWidget {
       ),
       ListTile(
         minVerticalPadding: 2,
-        title: Text('Giới tính'+' '*(30 - 7) +'${user.sex}'),
+        title: Text('Giới tính'+' '*(30 - 7) +'${user.gender}'),
       ),
       Divider(
         height: 10,
@@ -55,7 +55,7 @@ class Information extends StatelessWidget {
       ),
       ListTile(
         minVerticalPadding: 2,
-        title: Text('Tuổi'+ ' '*(30) + '${user.age}'),
+        title: Text('Tuổi'+ ' '*(30) + '${DateTime.now().year -user.birthday.year}'),
       ),
       Divider(
         height: 10,

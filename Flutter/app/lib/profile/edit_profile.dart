@@ -1,6 +1,7 @@
 import 'package:app/model/user.dart';
 import 'package:app/profile/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatefulWidget {
   final User user;
@@ -11,15 +12,16 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
+  final listGender = ["Nam", "Nữ", "None"];
+  String? value = "";
   @override
   Widget build(BuildContext context) {
     User currentUser = widget.user;
-    TextEditingController nameController = TextEditingController(text: currentUser.name);
-    TextEditingController ageController = TextEditingController(text: currentUser.age.toString());
+    TextEditingController nameController = TextEditingController(text: currentUser.username);
+    TextEditingController birthdayController = TextEditingController(text: DateFormat('dd-MM-yyyy').format(currentUser.birthday));
     TextEditingController phoneNumberController = TextEditingController(text: currentUser.phoneNumber);
-    TextEditingController sexController = TextEditingController(text: currentUser.sex);
-
+    // TextEditingController sexController = TextEditingController(text: currentUser.gender);
+    this.value = currentUser.gender;
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -50,17 +52,17 @@ class _EditProfileState extends State<EditProfile> {
           ),
           const SizedBox(height: 8),
           Text(
-            "Tuổi",
+            "Ngày sinh",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           TextField(
               obscureText: false,
-              controller: ageController,
+              controller: birthdayController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                hintText: "Tuổi",
+                hintText: "Ngày sinh",
               ),
               maxLines: 1
           ),
@@ -81,40 +83,40 @@ class _EditProfileState extends State<EditProfile> {
               maxLines: 1
           ),
           const SizedBox(height: 8),
-          Text(
-            "Giới tính",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          TextField(
-              obscureText: false,
-              controller: sexController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                hintText: "Giới tính",
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Giới tính",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              maxLines: 1
+              DropdownButton<String>(
+                value: this.value,
+                items: listGender.map(
+                        (String item) => DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    )
+                ).toList(),
+                onChanged: (value) => setState(() => this.value =value),
+              ),
+            ],
           ),
-          // TextFieldWidget(label: 'Tên',
-          //     text: currentUser.name,
-          //     onChanged: (name) {}
+          // TextField(
+          //     obscureText: false,
+          //     controller: sexController,
+          //     decoration: InputDecoration(
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(12),
+          //       ),
+          //       hintText: "Giới tính",
+          //     ),
+          //     maxLines: 1
           // ),
-          // const SizedBox(height: 20,),
-          // TextFieldWidget(label: 'Tuổi',
-          //     text: currentUser.age.toString(),
-          //     onChanged: (age) {}
-          // ),
-          // const SizedBox(height: 20,),
-          // TextFieldWidget(label: 'Điện thoại',
-          //     text: currentUser.phoneNumber,
-          //     onChanged: (phoneNumber) {}
-          // ),
-          // const SizedBox(height: 20,),
-          // TextFieldWidget(label: 'Giới tính',
-          //     text: currentUser.sex,
-          //     onChanged: (sex) {}
-          // ),
+
           const SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
