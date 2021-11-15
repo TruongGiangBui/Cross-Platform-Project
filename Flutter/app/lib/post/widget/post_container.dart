@@ -48,7 +48,7 @@ class _PostHeader extends StatelessWidget {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post.user.name),
+            Text(post.user.username),
             Row(
               children: [
                 Text(
