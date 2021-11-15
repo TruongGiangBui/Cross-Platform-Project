@@ -1,6 +1,6 @@
 import 'package:app/model/loginform.dart';
 import 'package:app/model/loginresponse.dart';
-import 'package:app/post/viewPost.dart';
+import 'package:app/post/screens/NewsFeed.dart';
 import 'package:flutter/material.dart';
 import 'package:app/account/Screens/register/register.dart';
 import 'package:app/account/components/background.dart';
