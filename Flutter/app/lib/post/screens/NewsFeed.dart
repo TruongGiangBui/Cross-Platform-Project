@@ -12,7 +12,7 @@ class NewsFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const posts = getlistpost(user.token);
+    // const posts = getlistpost(user.token);
 
     return Scaffold(
       body: CustomScrollView(
@@ -45,14 +45,14 @@ class NewsFeed extends StatelessWidget {
             ],
           ),
           SliverToBoxAdapter(child: CreatePostContainer(currentUser: user)),
-          SliverList(
-              delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final Post post = posts[index];
-              return PostContainer(post: post);
-            },
-            childCount: posts.length,
-          ))
+          // SliverList(
+          //     delegate: SliverChildBuilderDelegate(
+          //   (context, index) {
+          //     final Post post = posts[index];
+          //     return PostContainer(post: post);
+          //   },
+          //   childCount: posts.length,
+          // ))
         ],
       ),
     );

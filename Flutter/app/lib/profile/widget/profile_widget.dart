@@ -63,7 +63,7 @@ class ProfileWidget extends StatelessWidget {
       );
 
   Widget buildImage(){
-    final imageUser = Image.asset(this.user.imagePath);
+    final imageUser = Image.asset("assets/images/image.jpg");
     return ClipOval(
       child: Material(
         color: Colors.transparent,

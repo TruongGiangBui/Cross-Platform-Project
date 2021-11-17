@@ -74,8 +74,6 @@ class LoginScreen extends StatelessWidget {
                           phonenumber: phoneController.text,
                           password: passwordController.text))
                       .then((value) => {
-                            print(value)
-                            User user;
                             // if (value.token != "")
                             //   {
                                 

@@ -18,10 +18,11 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     User currentUser = widget.user;
     TextEditingController nameController = TextEditingController(text: currentUser.username);
-    TextEditingController birthdayController = TextEditingController(text: DateFormat('dd-MM-yyyy').format(currentUser.birthday));
-    TextEditingController phoneNumberController = TextEditingController(text: currentUser.phoneNumber);
-    // TextEditingController sexController = TextEditingController(text: currentUser.gender);
-    this.value = currentUser.gender;
+    TextEditingController phoneNumberController = TextEditingController(text: currentUser.phonenumber);
+    if(currentUser.gender=='secret'){
+      this.value="None";
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -47,22 +48,6 @@ class _EditProfileState extends State<EditProfile> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 hintText: "Tên",
-              ),
-              maxLines: 1
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Ngày sinh",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          TextField(
-              obscureText: false,
-              controller: birthdayController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                hintText: "Ngày sinh",
               ),
               maxLines: 1
           ),
@@ -101,21 +86,14 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     )
                 ).toList(),
-                onChanged: (value) => setState(() => this.value =value),
+                onChanged:(newValue){
+                  setState(() {
+                    this.value=newValue;
+                  });
+                },
               ),
             ],
           ),
-          // TextField(
-          //     obscureText: false,
-          //     controller: sexController,
-          //     decoration: InputDecoration(
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(12),
-          //       ),
-          //       hintText: "Giới tính",
-          //     ),
-          //     maxLines: 1
-          // ),
 
           const SizedBox(height: 20,),
           Row(

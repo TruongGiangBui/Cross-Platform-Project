@@ -2,6 +2,8 @@ import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 import 'setting_profile.dart';
 import 'package:app/model/user.dart';
+import 'dart:convert';
+
 
 class Profile extends StatelessWidget {
   final double coverImageHeight = 300;
@@ -9,12 +11,26 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final User userTemp = User(
-        "",
-        username: "Đào Minh Khánh", phoneNumber: "0366928055",
-        password: '111', firstName: "Khánh", lastName: "Đào",
-        gender: "Nam", birthday: DateTime.parse("2000-02-20"), description: "Study computer science",
-        address: "Nghệ an", city: "Nghệ An", country: "Việt Nam", imagePath: "assets/images/image.jpg"
+    final User userTemp = User.fromJson({
+      "data": {
+        "gender": "secret",
+        "blocked_inbox": [],
+        "blocked_diary": [],
+        "_id": "6187d8abe54eb0001ae17850",
+        "phonenumber": "0366928055",
+        "username": "Khanh",
+        "avatar": {
+          "type": "other",
+          "_id": "60c39f54f0b2c4268eb53367",
+          "fileName": "avatar_2.png"
+        },
+        "cover_image": {
+          "type": "other",
+          "_id": "60c39eb8f0b2c4268eb53366",
+          "fileName": "defaul_cover_image.jpg"
+        }
+      }
+    }
     );
     return Scaffold(
 
@@ -29,10 +45,6 @@ class Profile extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () async {
-              String token = await getTokenId(userTemp.phoneNumber, userTemp.password, userTemp.username);
-              userTemp.setToken(token);
-              print("\n\n\n");
-              print(token);
               print("Token id: ${userTemp.token}");
               Navigator.push(
                 context,
@@ -83,7 +95,7 @@ class Profile extends StatelessWidget {
     return CircleAvatar(
       radius: profileHeight,
       backgroundColor: Colors.grey.shade800,
-      backgroundImage: Image.asset(user.imagePath).image,
+      backgroundImage: Image.asset('assets/images/image.jpg').image,
 
     );
   }

@@ -49,26 +49,6 @@ class Information extends StatelessWidget {
         minVerticalPadding: 2,
         title: Text('Giới tính'+' '*(30 - 7) +'${user.gender}'),
       ),
-      Divider(
-        height: 10,
-        thickness: 0.5,
-      ),
-      ListTile(
-        minVerticalPadding: 2,
-        title: Text('Tuổi'+ ' '*(30) + '${DateTime.now().year -user.birthday.year}'),
-      ),
-      Divider(
-        height: 10,
-        thickness: 0.5,
-      ),
-      ListTile(
-        minVerticalPadding: 2,
-        title: Text('Điện thoại'+ ' '*(30 - 10) + '${user.phoneNumber}'),
-      ),
-      Divider(
-        height: 10,
-        thickness: 0.5,
-      ),
     ],
   );
 }

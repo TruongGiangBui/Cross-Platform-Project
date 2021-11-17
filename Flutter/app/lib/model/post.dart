@@ -1,7 +1,5 @@
 import 'dart:ffi';
 
-import 'dart:html';
-
 class Post {
   final dynamic images;
   final  dynamic videos;
