@@ -1,15 +1,15 @@
 import 'dart:ffi';
 
 class User {
-  final String id;
-  final String phonenumber;
-  final String username;
-  final String token;
-  final String gender;
-  final AvatarModel avatarModel;
-  final CoverImageModel coverImageModel;
-  final List blockedinbox;
-  final List blockeddiary;
+   String id;
+   String phonenumber;
+   String username;
+   String token;
+   String gender;
+   AvatarModel avatarModel;
+   CoverImageModel coverImageModel;
+   List<dynamic> blockedinbox;
+   List<dynamic> blockeddiary;
   User(
       {required this.id,
       required this.phonenumber,
@@ -45,20 +45,24 @@ class User {
     ) ;
   }
 
+  void set setToken(String newtoken) {
+    token = newtoken;
+  }
+  void setUsername(String value) => this.username=value;
 }
 
 
 class AvatarModel {
-  final String? type;
-  final String? id;
-  final String? fileName;
+   String? type;
+   String? id;
+   String? fileName;
   AvatarModel({required this.type, required this.id, required this.fileName});
 }
 
 class CoverImageModel {
-  final String? type;
-  final String? id;
-  final String? fileName;
+   String? type;
+   String? id;
+   String? fileName;
   CoverImageModel(
       {required this.type, required this.id, required this.fileName});
 }

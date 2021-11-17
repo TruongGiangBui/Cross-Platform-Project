@@ -8,30 +8,33 @@ import 'dart:convert';
 class Profile extends StatelessWidget {
   final double coverImageHeight = 300;
   final double profileHeight = 50;
+  final User user;
+  Profile({required this.user});
+  
   @override
   Widget build(BuildContext context) {
 
-    final User userTemp = User.fromJson({
-      "data": {
-        "gender": "secret",
-        "blocked_inbox": [],
-        "blocked_diary": [],
-        "_id": "6187d8abe54eb0001ae17850",
-        "phonenumber": "0366928055",
-        "username": "Khanh",
-        "avatar": {
-          "type": "other",
-          "_id": "60c39f54f0b2c4268eb53367",
-          "fileName": "avatar_2.png"
-        },
-        "cover_image": {
-          "type": "other",
-          "_id": "60c39eb8f0b2c4268eb53366",
-          "fileName": "defaul_cover_image.jpg"
-        }
-      }
-    }
-    );
+    // final User this.user = User.fromJson({
+    //   "data": {
+    //     "gender": "secret",
+    //     "blocked_inbox": [],
+    //     "blocked_diary": [],
+    //     "_id": "6187d8abe54eb0001ae17850",
+    //     "phonenumber": "0366928055",
+    //     "username": "Khanh",
+    //     "avatar": {
+    //       "type": "other",
+    //       "_id": "60c39f54f0b2c4268eb53367",
+    //       "fileName": "avatar_2.png"
+    //     },
+    //     "cover_image": {
+    //       "type": "other",
+    //       "_id": "60c39eb8f0b2c4268eb53366",
+    //       "fileName": "defaul_cover_image.jpg"
+    //     }
+    //   }
+    // }
+    // );
     return Scaffold(
 
       appBar: AppBar(
@@ -45,10 +48,10 @@ class Profile extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () async {
-              print("Token id: ${userTemp.token}");
+              print("Token id: ${this.user.token}");
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>ProfileSetting(user: userTemp,))
+                MaterialPageRoute(builder: (context) =>ProfileSetting(user: this.user,))
               );
             },
           )
@@ -58,8 +61,8 @@ class Profile extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          buildTop(userTemp),
-          buildContent(userTemp),
+          buildTop(this.user),
+          buildContent(this.user),
         ],
       ),
     );

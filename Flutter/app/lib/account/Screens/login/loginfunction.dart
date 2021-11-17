@@ -16,7 +16,7 @@ Future<LoginResponse> login(LoginForm loginForm) async {
       'password': loginForm.password
     }),
   );
-  print(response.statusCode);
+  // print(response.statusCode);
   if (response.statusCode == 200) {
     return LoginResponse.fromJson(jsonDecode(response.body));
   } else {
@@ -26,16 +26,16 @@ Future<LoginResponse> login(LoginForm loginForm) async {
 
 Future<User> getUser(String token) async {
   final response = await http.get(
-    Uri.parse('http://10.0.2.2:8000/api/v1/users/show'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    }
-  );
-  print(response.body);
+      Uri.parse('http://10.0.2.2:8000/api/v1/users/show'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
   if (response.statusCode == 200) {
-    return User.fromJson(jsonDecode(response.body));
+    User user = User.fromJson(jsonDecode(response.body));
+    user.setToken = token;
+    return user;
   } else {
     throw Exception(jsonDecode(response.body)['message']);
   }

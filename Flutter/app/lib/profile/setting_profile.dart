@@ -42,16 +42,6 @@ class ProfileSetting extends StatelessWidget {
             thickness: 0.5,
           ),
           ListTile(
-            title: Text("Đổi ảnh đại diện"),
-            onTap: (){
-              print("Đổi ảnh đại diện");
-            },
-          ),
-          Divider(
-            height: 10,
-            thickness: 0.5,
-          ),
-          ListTile(
             title: Text("Thay đổi mật khẩu"),
             onTap: (){
               Navigator.of(context).push(

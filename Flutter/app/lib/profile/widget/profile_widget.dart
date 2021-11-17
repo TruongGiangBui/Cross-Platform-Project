@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../edit_profile.dart';
 
 
@@ -10,11 +10,11 @@ class ProfileWidget extends StatelessWidget {
   final bool isEdit;
   final VoidCallback onClicked;
 
-  const ProfileWidget({Key? key,
+  const ProfileWidget({
       required this.user,
       this.isEdit=false,
-      required this.onClicked
-  }) : super(key: key);
+      required this.onClicked,
+  });
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;

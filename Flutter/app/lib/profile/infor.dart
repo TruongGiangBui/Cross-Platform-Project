@@ -5,6 +5,7 @@ import 'package:app/model/user.dart';
 
 class Information extends StatelessWidget {
   final User user;
+  Map<String,String> mapGender = {'secret':'None','male':'Nam','female':'Nữ'};
   Information({required this.user});
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class Information extends StatelessWidget {
       ),
       ListTile(
         minVerticalPadding: 2,
-        title: Text('Giới tính'+' '*(30 - 7) +'${user.gender}'),
+        title: Text('Giới tính'+' '*(30 - 7) +'${mapGender[user.gender]}'),
       ),
     ],
   );
