@@ -12,8 +12,8 @@ class NewsFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const posts = getlistpost(user.token);
-
+    const posts = [];
+    print("token:"+ user.token);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
