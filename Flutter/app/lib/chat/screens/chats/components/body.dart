@@ -4,9 +4,11 @@ import 'package:app/chat/models/chat.dart';
 import 'package:flutter/material.dart';
 import 'chat_card.dart';
 import 'package:app/chat/screens/messages/message_screen.dart';
+import 'package:app/model/user.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  final User user;
+  const Body({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class Body extends StatelessWidget {
               press: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MessageScreen(),
+                  builder: (context) => MessageScreen(user: user,),
                 )
               ),
             ),

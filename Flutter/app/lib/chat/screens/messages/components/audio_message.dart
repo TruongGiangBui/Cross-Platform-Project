@@ -14,7 +14,7 @@ class AudioMessage extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.55,
       padding: const EdgeInsets.symmetric(
         horizontal: kDefaultPadding * 0.75,
-        vertical: kDefaultPadding * 2.5,
+        vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),

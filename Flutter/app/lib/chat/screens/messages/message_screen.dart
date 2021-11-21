@@ -4,8 +4,28 @@ import 'package:app/chat/screens/messages/components/body.dart';
 
 import 'package:app/chat/screens/options/option_screen.dart';
 import 'package:app/chat/screens/options/components/options.dart';
+import 'package:app/model/user.dart';
 
-class MessageScreen extends StatelessWidget {
+class MessageScreen extends StatefulWidget {
+  final User user;
+  const MessageScreen({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  @override
+  _MessageScreenState createState() {
+    // TODO: implement createState
+    print("token:"+ user.token);
+    return _MessageScreenState();
+  }
+
+}
+
+
+class _MessageScreenState extends State<MessageScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -14,6 +34,7 @@ class MessageScreen extends StatelessWidget {
       body: Body(),
     );
   }
+
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -28,9 +49,9 @@ class MessageScreen extends StatelessWidget {
           const SizedBox(width: kDefaultPadding * 0.75,),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "Dinh Thang",
+                widget.user.username.toString(),
                 style: TextStyle(fontSize: 16),
               ),
               Text(
@@ -45,14 +66,13 @@ class MessageScreen extends StatelessWidget {
         IconButton(onPressed: (){}, icon: const Icon(Icons.local_phone)),
         IconButton(onPressed: (){}, icon: const Icon(Icons.videocam)),
         IconButton(onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OptionScreen(options: optionsDEMO,),
-          )
+            context,
+            MaterialPageRoute(
+              builder: (context) => OptionScreen(options: optionsDEMO, user: widget.user,),
+            )
         ), icon: const Icon(Icons.dehaze_sharp)),
         const SizedBox(width: kDefaultPadding / 2,)
       ],
     );
   }
-
 }

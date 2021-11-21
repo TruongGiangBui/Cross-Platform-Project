@@ -1,24 +1,31 @@
 import 'package:app/chat/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:app/chat/screens/chats/components/body.dart';
+import 'package:app/model/user.dart';
 
 class ChatScreen extends StatefulWidget {
+  final User user;
+  const ChatScreen({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
   @override
   _ChatsScreenState createState() {
     // TODO: implement createState
+    print("token:"+ user.token);
     return _ChatsScreenState();
   }
 }
 
 class _ChatsScreenState extends State<ChatScreen> {
   int _selectedIndex = 1;
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: buildAppBar(),
-      body: Body(),
+      body: Body(user: widget.user,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: kPrimaryColor,
@@ -57,7 +64,7 @@ class _ChatsScreenState extends State<ChatScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      automaticallyImplyLeading: false,
+      elevation: 0,
       title: const Text("Chats"),
       backgroundColor: kPrimaryColor,
       actions: [

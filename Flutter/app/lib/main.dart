@@ -4,6 +4,8 @@ import 'package:app/post/screens/NewsFeed.dart';
 import 'package:flutter/material.dart';
 import 'account/Screens/login/login.dart';
 
+import 'chat/screens/chats/chats_screen.dart';
+
 
 
 void main() {
@@ -43,6 +45,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: NewsFeed(user: user));
+        home: ChatScreen(user: user));
   }
 }

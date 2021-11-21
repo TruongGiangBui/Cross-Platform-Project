@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/chat/constants.dart';
 import 'package:flutter/foundation.dart';
+import 'package:app/model/user.dart';
 
 class Option {
   final String option;
@@ -12,8 +13,10 @@ class Option {
 class OptionScreen extends StatelessWidget {
   const OptionScreen({
     Key? key,
-    required this.options
+    required this.options,
+    required this.user
   }) : super(key: key);
+  final User user;
   final List<Option> options;
 
   @override
@@ -30,7 +33,24 @@ class OptionScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             title: Text(options[index].option),
-            onTap: () {},
+            onTap: () => showDialog<String> (
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text(options[index].option),
+                content: Text(options[index].description),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Cancel'),
+                  ),
+
+                  TextButton(
+                    onPressed: ()=> Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  )
+                ],
+              )
+            ),
           );
         },
       ),

@@ -8,6 +8,7 @@ class ChatInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sendMessageController = TextEditingController();
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: kDefaultPadding,
@@ -26,8 +27,28 @@ class ChatInputField extends StatelessWidget {
       child: SafeArea(
         child: Row(
           children: [
-            const Icon(Icons.mic, color: kPrimaryColor),
-            const SizedBox(width: kDefaultPadding),
+            SizedBox(
+                height: 18.0,
+                width: 18.0,
+                child: new IconButton(
+                  padding: new EdgeInsets.all(0.0),
+                  icon: new Icon(Icons.attach_file),
+                  onPressed: (){},
+                )
+            ),
+
+            const SizedBox(width: kDefaultPadding / 2),
+
+            SizedBox(
+                height: 18.0,
+                width: 18.0,
+                child: new IconButton(
+                  padding: new EdgeInsets.all(0.0),
+                  icon: new Icon(Icons.camera_alt_outlined),
+                  onPressed: (){},
+                )
+            ),
+            const SizedBox(width: kDefaultPadding/2),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -39,40 +60,35 @@ class ChatInputField extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.sentiment_satisfied_alt_outlined,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(0.64),
-                    ),
+
+                    IconButton(onPressed: (){}, icon: Icon(Icons.sentiment_satisfied_alt_outlined,),),
                     const SizedBox(width: kDefaultPadding / 4),
-                    const Expanded(
+                    Expanded(
                       child: TextField(
+                        controller: sendMessageController,
                         decoration: InputDecoration(
                           hintText: "Type message",
                           border: InputBorder.none,
                         ),
                       ),
                     ),
-                    Icon(
-                      Icons.attach_file,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(0.64),
-                    ),
-                    const SizedBox(width: kDefaultPadding / 4),
-                    Icon(
-                      Icons.camera_alt_outlined,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(0.64),
-                    ),
+
+                    IconButton(
+                      onPressed: (){
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              // Retrieve the text the that user has entered by using the
+                              // TextEditingController.
+                              content: Text(sendMessageController.text),
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.send, color: kPrimaryColor,),
+                    )
+
                   ],
                 ),
               ),
