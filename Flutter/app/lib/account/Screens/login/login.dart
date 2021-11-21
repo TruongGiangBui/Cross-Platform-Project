@@ -1,19 +1,23 @@
+import 'dart:convert';
+
 import 'package:app/model/loginform.dart';
 import 'package:app/model/loginresponse.dart';
-import 'package:app/post/viewPost.dart';
+import 'package:app/model/user.dart';
+import 'package:app/post/screens/NewsFeed.dart';
 import 'package:flutter/material.dart';
 import 'package:app/account/Screens/register/register.dart';
 import 'package:app/account/components/background.dart';
 import 'package:app/account/Screens/login/loginfunction.dart';
 
 class LoginScreen extends StatelessWidget {
-  void showAlert(BuildContext context,String message) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                content: Text(message),
-              ));
-    }
+  void showAlert(BuildContext context, String message) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(message),
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -68,17 +72,21 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
-                onPressed: () {
-                  login(new LoginForm(
+                onPressed: () async {
+                  var userdata = await login(new LoginForm(
                       phonenumber: phoneController.text,
-                      password: passwordController.text)).then((value) => {
-                            if(value.token!=""){
-                              Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context)=> ViewPost()),)
-                            }else{
-                              showAlert(context, "wrong phone number or password")
-                            }
-                        });
+                      password: passwordController.text));
+                  getUser(userdata.token)
+                      .then((value) => {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => NewsFeed(user: value)),
+                            )
+                          })
+                      .catchError((err) {
+                    showAlert(context, '$err');
+                    print(err);
+                  });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),

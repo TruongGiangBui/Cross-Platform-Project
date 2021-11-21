@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/account/components/background.dart';
 import 'package:app/account/Screens/register/registerfunction.dart';
-import 'package:app/post/viewPost.dart';
+// import 'package:app/post/viewPost.dart';
 
 class RegisterScreen extends StatelessWidget {
   void showAlert(BuildContext context, String message) {
@@ -84,16 +84,20 @@ class RegisterScreen extends StatelessWidget {
                           phonenumber: phoneController.text,
                           password: passwordController.text))
                       .then((value) => {
+
                             if (value.token != "")
                               {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewPost()),
-                                )
+                                // Navigator.of(context).push(
+                                //   MaterialPageRoute(
+                                //       builder: (context) => ViewPost()),
+                                // )
                               }
                             else
-                              {showAlert(context, value.username)}
-                          });
+                              {showAlert(context, "something wrong")}
+                          })
+                      .catchError((err) {
+                    showAlert(context, '$err');
+                  });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),

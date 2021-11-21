@@ -1,13 +1,60 @@
+import 'dart:ffi';
 
-class User{
-  final String name;
-  final int age;
-  final String phoneNumber;
-  final String sex;
-  final String imagePath;
+class User {
+   String? id;
+   String? phonenumber;
+   String? username;
+    String token;
+   String? gender;
+   AvatarModel avatarModel;
+   CoverImageModel coverImageModel;
+   List<dynamic> blockedinbox;
+   List<dynamic> blockeddiary;
+  User(
+      {required this.id,
+      required this.phonenumber,
+      required this.username,
+      required this.token,
+      required this.gender,
+      required this.avatarModel,
+      required this.coverImageModel,
+      required this.blockedinbox,
+      required this.blockeddiary});
 
-  User({required this.name, required this.age,
-    required this.phoneNumber, required this.sex, required this.imagePath});
-
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        id: json['data']['_id'],
+        phonenumber: json['data']['phonenumber'],
+        username: json['data']['username'],
+        token: "",
+        gender: json['data']['gender'],
+        avatarModel: AvatarModel(
+            type: json['data']['avatar']['type'],
+            id: json['data']['avatar']['_id'],
+            fileName: json['data']['avatar']['fileNname']),
+        coverImageModel: CoverImageModel(
+            type: json['data']['cover_image']['type'],
+            id: json['data']['cover_image']['_id'],
+            fileName: json['data']['cover_image']['fileNname']),
+        blockeddiary: json['data']['blocked_diary'],
+        blockedinbox: json['data']['blocked_inbox']);
+  }
+  void set setToken(String newtoken) {
+    token = newtoken;
+  }
 }
 
+class AvatarModel {
+   String? type;
+   String? id;
+   String? fileName;
+  AvatarModel({required this.type, required this.id, required this.fileName});
+}
+
+class CoverImageModel {
+   String? type;
+   String? id;
+   String? fileName;
+  CoverImageModel(
+      {required this.type, required this.id, required this.fileName});
+}
