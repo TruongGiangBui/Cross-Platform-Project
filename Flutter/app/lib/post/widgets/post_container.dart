@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
+import 'package:app/post/widgets/update_post.dart';
 
 class PostContainer extends StatelessWidget {
   final Post post;
@@ -72,10 +73,45 @@ class _PostHeader extends StatelessWidget {
             )
           ],
         )),
-        IconButton(
-          icon: const Icon(Icons.more_horiz),
-          onPressed: () => print('More'),
-        ),
+        Container(
+            child: PopupMenuButton(
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              child: TextButton(
+                onPressed: () => print('helo'),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.change_circle,
+                      color: Colors.grey[600],
+                      size: 20.0,
+                    ),
+                    Text('Chỉnh sửa'),
+                  ],
+                ),
+              ),
+              value: 1,
+              onTap: () => print('hi'),
+            ),
+            PopupMenuItem(
+              child: TextButton(
+                onPressed: () => showAlertDialog(context),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      color: Colors.grey[600],
+                      size: 20.0,
+                    ),
+                    Text('Xóa bài viết'),
+                  ],
+                ),
+              ),
+              value: 2,
+              onTap: () => print('hi'),
+            ),
+          ],
+        ))
       ],
     );
   }
@@ -209,4 +245,34 @@ class _PostButton extends StatelessWidget {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed: () {},
+  );
+  Widget continueButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {},
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Delete"),
+    content: Text("Would you like to delete this post?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
