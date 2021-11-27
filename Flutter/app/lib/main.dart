@@ -2,6 +2,7 @@
 import 'package:app/model/user.dart';
 import 'package:app/profile/profile_page.dart';
 import 'package:app/post/screens/NewsFeed.dart';
+import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 // import 'account/Screens/login/login.dart';
 
@@ -15,15 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Iktow6FuaCIsImlkIjoiNjE4N2Q4YWJlNTRlYjAwMDFhZTE3ODUwIiwiaWF0IjoxNjM3MTYwNzE0fQ.SHGYkPFpOTkfjNFpAgT9qD6A1C4eWGU7o_DoAfF91uI";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtoYW5oIiwiaWQiOiI2MWEyNGNlOGYzMWE5YTAwMWFiM2VmNjIiLCJpYXQiOjE2MzgwMjY0NzJ9.YhUZV7gQHRSzUezM8qdi_D5B3dC0yW0dYEo8ixF8gAQ";
     User user = User.fromJson({
       "data": {
         "gender": "secret",
         "blocked_inbox": [],
         "blocked_diary": [],
-        "_id": "6187d8abe54eb0001ae17850",
-        "phonenumber": "0366928055",
-        "username": "Khánh",
+        "id": "61a24ce8f31a9a001ab3ef62",
+        "phonenumber": "0932",
+        "username": "khanh",
         "avatar": {
           "type": "other",
           "_id": "60c39f54f0b2c4268eb53367",
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       }
     });
     user.setToken = token;
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

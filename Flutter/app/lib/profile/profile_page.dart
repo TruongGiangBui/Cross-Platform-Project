@@ -95,19 +95,24 @@ class Profile extends StatelessWidget {
     );
   }
   Widget buildProfileImage(User user){
+    String fileName = user.avatarModel.fileName;
+    String url = 'http://10.0.2.2:8000/files/' + fileName;
     return CircleAvatar(
       radius: profileHeight,
       backgroundColor: Colors.grey.shade800,
-      backgroundImage: Image.asset('assets/images/image.jpg').image,
-
+      // backgroundImage: Image.asset('assets/images/image.jpg').image,
+      backgroundImage: NetworkImage(url),
     );
   }
 
   Widget buildCoverImage(){
+    String fileName = user.coverImageModel.fileName;
+    String url = 'http://10.0.2.2:8000/files/' + fileName;
+
     return Container(
         color: Colors.grey,
         child: Image.network(
-            'https://cdn.pixabay.com/photo/2021/09/17/03/24/forest-6631518_960_720.jpg',
+            url,
             width: double.infinity,
           height: coverImageHeight,
           fit: BoxFit.cover,

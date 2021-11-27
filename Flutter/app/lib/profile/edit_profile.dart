@@ -79,9 +79,7 @@ class _EditProfileState extends State<EditProfile> {
       child: Stack(children: <Widget>[
         CircleAvatar(
           radius: 80.0,
-          backgroundImage: _imageFile!.path=="assets/images/image.jpg"
-              ? AssetImage("assets/images/image.jpg") as ImageProvider
-              : FileImage(File(_imageFile!.path)),
+          backgroundImage: NetworkImage('http://10.0.2.2:8000/files/${widget.user.avatarModel.fileName}'),
         ),
         Positioned(
           bottom: 20.0,
@@ -109,7 +107,6 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     User currentUser = widget.user;
     TextEditingController nameController = TextEditingController(text: currentUser.username);
-    // TextEditingController phoneNumberController = TextEditingController(text: currentUser.phonenumber);
     if(this.value == ""){
       this.value = mapGender[currentUser.gender];
     }
@@ -195,7 +192,7 @@ class _EditProfileState extends State<EditProfile> {
                   Map<String,String> dataChange={};
                   if(nameController.text != currentUser.username){
                     dataChange['username'] = nameController.text;
-                    currentUser.setUsername(nameController.text);
+                    currentUser.setUsername = nameController.text;
                   }
                   if(this.value != mapGender[currentUser.gender]){
                     if(this.value !=null) {
@@ -218,7 +215,12 @@ class _EditProfileState extends State<EditProfile> {
                               if(result==true){
                                 Navigator.pop(context);
                                 Navigator.pop(context);
+                                if(dataChange['gender'] != null){
+                                  String? gender = dataChange['gender'];
+                                  widget.user.setGender = gender!;
+                                }
                                 print("Change information success");
+
                               }
                               else{
                                 Navigator.pop(context);

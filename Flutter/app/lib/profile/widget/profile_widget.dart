@@ -21,7 +21,7 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
-          buildImage(),
+          buildImage(user.avatarModel.fileName),
           Positioned(
             bottom: 0,
             right: 4,
@@ -62,13 +62,12 @@ class ProfileWidget extends StatelessWidget {
 
       );
 
-  Widget buildImage(){
-    final imageUser = Image.asset("assets/images/image.jpg");
+  Widget buildImage(String fileName){
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: imageUser.image,
+          image: NetworkImage('http://10.0.2.2:8000/files/$fileName'),
           fit: BoxFit.cover,
           width: 128,
           height: 128,
