@@ -6,6 +6,8 @@ const ChatModel = require("../models/Chats");
 const MessagesModel = require("../models/Messages");
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
+var ObjectId = require('mongodb').ObjectId;      
+
 chatController.send = async (req, res, next) => {
     try {
         let userId = req.userId;
@@ -96,5 +98,23 @@ chatController.getMessages = async (req, res, next) => {
         });
     }
 }
-
+chatController.getChats = async (req, res, next) => {
+    try {
+        let messages = await    ChatModel.find({});
+        console.log(messages.length)
+        console.log(messages)
+        let data=Array();
+        for(var i=0;i<messages.length;i++){
+            console.log(messages[i])
+            if(messages[i].member.includes(req.params.UserId)) data.push(messages[i]);
+        }
+        return res.status(httpStatus.ACCEPTED).json({
+            data: data
+        });
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+}
 module.exports = chatController;

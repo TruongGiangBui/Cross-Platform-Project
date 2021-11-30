@@ -5,33 +5,57 @@ import 'package:app/chat/screens/messages/components/body.dart';
 import 'package:app/chat/screens/options/option_screen.dart';
 import 'package:app/chat/screens/options/components/options.dart';
 import 'package:app/model/user.dart';
+import 'package:app/chat/screens/messages/components/chat_input_field.dart';
+import 'package:app/chat/models/chat_message.dart';
+import 'package:app/chat/screens/messages/components/message.dart';
+
 
 class MessageScreen extends StatefulWidget {
   final User user;
+  final User receiver;
   const MessageScreen({
     Key? key,
     required this.user,
+    required this.receiver,
   }) : super(key: key);
 
   @override
   _MessageScreenState createState() {
     // TODO: implement createState
-    print("token:"+ user.token);
+    //print("token:"+ user.token);
     return _MessageScreenState();
   }
 
 }
 
-
 class _MessageScreenState extends State<MessageScreen> {
-
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    var demoChat = demeChatMessages;
+
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              child: ListView.builder(
+                itemCount: demoChat.length,
+                itemBuilder: (context, index) =>
+                    Message(message: demoChat[index]),
+              ),
+            ),
+          ),
+           ChatInputField(send: (message){
+            this.setState(() {
+              demoChat.add(message);
+            });
+          },),
+        ],
+      ),
     );
   }
 

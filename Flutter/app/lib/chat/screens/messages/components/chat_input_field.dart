@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:app/chat/constants.dart';
+import 'package:app/chat/models/chat_message.dart';
 
 class ChatInputField extends StatelessWidget {
+  final Function send;
   const ChatInputField({
-    Key? key,
+    Key? key, required this.send,
   }) : super(key: key);
 
   @override
@@ -75,16 +77,12 @@ class ChatInputField extends StatelessWidget {
 
                     IconButton(
                       onPressed: (){
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              // Retrieve the text the that user has entered by using the
-                              // TextEditingController.
-                              content: Text(sendMessageController.text),
-                            );
-                          },
-                        );
+                        this.send(ChatMessage(
+                            text: sendMessageController.text,
+                            messageType: ChatMessageType.text,
+                            messageStatus: MessageStatus.not_view,
+                            isSender: true,
+                        ));
                       },
                       icon: Icon(Icons.send, color: kPrimaryColor,),
                     )
