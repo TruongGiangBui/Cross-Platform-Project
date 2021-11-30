@@ -106,7 +106,7 @@ chatController.getChats = async (req, res, next) => {
         let data=Array();
         for(var i=0;i<messages.length;i++){
             console.log(messages[i])
-            if(messages[i].member.includes(req.params.UserId)) data.push(messages[i]);
+            if(messages[i].member.includes(req.userId)) data.push(messages[i]);
         }
         return res.status(httpStatus.ACCEPTED).json({
             data: data

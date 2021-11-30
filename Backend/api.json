@@ -1,0 +1,915 @@
+[
+    {
+        "method": "POST",
+        "name": "register",
+        "url": "http://localhost:8000/api/v1/users/register",
+        "body": {
+            "phonenumber": "1211",
+            "password": "1",
+            "username": "2323"
+        },
+        "responseExample": {
+            "data": {
+                "id": "61a6267f1de3b7209a1758d3",
+                "phonenumber": "12323232211",
+                "username": "2323",
+                "avatar": {
+                    "type": "other",
+                    "_id": "60c39f54f0b2c4268eb53367",
+                    "fileName": "avatar_2.png"
+                },
+                "cover_image": {
+                    "type": "other",
+                    "_id": "60c39eb8f0b2c4268eb53366",
+                    "fileName": "defaul_cover_image.jpg"
+                }
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjIzMjMiLCJpZCI6IjYxYTYyNjdmMWRlM2I3MjA5YTE3NThkMyIsImlhdCI6MTYzODI3ODc4NH0.Wxlld932eZCh4yjG2DDQa_9nMpy_Ql-1KDChjgfI7R0"
+        }
+    },
+    {
+        "method": "POST",
+        "name": "login",
+        "url": "http://localhost:8000/api/v1/users/login",
+        "body": {
+            "phonenumber": "0979722708",
+            "password": "abdjahdadad"
+        },
+        "responseExample": {
+            "data": {
+                "id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "username": "giang bui"
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM4Mjc4ODk1fQ.CRdfE2Yna8CRf6Ywv55y6vyVkE2ssKRfHZUHaOqIBO0"
+        }
+    },
+    {
+        "method": "GET",
+        "name": "show",
+        "url": "http://localhost:8000/api/v1/users/show",
+        "body": {},
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "username": "giang bui",
+                "avatar": {
+                    "type": "other",
+                    "_id": "60c39f54f0b2c4268eb53367",
+                    "fileName": "avatar_2.png"
+                },
+                "cover_image": {
+                    "type": "other",
+                    "_id": "60c39eb8f0b2c4268eb53366",
+                    "fileName": "defaul_cover_image.jpg"
+                }
+            }
+        }
+    },
+    {
+        "method": "GET",
+        "name": "show/:id",
+        "url": "http://localhost:8000/api/v1/users/show/:id",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/users/show/61752df79ba82c3677e0f072",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "username": "giang bui",
+                "avatar": {
+                    "type": "other",
+                    "_id": "60c39f54f0b2c4268eb53367",
+                    "fileName": "avatar_2.png"
+                },
+                "cover_image": {
+                    "type": "other",
+                    "_id": "60c39eb8f0b2c4268eb53366",
+                    "fileName": "defaul_cover_image.jpg"
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "search",
+        "url": "http://localhost:8000/api/v1/users/search",
+        "body": {
+            "keyword": "121213"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Tìm kiếm thành công",
+            "data": [
+                {
+                    "gender": "secret",
+                    "blocked_inbox": [],
+                    "blocked_diary": [],
+                    "_id": "618b246c6ba6431a5824931f",
+                    "phonenumber": "121213",
+                    "password": "$2b$10$MgXhXsp9z6YXZsCYc7RNie1julE5fLczcgM4WocnbNe9s45Jf0yS6",
+                    "username": "2323",
+                    "avatar": {
+                        "type": "other",
+                        "_id": "60c39f54f0b2c4268eb53367",
+                        "fileName": "avatar_2.png"
+                    },
+                    "cover_image": {
+                        "type": "other",
+                        "_id": "60c39eb8f0b2c4268eb53366",
+                        "fileName": "defaul_cover_image.jpg"
+                    },
+                    "createdAt": "2021-11-10T01:46:20.617Z",
+                    "updatedAt": "2021-11-10T01:46:20.617Z",
+                    "__v": 0
+                }
+            ]
+        }
+    },
+    {
+        "method": "POST",
+        "name": "edit",
+        "url": "http://localhost:8000/api/v1/users/edit",
+        "body": {
+            "username": "Giang Bui",
+            "gender": "male",
+            "birthday": "",
+            "description": "",
+            "address": "",
+            "city": "",
+            "country": "",
+            "avatar": "",
+            "cover_image": ""
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "username": "Giang Bui",
+                "avatar": {
+                    "type": "other",
+                    "_id": "60c39f54f0b2c4268eb53367",
+                    "fileName": "avatar_2.png"
+                },
+                "cover_image": {
+                    "type": "other",
+                    "_id": "60c39eb8f0b2c4268eb53366",
+                    "fileName": "defaul_cover_image.jpg"
+                }
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "change password",
+        "url": "http://localhost:8000/api/v1/users/change-password",
+        "body": {
+            "currentPassword": "abdjahdadad",
+            "newPassword": "abdjahdadad"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "username": "Giang Bui",
+                "avatar": {
+                    "type": "other",
+                    "_id": "60c39f54f0b2c4268eb53367",
+                    "fileName": "avatar_2.png"
+                },
+                "cover_image": {
+                    "type": "other",
+                    "_id": "60c39eb8f0b2c4268eb53366",
+                    "fileName": "defaul_cover_image.jpg"
+                }
+            },
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkdpYW5nIEJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM4MjgwMjU0fQ.lUPRmPUA1NooRBcS2M5MzZmRAcOOZ1mip3mDK4BSwZ0"
+        }
+    },
+    {
+        "method": "POST",
+        "name": "set block",
+        "url": "http://localhost:8000/api/v1/users/set-block-user",
+        "body": {
+            "user_id": "618b246c6ba6431a5824931f",
+            "type": true
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Thao tác thành công",
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [
+                    "618b246c6ba6431a5824931f"
+                ],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                "username": "Giang Bui",
+                "avatar": "60c39f54f0b2c4268eb53367",
+                "cover_image": "60c39eb8f0b2c4268eb53366",
+                "createdAt": "2021-10-24T09:57:11.894Z",
+                "updatedAt": "2021-11-30T13:50:54.348Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "set block diary",
+        "url": "http://localhost:8000/api/v1/users/set-block-diary",
+        "body": {
+            "user_id": "618b246c6ba6431a5824931f",
+            "type": true
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Thao tác thành công",
+            "data": {
+                "gender": "secret",
+                "blocked_inbox": [],
+                "blocked_diary": [],
+                "_id": "61752df79ba82c3677e0f072",
+                "phonenumber": "0979722708",
+                "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                "username": "Giang Bui",
+                "avatar": "60c39f54f0b2c4268eb53367",
+                "cover_image": "60c39eb8f0b2c4268eb53366",
+                "createdAt": "2021-10-24T09:57:11.894Z",
+                "updatedAt": "2021-11-30T13:54:36.130Z",
+                "__v": 2
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "create post",
+        "url": "http://localhost:8000/api/v1/posts/create",
+        "body": {
+            "image": [
+                "base64img"
+            ],
+            "video": null,
+            "described": "mo ta post"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "images": [],
+                "videos": [],
+                "like": [],
+                "countComments": 0,
+                "isLike": false,
+                "_id": "61a63209d915665311b432a1",
+                "author": {
+                    "_id": "618b246c6ba6431a5824931f",
+                    "phonenumber": "121213",
+                    "username": "2323",
+                    "avatar": {
+                        "_id": "60c39f54f0b2c4268eb53367",
+                        "fileName": "avatar_2.png"
+                    }
+                },
+                "described": "mo ta post",
+                "createdAt": "2021-11-30T14:15:37.915Z",
+                "updatedAt": "2021-11-30T14:15:37.915Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "edit post",
+        "url": "http://localhost:8000/api/v1/posts/edit/:id",
+        "body": {
+            "image": [
+                "base64img"
+            ],
+            "video": null,
+            "described": "mo ta post"
+        },
+        "example": "http://localhost:8000/api/v1/posts/edit/61a63209d915665311b432a1",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {}
+    },
+    {
+        "method": "GET",
+        "name": "get post",
+        "url": "http://localhost:8000/api/v1/posts/show/:id",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/posts/show/61a63209d915665311b432a1",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "images": [],
+                "videos": [],
+                "like": [],
+                "countComments": 0,
+                "isLike": false,
+                "_id": "61a63209d915665311b432a1",
+                "author": {
+                    "_id": "618b246c6ba6431a5824931f",
+                    "phonenumber": "121213",
+                    "username": "2323",
+                    "avatar": {
+                        "_id": "60c39f54f0b2c4268eb53367",
+                        "fileName": "avatar_2.png"
+                    }
+                },
+                "described": "mo ta post",
+                "createdAt": "2021-11-30T14:15:37.915Z",
+                "updatedAt": "2021-11-30T14:15:37.915Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "GET",
+        "name": "delete post",
+        "url": "http://localhost:8000/api/v1/posts/delete/:id",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/posts/delete/61a63209d915665311b432a1",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "message": "Delete post done"
+        }
+    },
+    {
+        "method": "GET",
+        "name": "list post",
+        "url": "http://localhost:8000/api/v1/posts/list",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/posts/delete/61a63209d915665311b432a1",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": [
+                {
+                    "images": [],
+                    "videos": [],
+                    "like": [],
+                    "countComments": 0,
+                    "isLike": false,
+                    "_id": "618b23856ba6431a58249312",
+                    "author": {
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "username": "Giang Bui",
+                        "avatar": {
+                            "_id": "60c39f54f0b2c4268eb53367",
+                            "fileName": "avatar_2.png"
+                        }
+                    },
+                    "described": "mo ta post",
+                    "createdAt": "2021-11-10T01:42:29.732Z",
+                    "updatedAt": "2021-11-10T01:42:29.732Z",
+                    "__v": 0
+                },
+                {
+                    "images": [],
+                    "videos": [],
+                    "like": [],
+                    "countComments": 0,
+                    "isLike": false,
+                    "_id": "618b24bf6ba6431a58249322",
+                    "author": {
+                        "_id": "618b246c6ba6431a5824931f",
+                        "phonenumber": "121213",
+                        "username": "2323",
+                        "avatar": {
+                            "_id": "60c39f54f0b2c4268eb53367",
+                            "fileName": "avatar_2.png"
+                        }
+                    },
+                    "described": "mo ta post",
+                    "createdAt": "2021-11-10T01:47:43.467Z",
+                    "updatedAt": "2021-11-10T01:47:43.467Z",
+                    "__v": 0
+                },
+                {
+                    "images": [],
+                    "videos": [],
+                    "like": [],
+                    "countComments": 0,
+                    "isLike": false,
+                    "_id": "61a63329aa8fed5918a92df6",
+                    "author": {
+                        "_id": "618b246c6ba6431a5824931f",
+                        "phonenumber": "121213",
+                        "username": "2323",
+                        "avatar": {
+                            "_id": "60c39f54f0b2c4268eb53367",
+                            "fileName": "avatar_2.png"
+                        }
+                    },
+                    "described": "mo ta post",
+                    "createdAt": "2021-11-30T14:20:25.844Z",
+                    "updatedAt": "2021-11-30T14:20:25.844Z",
+                    "__v": 0
+                },
+                {
+                    "images": [],
+                    "videos": [],
+                    "like": [],
+                    "countComments": 0,
+                    "isLike": false,
+                    "_id": "61a6338caa8fed5918a92e00",
+                    "author": {
+                        "_id": "618b246c6ba6431a5824931f",
+                        "phonenumber": "121213",
+                        "username": "2323",
+                        "avatar": {
+                            "_id": "60c39f54f0b2c4268eb53367",
+                            "fileName": "avatar_2.png"
+                        }
+                    },
+                    "described": "mo ta post",
+                    "createdAt": "2021-11-30T14:22:04.537Z",
+                    "updatedAt": "2021-11-30T14:22:04.537Z",
+                    "__v": 0
+                }
+            ]
+        }
+    },
+    {
+        "method": "POST",
+        "name": "like post",
+        "url": "http://localhost:8000/api/v1/postLike/action/:id",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/postLike/action/61a6362ec633076440d796cd",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "images": [],
+                "videos": [],
+                "like": [
+                    {
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "username": "Giang Bui"
+                    }
+                ],
+                "countComments": 0,
+                "isLike": false,
+                "_id": "61a6362ec633076440d796cd",
+                "author": "618b246c6ba6431a5824931f",
+                "described": "mo ta post",
+                "createdAt": "2021-11-30T14:33:18.662Z",
+                "updatedAt": "2021-11-30T14:33:46.314Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "cmt post",
+        "url": "http://localhost:8000/api/v1/postComment/create/:postId",
+        "body": {
+            "content": "Cham do troi bai",
+            " commentAnswered": false
+        },
+        "example": "http://localhost:8000/api/v1/postComment/create/61a6362ec633076440d796cd",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "_id": "61a637e78406cf6da273f83e",
+                "user": {
+                    "_id": "61752df79ba82c3677e0f072",
+                    "phonenumber": "0979722708",
+                    "username": "Giang Bui"
+                },
+                "post": "61a6362ec633076440d796cd",
+                "content": "Cham do troi bai",
+                "commentAnswered": null,
+                "createdAt": "2021-11-30T14:40:39.565Z",
+                "updatedAt": "2021-11-30T14:40:39.565Z",
+                "__v": 0
+            },
+            "post": {
+                "images": [],
+                "videos": [],
+                "like": [
+                    "61752df79ba82c3677e0f072"
+                ],
+                "countComments": 0,
+                "isLike": false,
+                "_id": "61a6362ec633076440d796cd",
+                "author": "618b246c6ba6431a5824931f",
+                "described": "mo ta post",
+                "createdAt": "2021-11-30T14:33:18.662Z",
+                "updatedAt": "2021-11-30T14:33:46.314Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "GET",
+        "name": "cmt list",
+        "url": "http://localhost:8000/api/v1/postComment/list/:postId",
+        "body": {},
+        "example": "http://localhost:8000/api/v1/postComment/list/61a6362ec633076440d796cd",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": [
+                {
+                    "_id": "61a637e78406cf6da273f83e",
+                    "user": {
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "username": "Giang Bui"
+                    },
+                    "post": "61a6362ec633076440d796cd",
+                    "content": "Cham do troi bai",
+                    "commentAnswered": null,
+                    "createdAt": "2021-11-30T14:40:39.565Z",
+                    "updatedAt": "2021-11-30T14:40:39.565Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "61a638923fae7a6ed6af7c4c",
+                    "user": {
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "username": "Giang Bui"
+                    },
+                    "post": "61a6362ec633076440d796cd",
+                    "content": "Cham do troi bai",
+                    "commentAnswered": null,
+                    "createdAt": "2021-11-30T14:43:30.739Z",
+                    "updatedAt": "2021-11-30T14:43:30.739Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "61a638973fae7a6ed6af7c53",
+                    "user": {
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "username": "Giang Bui"
+                    },
+                    "post": "61a6362ec633076440d796cd",
+                    "content": "Cham do troi bai",
+                    "commentAnswered": null,
+                    "createdAt": "2021-11-30T14:43:35.213Z",
+                    "updatedAt": "2021-11-30T14:43:35.213Z",
+                    "__v": 0
+                }
+            ]
+        }
+    },
+    {
+        "method": "POST",
+        "name": "request friend",
+        "url": "http://localhost:8000/api/v1/friends/set-requested-friend",
+        "body": {
+            "user_id": "61752df79ba82c3677e0f072"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "success": false,
+            "message": "Đã gửi lời mời kết bạn trước đó"
+        }
+    },
+    {
+        "method": "GET",
+        "name": "get request friend",
+        "url": "http://localhost:8000/api/v1/friends/get-request-friend",
+        "body": {},
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Danh sách lời mời kết bạn",
+            "data": {
+                "friends": []
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "get accept friend",
+        "url": "http://localhost:8000/api/v1/friends/set-accept",
+        "body": {
+            "user_id": "618b246c6ba6431a5824931f",
+            "is_accept": "1"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Kết bạn thành công",
+            "data": {
+                "_id": "618b25a96ba6431a5824932a",
+                "sender": "618b246c6ba6431a5824931f",
+                "receiver": "61752df79ba82c3677e0f072",
+                "status": "1",
+                "createdAt": "2021-11-10T01:51:37.799Z",
+                "updatedAt": "2021-11-10T01:54:50.221Z",
+                "__v": 0
+            },
+            "success": true
+        }
+    },
+    {
+        "method": "POST",
+        "name": "set remove",
+        "url": "http://localhost:8000/api/v1/friends/set-remove",
+        "body": {
+            "user_id": "618b246c6ba6431a5824931f"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {}
+    },
+    {
+        "method": "GET",
+        "name": "list request",
+        "url": "http://localhost:8000/api/v1/friends/list",
+        "body": {},
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "code": 200,
+            "message": "Danh sách bạn bè",
+            "data": {
+                "friends": [
+                    {
+                        "gender": "secret",
+                        "blocked_inbox": [],
+                        "blocked_diary": [],
+                        "_id": "618b246c6ba6431a5824931f",
+                        "phonenumber": "121213",
+                        "password": "$2b$10$MgXhXsp9z6YXZsCYc7RNie1julE5fLczcgM4WocnbNe9s45Jf0yS6",
+                        "username": "2323",
+                        "avatar": {
+                            "type": "other",
+                            "_id": "60c39f54f0b2c4268eb53367",
+                            "fileName": "avatar_2.png"
+                        },
+                        "cover_image": {
+                            "type": "other",
+                            "_id": "60c39eb8f0b2c4268eb53366",
+                            "fileName": "defaul_cover_image.jpg"
+                        },
+                        "createdAt": "2021-11-10T01:46:20.617Z",
+                        "updatedAt": "2021-11-10T01:46:20.617Z",
+                        "__v": 0
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "method": "POST",
+        "name": "send message",
+        "url": "http://localhost:8000/api/v1/chats/send",
+        "body": {
+            "chatId": "61a4fc39ee2832211eb3826d",
+            "receivedId": "618b246c6ba6431a5824931f",
+            "member": [
+                "618b246c6ba6431a5824931f",
+                "61752df79ba82c3677e0f072"
+            ],
+            "type": "PRIVATE_CHAT",
+            "content": "Xin chao"
+        },
+        "example": "",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": {
+                "_id": "61a641e435a24e91081da999",
+                "chat": {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4fc39ee2832211eb3826d",
+                    "createdAt": "2021-11-29T16:13:45.864Z",
+                    "updatedAt": "2021-11-29T16:13:45.864Z",
+                    "__v": 0
+                },
+                "user": {
+                    "gender": "secret",
+                    "blocked_inbox": [],
+                    "blocked_diary": [],
+                    "_id": "61752df79ba82c3677e0f072",
+                    "phonenumber": "0979722708",
+                    "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                    "username": "Giang Bui",
+                    "avatar": "60c39f54f0b2c4268eb53367",
+                    "cover_image": "60c39eb8f0b2c4268eb53366",
+                    "createdAt": "2021-10-24T09:57:11.894Z",
+                    "updatedAt": "2021-11-30T13:54:36.130Z",
+                    "__v": 2
+                },
+                "content": "Xin chao",
+                "createdAt": "2021-11-30T15:23:16.301Z",
+                "updatedAt": "2021-11-30T15:23:16.301Z",
+                "__v": 0
+            }
+        }
+    },
+    {
+        "method": "GET",
+        "name": "get messages",
+        "url": "http://localhost:8000/api/v1/chats/getMessages/:chatid",
+        "body": {
+            "chatId": "61a4fc39ee2832211eb3826d",
+            "receivedId": "618b246c6ba6431a5824931f",
+            "member": [
+                "618b246c6ba6431a5824931f",
+                "61752df79ba82c3677e0f072"
+            ],
+            "type": "PRIVATE_CHAT",
+            "content": "Xin chao"
+        },
+        "example": "http://localhost:8000/api/v1/chats/getMessages/61a4fc39ee2832211eb3826d",
+        "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA",
+        "responseExample": {
+            "data": [
+                {
+                    "_id": "61a4fc3aee2832211eb3826f",
+                    "chat": "61a4fc39ee2832211eb3826d",
+                    "user": {
+                        "gender": "secret",
+                        "blocked_inbox": [],
+                        "blocked_diary": [],
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                        "username": "Giang Bui",
+                        "avatar": "60c39f54f0b2c4268eb53367",
+                        "cover_image": "60c39eb8f0b2c4268eb53366",
+                        "createdAt": "2021-10-24T09:57:11.894Z",
+                        "updatedAt": "2021-11-30T13:54:36.130Z",
+                        "__v": 2
+                    },
+                    "content": "Xin chao",
+                    "createdAt": "2021-11-29T16:13:46.110Z",
+                    "updatedAt": "2021-11-29T16:13:46.110Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "61a4fc74ee2832211eb38276",
+                    "chat": "61a4fc39ee2832211eb3826d",
+                    "user": {
+                        "gender": "secret",
+                        "blocked_inbox": [],
+                        "blocked_diary": [],
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                        "username": "Giang Bui",
+                        "avatar": "60c39f54f0b2c4268eb53367",
+                        "cover_image": "60c39eb8f0b2c4268eb53366",
+                        "createdAt": "2021-10-24T09:57:11.894Z",
+                        "updatedAt": "2021-11-30T13:54:36.130Z",
+                        "__v": 2
+                    },
+                    "content": "Xin chao",
+                    "createdAt": "2021-11-29T16:14:44.677Z",
+                    "updatedAt": "2021-11-29T16:14:44.677Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "61a4fc78ee2832211eb3827d",
+                    "chat": "61a4fc39ee2832211eb3826d",
+                    "user": {
+                        "gender": "secret",
+                        "blocked_inbox": [],
+                        "blocked_diary": [],
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                        "username": "Giang Bui",
+                        "avatar": "60c39f54f0b2c4268eb53367",
+                        "cover_image": "60c39eb8f0b2c4268eb53366",
+                        "createdAt": "2021-10-24T09:57:11.894Z",
+                        "updatedAt": "2021-11-30T13:54:36.130Z",
+                        "__v": 2
+                    },
+                    "content": "Xin chao",
+                    "createdAt": "2021-11-29T16:14:48.710Z",
+                    "updatedAt": "2021-11-29T16:14:48.710Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "61a641e435a24e91081da999",
+                    "chat": "61a4fc39ee2832211eb3826d",
+                    "user": {
+                        "gender": "secret",
+                        "blocked_inbox": [],
+                        "blocked_diary": [],
+                        "_id": "61752df79ba82c3677e0f072",
+                        "phonenumber": "0979722708",
+                        "password": "$2b$10$VnMEzxhRyAQCZOvMjbAWdO0pTdDghMUxz8aJhaBeAULsxjKWUE06K",
+                        "username": "Giang Bui",
+                        "avatar": "60c39f54f0b2c4268eb53367",
+                        "cover_image": "60c39eb8f0b2c4268eb53366",
+                        "createdAt": "2021-10-24T09:57:11.894Z",
+                        "updatedAt": "2021-11-30T13:54:36.130Z",
+                        "__v": 2
+                    },
+                    "content": "Xin chao",
+                    "createdAt": "2021-11-30T15:23:16.301Z",
+                    "updatedAt": "2021-11-30T15:23:16.301Z",
+                    "__v": 0
+                }
+            ]
+        }
+    },
+    {
+        "method": "GET",
+        "name": "get chats",
+        "url": "http://localhost:8000/api/v1/chats/getChats",
+        "body": {},
+        "example": "",
+        "responseExample": {
+            "data": [
+                {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4f8a7ee2832211eb3822c",
+                    "createdAt": "2021-11-29T15:58:31.461Z",
+                    "updatedAt": "2021-11-29T15:58:31.461Z",
+                    "__v": 0
+                },
+                {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4f9f0ee2832211eb38236",
+                    "createdAt": "2021-11-29T16:04:00.535Z",
+                    "updatedAt": "2021-11-29T16:04:00.535Z",
+                    "__v": 0
+                },
+                {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4fa69ee2832211eb3824c",
+                    "createdAt": "2021-11-29T16:06:01.687Z",
+                    "updatedAt": "2021-11-29T16:06:01.687Z",
+                    "__v": 0
+                },
+                {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4fb74ee2832211eb38265",
+                    "createdAt": "2021-11-29T16:10:28.864Z",
+                    "updatedAt": "2021-11-29T16:10:28.864Z",
+                    "__v": 0
+                },
+                {
+                    "member": [
+                        "618b246c6ba6431a5824931f",
+                        "61752df79ba82c3677e0f072"
+                    ],
+                    "type": "PRIVATE_CHAT",
+                    "_id": "61a4fc39ee2832211eb3826d",
+                    "createdAt": "2021-11-29T16:13:45.864Z",
+                    "updatedAt": "2021-11-29T16:13:45.864Z",
+                    "__v": 0
+                }
+            ]
+        }
+    }
+]
