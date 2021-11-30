@@ -4,6 +4,7 @@ const {
 } = require('../constants/constants');
 const ChatModel = require("../models/Chats");
 const MessagesModel = require("../models/Messages");
+const UsersModel=require("../models/Users")
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
 var ObjectId = require('mongodb').ObjectId;      
@@ -101,13 +102,32 @@ chatController.getMessages = async (req, res, next) => {
 chatController.getChats = async (req, res, next) => {
     try {
         let messages = await    ChatModel.find({});
-        console.log(messages.length)
-        console.log(messages)
         let data=Array();
+        console.log(messages)
         for(var i=0;i<messages.length;i++){
             console.log(messages[i])
-            if(messages[i].member.includes(req.userId)) data.push(messages[i]);
+            if(messages[i].member.includes(req.userId)){
+                var chat=new Map()
+                chat['owner']=req.userId;
+                chat['guest']=messages[i].member.filter(item => item != req.userId)[0];
+                chat['messages']=messages[i].messages
+                chat['seens']=messages[i].seens
+                chat['type']=messages[i].type
+                chat['updateAt']=messages[i]['updatedAt']
+                chat['pivots']=messages[i].pivots
+                chat['_id']=messages[i]._id
+                let message = await MessagesModel.findOne({
+                    chat: chat['_id']
+                }).populate('user');
+                let user = await UsersModel.findOne({
+                    _id:chat['guest']
+                }).populate('user');
+                chat['lastmessage']=message.content;
+                chat['guestname']=user.username;
+                data.push(chat);
+            }
         }
+        console.log(data);
         return res.status(httpStatus.ACCEPTED).json({
             data: data
         });
