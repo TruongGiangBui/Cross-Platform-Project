@@ -1,3 +1,4 @@
+import 'package:app/friendfuction.dart';
 import 'package:app/post/postsfuction.dart';
 import 'package:app/post/widgets/circle_button.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +44,12 @@ class NewsFeed extends StatelessWidget {
     //     .catchError((err) {
     //   print(err);
     // });
-    createComment(user.token,"61a6362ec633076440d796cd","cmt phat do troi")
-        .then((res) => {print(res)})
-        .catchError((err) {
-      print(err);
-    });
+    // createComment(user.token,"61a6362ec633076440d796cd","cmt phat do troi")
+    //     .then((res) => {print(res)})
+    //     .catchError((err) {
+    //   print(err);
+    // });
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [

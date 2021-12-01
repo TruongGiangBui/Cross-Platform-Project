@@ -1,6 +1,6 @@
 import 'package:app/chat/components/filled_outline_button.dart';
 import 'package:app/chat/constants.dart';
-import 'package:app/chat/function.dart';
+import 'package:app/chat/chatfunction.dart';
 import 'package:app/chat/models/chat.dart';
 import 'package:flutter/material.dart';
 import 'chat_card.dart';
@@ -13,16 +13,16 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // getlistchats(user.token).then((res) {
-    //   print(res[1].owner);
-    // }).catchError((err) {
-    //   print(err);
-    // });
-    // getlistmessages(user.token, "61a4fc39ee2832211eb3826d").then((res) {
-    //   print(res[1].content);
-    // }).catchError((err) {
-    //   print(err);
-    // });
+    getlistchats(user.token).then((res) {
+      print(res[1].owner);
+    }).catchError((err) {
+      print(err);
+    });
+    getlistmessages(user.token, "61a4fc39ee2832211eb3826d").then((res) {
+      print(res[1].content);
+    }).catchError((err) {
+      print(err);
+    });
     sendmessage(user.token, "618b246c6ba6431a5824931f",
         "61a4fc39ee2832211eb3826d", "Chao ban ").then((res) {
       print(res);
