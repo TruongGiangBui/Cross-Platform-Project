@@ -45,6 +45,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ChatScreen(user: user));
+        home:NewsFeed(user: user));
   }
 }

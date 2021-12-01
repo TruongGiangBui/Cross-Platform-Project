@@ -47,13 +47,13 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(imageUrl: post.author.avatar.toString()),
+        ProfileAvatar(imageUrl: "http://localhost:8000/files"+post.authoravt.toString()),
         const SizedBox(width: 8.0),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post.author.username.toString()),
+            Text(post.authorname.toString()),
             Row(
               children: [
                 Text(
