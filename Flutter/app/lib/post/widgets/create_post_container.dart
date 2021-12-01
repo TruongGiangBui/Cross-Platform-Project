@@ -18,7 +18,7 @@ class CreatePostContainer extends StatelessWidget {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundColor: Colors.grey[200],
-                  backgroundImage: Image.network(currentUser.coverImageModel.fileName.toString()).image,
+                  backgroundImage: Image.network(currentUser.imagePath).image,
                 ),
                 const SizedBox(width: 8.0),
                 Expanded(
