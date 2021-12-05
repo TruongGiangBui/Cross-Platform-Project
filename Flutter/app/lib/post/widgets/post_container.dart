@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
 import 'package:app/post/widgets/update_post.dart';
+import 'package:intl/intl.dart';
 
 class PostContainer extends StatelessWidget {
   final Post post;
@@ -22,14 +23,14 @@ class PostContainer extends StatelessWidget {
                 children: [
                   _PostHeader(post: post),
                   const SizedBox(height: 4.0),
-                  Text(post.caption),
+                  Text(post.described),
                   const SizedBox.shrink(),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Image.network(post.imageUrl),
+              // child: Image.network("http://10.0.2.2:8000/files/"+post.images[0]),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -43,22 +44,27 @@ class PostContainer extends StatelessWidget {
 class _PostHeader extends StatelessWidget {
   final Post post;
   const _PostHeader({Key? key, required this.post}) : super(key: key);
+  String readTimestamp(String timestamp) {
+    var time = DateTime.parse(timestamp);
+
+    return time.day.toString()+"/"+time.month.toString()+" "+ time.hour.toString()+"-"+time.minute.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(imageUrl: post.user.imagePath),
+        ProfileAvatar(imageUrl: "http://10.0.2.2:8000/files/" + post.authoravt),
         const SizedBox(width: 8.0),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post.user.name),
+            Text(post.authorname),
             Row(
               children: [
                 Text(
-                  '${post.timeAgo} ',
+                  readTimestamp(post.createAt.toString()),
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12.0,
@@ -174,7 +180,7 @@ class _PostStats extends StatelessWidget {
                 size: 20.0,
               ),
               label: 'Like',
-              count: post.likes,
+              count: post.likes.length,
               onTap: () => print('Like'),
             ),
             _PostButton(
@@ -184,19 +190,9 @@ class _PostStats extends StatelessWidget {
                 size: 20.0,
               ),
               label: 'Comment',
-              count: post.comments,
+              count: post.countComments,
               onTap: () => print('Comment'),
             ),
-            _PostButton(
-              icon: Icon(
-                Icons.share,
-                color: Colors.grey[600],
-                size: 25.0,
-              ),
-              label: 'Share',
-              count: post.comments,
-              onTap: () => print('Share'),
-            )
           ],
         ),
       ],

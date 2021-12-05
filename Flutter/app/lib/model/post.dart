@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 class Post {
   final dynamic images;
   final dynamic videos;
@@ -25,8 +26,8 @@ class Post {
       this.authorid,
       this.authorname,
       this.authoravt});
+     
   factory Post.fromJson(Map<dynamic, dynamic> json) {
-
     return Post(
         images: json['images'],
         videos: json['videos'],
@@ -35,7 +36,7 @@ class Post {
         isLike: json['isLike'],
         id: json['_id'],
         described: json['described'],
-        createAt: json['createAt'],
+        createAt: json['createdAt'],
         updateAt: json['updateAt'],
         authorid: json['author']['_id'],
         authorname: json['author']['username'],
