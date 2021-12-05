@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 class PostContainer extends StatelessWidget {
   final Post post;
   const PostContainer({Key? key, required this.post}) : super(key: key);
-
+ 
   @override
   Widget build(BuildContext context) {
+    if(post.images.length>0) print(post.images[0]['fileName']);
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -30,7 +31,7 @@ class PostContainer extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              // child: Image.network("http://10.0.2.2:8000/files/"+post.images[0]),
+              child:post.images.length>0?Image.network("http://10.0.2.2:8000/files/"+post.images[0]['fileName'].toString()):null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
