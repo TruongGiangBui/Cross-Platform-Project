@@ -221,6 +221,7 @@ postsController.delete = async (req, res, next) => {
 
 postsController.list = async (req, res, next) => {
     try {
+
         let posts = [];
         let userId = req.userId;
         if (req.query.userId) {
@@ -281,7 +282,7 @@ postsController.list = async (req, res, next) => {
             postWithIsLike.push(postItem);
         }
         return res.status(httpStatus.OK).json({
-            data: postWithIsLike
+            data: postWithIsLike.reverse()
         });
     } catch (error) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message: error.message});
