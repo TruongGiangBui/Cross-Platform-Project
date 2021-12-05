@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
-import 'package:app/post/widgets/update_post.dart';
 
 class PostContainer extends StatelessWidget {
   final Post post;
@@ -22,14 +21,14 @@ class PostContainer extends StatelessWidget {
                 children: [
                   _PostHeader(post: post),
                   const SizedBox(height: 4.0),
-                  Text(post.caption),
+                  Text(post.described.toString()),
                   const SizedBox.shrink(),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Image.network(post.imageUrl),
+              child: Image.network(post.images[0]),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -48,17 +47,17 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(imageUrl: post.user.imagePath),
+        ProfileAvatar(imageUrl: post.author.avatar.toString()),
         const SizedBox(width: 8.0),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post.user.name),
+            Text(post.author.username.toString()),
             Row(
               children: [
                 Text(
-                  '${post.timeAgo} ',
+                  '${post.createAt} ',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12.0,
@@ -73,45 +72,10 @@ class _PostHeader extends StatelessWidget {
             )
           ],
         )),
-        Container(
-            child: PopupMenuButton(
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              child: TextButton(
-                onPressed: () => print('helo'),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.change_circle,
-                      color: Colors.grey[600],
-                      size: 20.0,
-                    ),
-                    Text('Chỉnh sửa'),
-                  ],
-                ),
-              ),
-              value: 1,
-              onTap: () => print('hi'),
-            ),
-            PopupMenuItem(
-              child: TextButton(
-                onPressed: () => showAlertDialog(context),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.grey[600],
-                      size: 20.0,
-                    ),
-                    Text('Xóa bài viết'),
-                  ],
-                ),
-              ),
-              value: 2,
-              onTap: () => print('hi'),
-            ),
-          ],
-        ))
+        IconButton(
+          icon: const Icon(Icons.more_horiz),
+          onPressed: () => print('More'),
+        ),
       ],
     );
   }
@@ -174,7 +138,7 @@ class _PostStats extends StatelessWidget {
                 size: 20.0,
               ),
               label: 'Like',
-              count: post.likes,
+              count: post.likes.length,
               onTap: () => print('Like'),
             ),
             _PostButton(
@@ -184,7 +148,7 @@ class _PostStats extends StatelessWidget {
                 size: 20.0,
               ),
               label: 'Comment',
-              count: post.comments,
+              count: post.countComments,
               onTap: () => print('Comment'),
             ),
             _PostButton(
@@ -194,7 +158,7 @@ class _PostStats extends StatelessWidget {
                 size: 25.0,
               ),
               label: 'Share',
-              count: post.comments,
+              count: post.countComments,
               onTap: () => print('Share'),
             )
           ],
@@ -245,34 +209,4 @@ class _PostButton extends StatelessWidget {
       ),
     );
   }
-}
-
-showAlertDialog(BuildContext context) {
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("Cancel"),
-    onPressed: () {},
-  );
-  Widget continueButton = TextButton(
-    child: Text("OK"),
-    onPressed: () {},
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Delete"),
-    content: Text("Would you like to delete this post?"),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }

@@ -1,15 +1,19 @@
 import 'package:app/post/widgets/circle_button.dart';
 import 'package:flutter/material.dart';
-import 'package:app/model/data.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/create_post_container.dart';
 import 'package:app/post/widgets/post_container.dart';
+import 'package:app/model/user.dart';
+import 'package:app/post/screens/postsfuction.dart';
 
 class NewsFeed extends StatelessWidget {
-  const NewsFeed({Key? key}) : super(key: key);
+  final User user;
+  const NewsFeed({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const posts = [];
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -40,8 +44,7 @@ class NewsFeed extends StatelessWidget {
                   onPressed: () => print('Notifications'))
             ],
           ),
-          SliverToBoxAdapter(
-              child: CreatePostContainer(currentUser: currentUser)),
+          SliverToBoxAdapter(child: CreatePostContainer(currentUser: user)),
           SliverList(
               delegate: SliverChildBuilderDelegate(
             (context, index) {
