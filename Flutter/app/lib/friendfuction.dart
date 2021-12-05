@@ -77,7 +77,7 @@ Future<dynamic> setacceptfriend(String token, dynamic receiver_id) async {
 }
 
 
-Future<dynamic> getlistfriend(String token) async {
+Future<List<Friend>> getlistfriend(String token) async {
   final response = await http.get(
       Uri.parse('http://10.0.2.2:8000/api/v1/friends/list'),
       headers: <String, String>{

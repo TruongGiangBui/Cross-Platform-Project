@@ -1,73 +1,75 @@
 import 'dart:math';
 
+import 'package:app/friends/screen/search_screen.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/postsfuction.dart';
 import 'package:app/post/widgets/circle_button.dart';
+import 'package:app/post/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/create_post_container.dart';
 import 'package:app/post/widgets/post_container.dart';
 
+class SearchWidget extends StatefulWidget {
+  final User user;
+  const SearchWidget({Key? key, required this.user}) : super(key: key);
+
+  @override
+  _SearchWidgetState createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  final TextEditingController controller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      backgroundColor: Colors.purple,
+      title: Column(children: [
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: controller,
+                decoration: InputDecoration.collapsed(
+                    hintText: 'Tìm bạn bè, tin nhắn ...'),
+              ),
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SearchResultWidget(
+                          user: widget.user, keyword: controller.text)));
+                },
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.green,
+                ),
+                label: Text('')),
+          ],
+        )
+      ]),
+      centerTitle: false,
+      floating: true,
+    );
+  }
+}
+
 class NewsFeed extends StatelessWidget {
   final User user;
+
   const NewsFeed({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Future<List<Post>> posts = getlistpost(user.token);
     // print(posts[0]);
+    final TextEditingController controller = TextEditingController();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.purple,
-            title: Column(children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration.collapsed(
-                          hintText: 'Tìm bạn bè, tin nhắn ...'),
-                    ),
-                  ),
-                ],
-              )
-            ]),
-            centerTitle: false,
-            floating: true,
-            actions: [
-              CircleButton(
-                  icon: Icons.search,
-                  iconSize: 25.0,
-                  onPressed: () => print('Search')),
-              CircleButton(
-                  icon: Icons.notifications,
-                  iconSize: 25.0,
-                  onPressed: () => print('Notifications'))
-            ],
-          ),
+          SearchWidget(user: user),
+          SliverToBoxAdapter(child: NavBarContainer(currentUser: user)),
           SliverToBoxAdapter(child: CreatePostContainer(currentUser: user)),
-          // SliverList(
-
-          //     delegate: SliverChildListDelegate([
-          //   Container(
-          //       child: FutureBuilder(
-          //           future: getlistpost(user.token),
-          //           builder: (context, AsyncSnapshot snapshot) {
-          //             if (!snapshot.hasData) {
-          //               return Center(child: CircularProgressIndicator());
-          //             } else {
-          //               return Container(
-          //                   child: ListView.builder(
-          //                       itemCount: snapshot.data.length,
-          //                       scrollDirection: Axis.horizontal,
-          //                       itemBuilder: (BuildContext context, int index) {
-          //                         return PostContainer(post: snapshot.data[index]);
-          //                       }));
-          //             }
-          //           }))
-          // ])),
-
           FutureBuilder(
             future: getlistpost(user.token),
             builder: (context, AsyncSnapshot projectSnap) {
@@ -88,7 +90,8 @@ class NewsFeed extends StatelessWidget {
                     return Container();
                   }
                   print(projectSnap.data[index]);
-                  return PostContainer(user:user,post: projectSnap.data[index]);
+                  return PostContainer(
+                      user: user, post: projectSnap.data[index]);
                 }, childCount: childCount),
               );
             },

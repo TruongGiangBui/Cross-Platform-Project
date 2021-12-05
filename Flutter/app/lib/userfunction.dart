@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/model/friend.dart';
 import 'package:app/model/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,7 +48,7 @@ Future<bool> setblockuser(String token, dynamic userId) async {
   return false;
 }
 
-Future<List<User>> searchUser(String token, dynamic keyword) async {
+Future<List<Friend>> searchUser(String token, dynamic keyword) async {
   final response =
       await http.post(Uri.parse('http://10.0.2.2:8000/api/v1/users/search'),
           headers: <String, String>{
@@ -56,11 +57,12 @@ Future<List<User>> searchUser(String token, dynamic keyword) async {
             'Authorization': 'Bearer $token',
           },
           body: jsonEncode(<String, dynamic>{"keyword": keyword}));
-  List<User> users = [];
+  List<Friend> users = [];
   var data = jsonDecode(response.body)['data'];
   data.forEach((element) {
-    User user = User.fromJson(element);
+    Friend user = Friend.fromJson(element);
     users.add(user);
+    print(user);
   });
   return users;
 }

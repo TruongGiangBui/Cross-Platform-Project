@@ -188,7 +188,9 @@ class _PostLike extends StatelessWidget {
       child: Material(
         color: Colors.white,
         child: InkWell(
-          onTap: () => {},
+          onTap: () => {
+            
+          },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               height: 50.0,

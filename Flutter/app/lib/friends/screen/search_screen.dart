@@ -1,33 +1,39 @@
+import 'package:app/friendfuction.dart';
 import 'package:app/model/comment.dart';
+import 'package:app/model/friend.dart';
 import 'package:app/post/postsfuction.dart';
 import 'package:app/post/widgets/widgets.dart';
+import 'package:app/userfunction.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
 import 'package:app/model/post.dart';
 
-class CommentWidget extends StatefulWidget {
+class SearchResultWidget extends StatefulWidget {
   final User user;
-  final Post post;
-  const CommentWidget({Key? key, required this.user, required this.post})
+  final String keyword;
+  const SearchResultWidget(
+      {Key? key, required this.user, required this.keyword})
       : super(key: key);
 
   @override
-  _CommentWidgetState createState() => _CommentWidgetState();
+  _SearchResultWidgetState createState() => _SearchResultWidgetState();
 }
 
-class _CommentWidgetState extends State<CommentWidget> {
+class _SearchResultWidgetState extends State<SearchResultWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  List<Comment> data = [];
-  Widget commentChild(user, post, data) {
-    return FutureBuilder<List<Comment>>(
-      future: getlistcomment(widget.user.token, widget.post.id),
+  List<Friend> data = [];
+  Widget UserItem(user) {
+    searchUser(widget.user.token, widget.keyword).then((res) {
+      print(res.length);
+    });
+    return FutureBuilder<List<Friend>>(
+      future: searchUser(widget.user.token, widget.keyword),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          if (data.length <= snapshot.data.length) {
-            data = snapshot.data;
-          }
+          data = snapshot.data;
+          print(snapshot.data[0].username);
           return ListView(
             children: [
               for (var i = 0; i < data.length; i++)
@@ -50,14 +56,13 @@ class _CommentWidgetState extends State<CommentWidget> {
                             radius: 50,
                             backgroundImage: NetworkImage(
                                 "http://10.0.2.2:8000/files/" +
-                                    data[i].authoravt.toString())),
+                                    data[i].avt)),
                       ),
                     ),
                     title: Text(
-                      data[i].authorname,
+                      data[i].username,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(data[i].content),
                   ),
                 )
             ],
@@ -80,41 +85,10 @@ class _CommentWidgetState extends State<CommentWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Comments"),
+        title: Text("Search"),
         backgroundColor: Colors.deepPurpleAccent,
       ),
-      body: Container(
-        child: CommentBox(
-          userImage: "http://10.0.2.2:8000/files/" +
-              widget.user.avatarModel.fileName.toString(),
-          child: commentChild(widget.user, widget.post, data),
-          labelText: 'Write a comment...',
-          withBorder: false,
-          errorText: 'Comment cannot be blank',
-          sendButtonMethod: () {
-            if (formKey.currentState!.validate()) {
-              print(commentController.text);
-              setState(() {
-                Comment comment = new Comment(
-                    content: commentController.text,
-                    authorname: widget.user.username,
-                    authoravt: widget.user.avatarModel.fileName);
-                createComment(
-                    widget.user.token, widget.post.id, commentController.text);
-              });
-              commentController.clear();
-              FocusScope.of(context).unfocus();
-            } else {
-              print("Not validated");
-            }
-          },
-          formKey: formKey,
-          commentController: commentController,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
-        ),
-      ),
+      body: UserItem(widget.user)
     );
   }
 }
