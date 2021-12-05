@@ -3,7 +3,9 @@ import 'package:app/model/user.dart';
 import 'package:app/profile/widget/profile_widget.dart';
 import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -79,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
       child: Stack(children: <Widget>[
         CircleAvatar(
           radius: 80.0,
-          backgroundImage: NetworkImage('http://10.0.2.2:8000/files/${widget.user.avatarModel.fileName}'),
+          backgroundImage: _imageFile!.path == 'assets/images/image.jpg' ? NetworkImage('http://10.0.2.2:8000/files/${widget.user.avatarModel.fileName}'): FileImage(File(_imageFile!.path)) as ImageProvider
         ),
         Positioned(
           bottom: 20.0,
@@ -106,6 +108,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     User currentUser = widget.user;
+    print(_imageFile!.path);
     TextEditingController nameController = TextEditingController(text: currentUser.username);
     if(this.value == ""){
       this.value = mapGender[currentUser.gender];

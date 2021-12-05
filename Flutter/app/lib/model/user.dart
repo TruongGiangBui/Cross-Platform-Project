@@ -40,11 +40,11 @@ class User {
         blockedinbox: json['data']['blocked_inbox']);
   }
 
-  void set setToken(String newToken){
+  set setToken(String newToken){
     token = newToken;
   }
 
-  void set setUsername(String userName){
+  set setUsername(String userName){
     username = userName;
   }
 
