@@ -2,11 +2,8 @@ import 'package:app/account/Screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
-<<<<<<< HEAD
-=======
 import 'package:app/post/widgets/update_post.dart';
 import 'package:intl/intl.dart';
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
 
 class PostContainer extends StatelessWidget {
   final Post post;
@@ -28,25 +25,17 @@ class PostContainer extends StatelessWidget {
                 children: [
                   _PostHeader(post: post),
                   const SizedBox(height: 4.0),
-<<<<<<< HEAD
-                  Text(post.described.toString()),
-=======
                   Text(post.described),
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
                   const SizedBox.shrink(),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-<<<<<<< HEAD
-              child: Image.network(post.images[0]),
-=======
               child: post.images.length > 0
                   ? Image.network("http://10.0.2.2:8000/files/" +
                       post.images[0]['fileName'].toString())
                   : null,
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -77,29 +66,17 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-<<<<<<< HEAD
-        ProfileAvatar(imageUrl: post.author.avatar.toString()),
-=======
         ProfileAvatar(imageUrl: "http://10.0.2.2:8000/files/" + post.authoravt),
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
         const SizedBox(width: 8.0),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-<<<<<<< HEAD
-            Text(post.author.username.toString()),
-            Row(
-              children: [
-                Text(
-                  '${post.createAt} ',
-=======
             Text(post.authorname),
             Row(
               children: [
                 Text(
                   readTimestamp(post.createAt.toString()),
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 12.0,
@@ -114,12 +91,6 @@ class _PostHeader extends StatelessWidget {
             )
           ],
         )),
-<<<<<<< HEAD
-        IconButton(
-          icon: const Icon(Icons.more_horiz),
-          onPressed: () => print('More'),
-        ),
-=======
         Container(
             child: PopupMenuButton(
           itemBuilder: (context) => [
@@ -159,7 +130,6 @@ class _PostHeader extends StatelessWidget {
             ),
           ],
         ))
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
       ],
     );
   }
@@ -179,34 +149,13 @@ class _PostStats extends StatelessWidget {
             _PostLike(
               post: post,
               label: 'Like',
-<<<<<<< HEAD
-              count: post.likes.length,
-              onTap: () => print('Like'),
-=======
               onTap: () => {},
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
             ),
             _PostComment(
               post: post,
               label: 'Comment',
-<<<<<<< HEAD
-              count: post.countComments,
-              onTap: () => print('Comment'),
-            ),
-            _PostButton(
-              icon: Icon(
-                Icons.share,
-                color: Colors.grey[600],
-                size: 25.0,
-              ),
-              label: 'Share',
-              count: post.countComments,
-              onTap: () => print('Share'),
-            )
-=======
               onTap: () {},
             ),
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
           ],
         ),
       ],
@@ -220,10 +169,7 @@ class _PostLike extends StatelessWidget {
   final Post post;
 
   const _PostLike(
-      {Key? key,
-      required this.post,
-      required this.label,
-      required this.onTap})
+      {Key? key, required this.post, required this.label, required this.onTap})
       : super(key: key);
 
   @override
@@ -260,8 +206,6 @@ class _PostLike extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
-=======
 }
 
 class _PostComment extends StatelessWidget {
@@ -270,10 +214,7 @@ class _PostComment extends StatelessWidget {
   final Post post;
 
   const _PostComment(
-      {Key? key,
-      required this.post,
-      required this.label,
-      required this.onTap})
+      {Key? key, required this.post, required this.label, required this.onTap})
       : super(key: key);
 
   @override
@@ -340,5 +281,4 @@ showAlertDialog(BuildContext context) {
       return alert;
     },
   );
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
 }

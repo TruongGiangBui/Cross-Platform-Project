@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/account/components/background.dart';
 import 'package:app/account/Screens/register/registerfunction.dart';
-<<<<<<< HEAD
-=======
 import 'package:app/post/screens/NewsFeed.dart';
->>>>>>> d24154e401e0175379a2c5015883b278a846fd58
 
 class RegisterScreen extends StatelessWidget {
   void showAlert(BuildContext context, String message) {
