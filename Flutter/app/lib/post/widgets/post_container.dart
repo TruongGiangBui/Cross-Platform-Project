@@ -1,20 +1,27 @@
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/comment/screen/comment_screen.dart';
 import 'package:app/model/user.dart';
+import 'package:app/post/postsfuction.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
 import 'package:app/post/widgets/update_post.dart';
 import 'package:intl/intl.dart';
 
-class PostContainer extends StatelessWidget {
+class PostContainer extends StatefulWidget {
   final Post post;
   final User user;
-  const PostContainer({Key? key,required this.user, required this.post}) : super(key: key);
+  const PostContainer({Key? key, required this.user, required this.post})
+      : super(key: key);
 
   @override
+  _PostContainerState createState() => _PostContainerState();
+}
+
+class _PostContainerState extends State<PostContainer> {
+  @override
   Widget build(BuildContext context) {
-    if (post.images.length > 0) print(post.images[0]['fileName']);
+    if (widget.post.images.length > 0) print(widget.post.images[0]['fileName']);
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -26,23 +33,23 @@ class PostContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _PostHeader(post: post),
+                  _PostHeader(post: widget.post),
                   const SizedBox(height: 4.0),
-                  Text(post.described),
+                  Text(widget.post.described),
                   const SizedBox.shrink(),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: post.images.length > 0
+              child: widget.post.images.length > 0
                   ? Image.network("http://10.0.2.2:8000/files/" +
-                      post.images[0]['fileName'].toString())
+                      widget.post.images[0]['fileName'].toString())
                   : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: _PostStats(user: user, post: post),
+              child: _PostStats(user: widget.user, post: widget.post),
             )
           ],
         ));
@@ -153,14 +160,10 @@ class _PostStats extends StatelessWidget {
             _PostLike(
               user: user,
               post: post,
-              label: 'Like',
-              onTap: () => {},
             ),
             _PostComment(
               user: user,
               post: post,
-              label: 'Comment',
-              onTap: () {},
             ),
           ],
         ),
@@ -169,44 +172,59 @@ class _PostStats extends StatelessWidget {
   }
 }
 
-class _PostLike extends StatelessWidget {
-  final String label;
-  final Function onTap;
+class _PostLike extends StatefulWidget {
   final Post post;
   final User user;
-  const _PostLike(
-      {Key? key,
-      required this.user,
-      required this.post,
-      required this.label,
-      required this.onTap})
+  const _PostLike({Key? key, required this.user, required this.post})
       : super(key: key);
+  @override
+  _PostLikeState createState() => _PostLikeState();
+}
 
+class _PostLikeState extends State<_PostLike> {
+  bool islike = false;
+  int countlike = 0;
+  Color _colorContainer = Colors.grey;
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      bool islike = widget.post.isLike;
+      countlike = widget.post.likes.length;
+      if (islike) _colorContainer = Colors.red;
+    });
     return Expanded(
       child: Material(
         color: Colors.white,
         child: InkWell(
-          onTap: () => {
-            
+          onTap: () {
+            likepost(widget.user.token, widget.post.id);
+            setState(() {
+              countlike = countlike + 1;
+              if (islike) {
+                islike = false;
+                _colorContainer = Colors.grey;
+              } else {
+                islike = true;
+                _colorContainer = Colors.red;
+              }
+            });
           },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               height: 50.0,
               child: Column(
                 children: [
-                  Text(post.likes.length.toString()),
+                  Text(countlike.toString()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.favorite_rounded,
-                        color: post.isLike ? Colors.red[600] : Colors.grey[600],
+                        color: _colorContainer,
                         size: 20.0,
                       ),
                       const SizedBox(width: 4.0),
-                      Text(label),
+                      Text("Like"),
                     ],
                   ),
                 ],
@@ -218,17 +236,10 @@ class _PostLike extends StatelessWidget {
 }
 
 class _PostComment extends StatelessWidget {
-  final String label;
-  final Function onTap;
   final Post post;
   final User user;
 
-  const _PostComment(
-      {Key? key,
-      required this.user,
-      required this.post,
-      required this.label,
-      required this.onTap})
+  const _PostComment({Key? key, required this.user, required this.post})
       : super(key: key);
 
   @override
@@ -238,8 +249,11 @@ class _PostComment extends StatelessWidget {
         color: Colors.white,
         child: InkWell(
           onTap: () => {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => CommentWidget(user: user,post: post,)))
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CommentWidget(
+                      user: user,
+                      post: post,
+                    )))
           },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -256,7 +270,7 @@ class _PostComment extends StatelessWidget {
                         size: 20.0,
                       ),
                       const SizedBox(width: 4.0),
-                      Text(label),
+                      Text("Comment"),
                     ],
                   ),
                 ],
