@@ -2,7 +2,7 @@ import 'package:app/model/post.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/screens/NewsFeed.dart';
 import 'package:flutter/material.dart';
-import 'account/Screens/login/login.dart';
+import 'post/screens/NewsFeed.dart';
 
 import 'chat/screens/chats/chats_screen.dart';
 
@@ -45,6 +45,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ChatScreen(user: user));
+        home:NewsFeed(user: user));
   }
 }

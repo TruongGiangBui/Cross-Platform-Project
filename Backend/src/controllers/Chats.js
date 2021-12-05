@@ -4,6 +4,8 @@ const {
 } = require('../constants/constants');
 const ChatModel = require("../models/Chats");
 const MessagesModel = require("../models/Messages");
+const UsersModel=require("../models/Users")
+const DocumentModel=require("../models/Documents")
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
 var ObjectId = require('mongodb').ObjectId;      
@@ -61,7 +63,7 @@ chatController.send = async (req, res, next) => {
                     content: content
                 });
                 await message.save();
-                let messageNew = await MessagesModel.findById(message._id).populate('chat').populate('user');
+                let messageNew = await MessagesModel.findById(message._id).populate('user');
                 return res.status(httpStatus.OK).json({
                     data: messageNew
                 });
@@ -88,7 +90,12 @@ chatController.getMessages = async (req, res, next) => {
     try {
         let messages = await MessagesModel.find({
             chat: req.params.chatId
-        }).populate('user');
+        }).populate({
+            path : 'user',
+            populate : {
+              path : 'avatar'
+            }
+          });
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             data: messages
         });
@@ -101,13 +108,24 @@ chatController.getMessages = async (req, res, next) => {
 chatController.getChats = async (req, res, next) => {
     try {
         let messages = await    ChatModel.find({});
-        console.log(messages.length)
-        console.log(messages)
         let data=Array();
+        console.log(messages)
         for(var i=0;i<messages.length;i++){
             console.log(messages[i])
-            if(messages[i].member.includes(req.params.UserId)) data.push(messages[i]);
+            if(messages[i].member.includes(req.userId)){
+                var chat=new Map()
+                chat['owner']=req.userId;
+                chat['guest']=messages[i].member.filter(item => item != req.userId)[0];
+                chat['messages']=messages[i].messages
+                chat['seens']=messages[i].seens
+                chat['type']=messages[i].type
+                chat['updateAt']=messages[i]['updatedAt']
+                chat['pivots']=messages[i].pivots
+                chat['_id']=messages[i]._id
+                data.push(chat);
+            }
         }
+        console.log(data);
         return res.status(httpStatus.ACCEPTED).json({
             data: data
         });
