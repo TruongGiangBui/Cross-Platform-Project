@@ -221,6 +221,7 @@ postsController.delete = async (req, res, next) => {
 
 postsController.list = async (req, res, next) => {
     try {
+
         let posts = [];
         let userId = req.userId;
         if (req.query.userId) {

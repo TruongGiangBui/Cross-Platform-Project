@@ -1,3 +1,4 @@
+import 'package:app/account/Screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
@@ -7,10 +8,10 @@ import 'package:intl/intl.dart';
 class PostContainer extends StatelessWidget {
   final Post post;
   const PostContainer({Key? key, required this.post}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
-    if(post.images.length>0) print(post.images[0]['fileName']);
+    if (post.images.length > 0) print(post.images[0]['fileName']);
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -31,7 +32,10 @@ class PostContainer extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child:post.images.length>0?Image.network("http://10.0.2.2:8000/files/"+post.images[0]['fileName'].toString()):null,
+              child: post.images.length > 0
+                  ? Image.network("http://10.0.2.2:8000/files/" +
+                      post.images[0]['fileName'].toString())
+                  : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -44,11 +48,18 @@ class PostContainer extends StatelessWidget {
 
 class _PostHeader extends StatelessWidget {
   final Post post;
+
   const _PostHeader({Key? key, required this.post}) : super(key: key);
   String readTimestamp(String timestamp) {
     var time = DateTime.parse(timestamp);
 
-    return time.day.toString()+"/"+time.month.toString()+" "+ time.hour.toString()+"-"+time.minute.toString();
+    return time.day.toString() +
+        "/" +
+        time.month.toString() +
+        " " +
+        time.hour.toString() +
+        "-" +
+        time.minute.toString();
   }
 
   @override
@@ -133,66 +144,17 @@ class _PostStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Row(
-        //   children: [
-        //     Container(
-        //       padding: const EdgeInsets.all(4.0),
-        //       decoration: BoxDecoration(
-        //         color: Colors.amber[300],
-        //         shape: BoxShape.circle,
-        //       ),
-        //       child: const Icon(
-        //         Icons.thumb_up,
-        //         size: 10.0,
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //     const SizedBox(width: 4.0),
-        //     Expanded(
-        //       child: Text(
-        //         '${post.likes}',
-        //         style: TextStyle(
-        //           color: Colors.grey[600],
-        //         ),
-        //       ),
-        //     ),
-        //     Text(
-        //       '${post.comments} Comments',
-        //       style: TextStyle(
-        //         color: Colors.grey[600],
-        //       ),
-        //     ),
-        //     const SizedBox(width: 8.0),
-        //     Text(
-        //       '${post.shares} Shares',
-        //       style: TextStyle(
-        //         color: Colors.grey[600],
-        //       ),
-        //     )
-        //   ],
-        // ),
-        // const Divider(),
         Row(
           children: [
-            _PostButton(
-              icon: Icon(
-                Icons.favorite_rounded,
-                color: Colors.grey[600],
-                size: 20.0,
-              ),
+            _PostLike(
+              post: post,
               label: 'Like',
-              count: post.likes.length,
-              onTap: () => print('Like'),
+              onTap: () => {},
             ),
-            _PostButton(
-              icon: Icon(
-                Icons.mode_comment,
-                color: Colors.grey[600],
-                size: 20.0,
-              ),
+            _PostComment(
+              post: post,
               label: 'Comment',
-              count: post.countComments,
-              onTap: () => print('Comment'),
+              onTap: () {},
             ),
           ],
         ),
@@ -201,17 +163,15 @@ class _PostStats extends StatelessWidget {
   }
 }
 
-class _PostButton extends StatelessWidget {
-  final Icon icon;
+class _PostLike extends StatelessWidget {
   final String label;
   final Function onTap;
-  final int count;
+  final Post post;
 
-  const _PostButton(
+  const _PostLike(
       {Key? key,
-      required this.icon,
+      required this.post,
       required this.label,
-      required this.count,
       required this.onTap})
       : super(key: key);
 
@@ -221,17 +181,72 @@ class _PostButton extends StatelessWidget {
       child: Material(
         color: Colors.white,
         child: InkWell(
-          onTap: () => print('ontap'),
+          onTap: () => {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LoginScreen()))
+          },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               height: 50.0,
               child: Column(
                 children: [
-                  Text('$count'),
+                  Text(post.likes.length.toString()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      icon,
+                      Icon(
+                        Icons.favorite_rounded,
+                        color: post.isLike ? Colors.red[600] : Colors.grey[600],
+                        size: 20.0,
+                      ),
+                      const SizedBox(width: 4.0),
+                      Text(label),
+                    ],
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+class _PostComment extends StatelessWidget {
+  final String label;
+  final Function onTap;
+  final Post post;
+
+  const _PostComment(
+      {Key? key,
+      required this.post,
+      required this.label,
+      required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: () => {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LoginScreen()))
+          },
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              height: 50.0,
+              child: Column(
+                children: [
+                  Text(post.countComments.toString()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.mode_comment,
+                        color: Colors.grey[600],
+                        size: 20.0,
+                      ),
                       const SizedBox(width: 4.0),
                       Text(label),
                     ],
