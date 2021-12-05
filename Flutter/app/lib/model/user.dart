@@ -1,11 +1,11 @@
 import 'dart:ffi';
 
 class User {
-   String? id;
-   String? phonenumber;
-   String? username;
+   dynamic id;
+   dynamic phonenumber;
+   dynamic username;
     String token;
-   String? gender;
+   dynamic gender;
    AvatarModel avatarModel;
    CoverImageModel coverImageModel;
    List<dynamic> blockedinbox;
@@ -31,11 +31,11 @@ class User {
         avatarModel: AvatarModel(
             type: json['data']['avatar']['type'],
             id: json['data']['avatar']['_id'],
-            fileName: json['data']['avatar']['fileNname']),
+            fileName: json['data']['avatar']['fileName']),
         coverImageModel: CoverImageModel(
             type: json['data']['cover_image']['type'],
             id: json['data']['cover_image']['_id'],
-            fileName: json['data']['cover_image']['fileNname']),
+            fileName: json['data']['cover_image']['fileName']),
         blockeddiary: json['data']['blocked_diary'],
         blockedinbox: json['data']['blocked_inbox']);
   }
@@ -45,16 +45,16 @@ class User {
 }
 
 class AvatarModel {
-   String? type;
-   String? id;
-   String? fileName;
+   dynamic type;
+   dynamic id;
+   dynamic fileName;
   AvatarModel({required this.type, required this.id, required this.fileName});
 }
 
 class CoverImageModel {
-   String? type;
-   String? id;
-   String? fileName;
+   dynamic type;
+   dynamic id;
+   dynamic fileName;
   CoverImageModel(
       {required this.type, required this.id, required this.fileName});
 }

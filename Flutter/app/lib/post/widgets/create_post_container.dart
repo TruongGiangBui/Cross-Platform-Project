@@ -8,6 +8,7 @@ class CreatePostContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(currentUser.avatarModel.fileName);
     return Container(
         padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
         color: Colors.white,
@@ -18,8 +19,13 @@ class CreatePostContainer extends StatelessWidget {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundColor: Colors.grey[200],
+<<<<<<< HEAD
                   backgroundImage: Image.network(
                           currentUser.coverImageModel.fileName.toString())
+=======
+                  backgroundImage: Image.network("http://10.0.2.2:8000/files/" +
+                          currentUser.avatarModel.fileName)
+>>>>>>> d24154e401e0175379a2c5015883b278a846fd58
                       .image,
                 ),
                 const SizedBox(width: 8.0),

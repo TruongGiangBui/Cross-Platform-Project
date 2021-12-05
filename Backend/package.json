@@ -7,7 +7,7 @@
   "author": "tonytran99",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "nodemon --inspect src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -30,7 +30,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13",
+    "nodemon": "^2.0.15",
     "swagger-ui-express": "^4.1.6"
   }
 }
