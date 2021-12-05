@@ -1,46 +1,26 @@
+import 'package:app/model/comment.dart';
 import 'package:app/post/postsfuction.dart';
+import 'package:app/post/widgets/widgets.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
+import 'package:app/model/post.dart';
 
-class TestMe extends StatefulWidget {
+class CommentWidget extends StatefulWidget {
   final User user;
-  const TestMe({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
+  final Post post;
+  const CommentWidget({Key? key, required this.user, required this.post})
+      : super(key: key);
 
   @override
-  _TestMeState createState() => _TestMeState();
+  _CommentWidgetState createState() => _CommentWidgetState();
 }
 
-class _TestMeState extends State<TestMe> {
+class _CommentWidgetState extends State<CommentWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  List filedata = [
-    {
-      'name': 'Adeleye Ayodeji',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'I love to code'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
-    },
-    {
-      'name': 'Biggi Man',
-      'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
-    },
-  ];
 
-  Widget commentChild(data) {
+  Widget commentChild(user, post) {
     // return ListView(
     //   children: [
     //     for (var i = 0; i < data.length; i++)
@@ -72,31 +52,56 @@ class _TestMeState extends State<TestMe> {
     //       )
     //   ],
     // );
-    return FutureBuilder(
-            future: getlistcomment(user.token),
-            builder: (context, AsyncSnapshot projectSnap) {
-              //                Whether project = projectSnap.data[index]; //todo check your model
-              var childCount = 0;
-              if (projectSnap.connectionState != ConnectionState.done ||
-                  projectSnap.hasData == null)
-                childCount = 1;
-              else
-                childCount = projectSnap.data.length;
-              return SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  if (projectSnap.connectionState != ConnectionState.done) {
-                    //todo handle state
-                    return CircularProgressIndicator(); //todo set progress bar
-                  }
-                  if (projectSnap.hasData == null) {
-                    return Container();
-                  }
-                  print(projectSnap.data[index]);
-                  return PostContainer(post: projectSnap.data[index]);
-                }, childCount: childCount),
-              );
-            },
+    return FutureBuilder<List<Comment>>(
+      future: getlistcomment(widget.user.token, widget.post.id),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          List<Comment> data = snapshot.data;
+          return ListView(
+            children: [
+              for (var i = 0; i < data.length; i++)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
+                  child: ListTile(
+                    leading: GestureDetector(
+                      onTap: () async {
+                        // Display the image in large form.
+                        print("Comment Clicked");
+                      },
+                      child: Container(
+                        height: 50.0,
+                        width: 50.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                new BorderRadius.all(Radius.circular(50))),
+                        child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage:
+                                NetworkImage("http://10.0.2.2:8000/files/"+data[i].authoravt.toString())),
+                      ),
+                    ),
+                    title: Text(
+                      data[i].authorname,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(data[i].content),
+                  ),
+                )
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Container();
+        }
+        return Center(
+          child: Container(
+            width: 50,
+            height: 50,
+            child: CircularProgressIndicator(),
           ),
+        );
+      },
+    );
   }
 
   @override
@@ -110,7 +115,7 @@ class _TestMeState extends State<TestMe> {
         child: CommentBox(
           userImage:
               "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400d",
-          child: commentChild(filedata),
+          child: commentChild(widget.user, widget.post),
           labelText: 'Write a comment...',
           withBorder: false,
           errorText: 'Comment cannot be blank',
@@ -124,7 +129,7 @@ class _TestMeState extends State<TestMe> {
                       'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
                   'message': commentController.text
                 };
-                filedata.insert(0, value);
+                // filedata.insert(0, value);
               });
               commentController.clear();
               FocusScope.of(context).unfocus();

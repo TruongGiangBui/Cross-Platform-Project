@@ -1,4 +1,6 @@
 import 'package:app/account/Screens/login/login.dart';
+import 'package:app/comment/screen/comment_screen.dart';
+import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
@@ -7,7 +9,8 @@ import 'package:intl/intl.dart';
 
 class PostContainer extends StatelessWidget {
   final Post post;
-  const PostContainer({Key? key, required this.post}) : super(key: key);
+  final User user;
+  const PostContainer({Key? key,required this.user, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class PostContainer extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: _PostStats(post: post),
+              child: _PostStats(user: user, post: post),
             )
           ],
         ));
@@ -137,8 +140,9 @@ class _PostHeader extends StatelessWidget {
 
 class _PostStats extends StatelessWidget {
   final Post post;
-
-  const _PostStats({Key? key, required this.post}) : super(key: key);
+  final User user;
+  const _PostStats({Key? key, required this.user, required this.post})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -147,11 +151,13 @@ class _PostStats extends StatelessWidget {
         Row(
           children: [
             _PostLike(
+              user: user,
               post: post,
               label: 'Like',
               onTap: () => {},
             ),
             _PostComment(
+              user: user,
               post: post,
               label: 'Comment',
               onTap: () {},
@@ -167,9 +173,10 @@ class _PostLike extends StatelessWidget {
   final String label;
   final Function onTap;
   final Post post;
-
+  final User user;
   const _PostLike(
       {Key? key,
+      required this.user,
       required this.post,
       required this.label,
       required this.onTap})
@@ -181,10 +188,7 @@ class _PostLike extends StatelessWidget {
       child: Material(
         color: Colors.white,
         child: InkWell(
-          onTap: () => {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => LoginScreen()))
-          },
+          onTap: () => {},
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               height: 50.0,
@@ -215,9 +219,11 @@ class _PostComment extends StatelessWidget {
   final String label;
   final Function onTap;
   final Post post;
+  final User user;
 
   const _PostComment(
       {Key? key,
+      required this.user,
       required this.post,
       required this.label,
       required this.onTap})
@@ -231,7 +237,7 @@ class _PostComment extends StatelessWidget {
         child: InkWell(
           onTap: () => {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => LoginScreen()))
+                .push(MaterialPageRoute(builder: (context) => CommentWidget(user: user,post: post,)))
           },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
