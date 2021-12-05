@@ -51,9 +51,12 @@ postCommentController.list = async (req, res, next) => {
         console.log(req.params.postId);
         let postComments = await PostCommentModel.find({
             post: req.params.postId
-        }).populate('user', [
-            'username', 'phonenumber'
-        ]);
+        }).populate({
+            path : 'user',
+            populate : {
+              path : 'avatar'
+            }
+          });
         return res.status(httpStatus.OK).json({
             data: postComments
         });
