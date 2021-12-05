@@ -1,11 +1,8 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:io' as Io;
 import 'package:app/model/user.dart';
-import 'package:app/profile/widget/profile_widget.dart';
 import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
@@ -31,6 +28,9 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       _imageFile = pickedfile!;
       print(_imageFile!.path);
+      final bytes = Io.File(_imageFile!.path).readAsBytesSync();
+      String base64 = base64Encode(bytes);
+      updatePhoto(base64, widget.user.token);
       Navigator.pop(context);
     });
   }
@@ -81,7 +81,7 @@ class _EditProfileState extends State<EditProfile> {
       child: Stack(children: <Widget>[
         CircleAvatar(
           radius: 80.0,
-          backgroundImage: _imageFile!.path == 'assets/images/image.jpg' ? NetworkImage('http://10.0.2.2:8000/files/${widget.user.avatarModel.fileName}'): FileImage(File(_imageFile!.path)) as ImageProvider
+          backgroundImage: _imageFile!.path == 'assets/images/image.jpg' ? NetworkImage('http://10.0.2.2:8000/files/${widget.user.avatarModel.fileName}'): FileImage(Io.File(_imageFile!.path)) as ImageProvider
         ),
         Positioned(
           bottom: 20.0,
