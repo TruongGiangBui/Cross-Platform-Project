@@ -22,6 +22,7 @@ mongoose.connect(MONGO_URI, {
     .catch(err => {
         console.log(err);
     })
+
 const app = express();
 // use middleware to parse body req to json
 app.use(express.json());

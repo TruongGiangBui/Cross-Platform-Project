@@ -120,6 +120,7 @@ usersController.edit = async (req, res, next) => {
             avatar,
             cover_image,
         } = req.body;
+        // console.log(req.body)
         const dataUserUpdate = {};
         const listPros = [
             "username",
@@ -197,6 +198,7 @@ usersController.edit = async (req, res, next) => {
     }
 }
 usersController.changePassword = async (req, res, next) => {
+    // console.log("Change password SUCCESS---------------------")
     try {
         let userId = req.userId;
         let  user = await UserModel.findById(userId);
