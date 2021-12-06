@@ -24,11 +24,15 @@ class MyApp extends StatelessWidget {
         "blocked_diary": [],
         "id": "61a24ce8f31a9a001ab3ef62",
         "phonenumber": "0932",
-        "username": "khanh",
+        "username": "KHANH DAO MINH",
         "avatar": {
-          "type": "other",
-          "_id": "60c39f54f0b2c4268eb53367",
-          "fileName": "avatar_2.png"
+          "type": "image",
+          "_id": "61ae4b11e0e78d2f93729b53",
+          "fileName": "20e4bb1f-4623-4e83-a603-a18fc8865a98.png",
+          "fileSize": 40575,
+          "createdAt": "2021-12-06T17:40:33.697Z",
+          "updatedAt": "2021-12-06T17:40:33.697Z",
+          "__v": 0
         },
         "cover_image": {
           "type": "other",
