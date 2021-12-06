@@ -46,6 +46,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         // home: NewsFeed(user: user));
-        home: RequestWidget());
+        home: RequestWidget(user: user));
   }
 }
