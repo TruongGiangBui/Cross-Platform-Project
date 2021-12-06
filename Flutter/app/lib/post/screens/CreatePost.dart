@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:open_file/open_file.dart';
+import 'dart:io';
 
 class CreatePost extends StatelessWidget {
   final User user;
@@ -88,7 +91,15 @@ class CreatePost extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton.icon(
-                      onPressed: () => print('Đăng hình'),
+                      onPressed: () async {
+                        final result = await FilePicker.platform.pickFiles();
+                        if (result != null) {
+                          final file = result.files.first;
+                          OpenFile.open(file.path!);
+                        } else {
+                          return;
+                        }
+                      },
                       icon: const Icon(
                         Icons.photo_library,
                         color: Colors.green,

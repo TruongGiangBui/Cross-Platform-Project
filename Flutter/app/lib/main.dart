@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'post/screens/NewsFeed.dart';
 import 'chat/screens/chats/chats_screen.dart';
 import 'post/screens/CreatePost.dart';
+import 'post/screens/ViewPost.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,12 +38,13 @@ class MyApp extends StatelessWidget {
         }
       }
     });
+
     user.setToken = token;
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: CreatePost(user: user));
+        home: ViewPost(user: user));
   }
 }
