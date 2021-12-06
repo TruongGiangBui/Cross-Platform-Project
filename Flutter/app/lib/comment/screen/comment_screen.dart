@@ -77,8 +77,9 @@ class _CommentWidgetState extends State<CommentWidget> {
                                 new BorderRadius.all(Radius.circular(50))),
                         child: CircleAvatar(
                             radius: 50,
-                            backgroundImage:
-                                NetworkImage("http://10.0.2.2:8000/files/"+data[i].authoravt.toString())),
+                            backgroundImage: NetworkImage(
+                                "http://10.0.2.2:8000/files/" +
+                                    data[i].authoravt.toString())),
                       ),
                     ),
                     title: Text(

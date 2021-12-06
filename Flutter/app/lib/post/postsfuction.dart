@@ -75,6 +75,7 @@ Future<bool> likepost(String token, dynamic postId) async {
   if (response.statusCode == 200) return true;
   return false;
 }
+
 Future<bool> reportpost(String token, dynamic postId) async {
   final response = await http.post(
       Uri.parse(
@@ -87,6 +88,7 @@ Future<bool> reportpost(String token, dynamic postId) async {
   if (response.statusCode == 200) return true;
   return false;
 }
+
 Future<List<Comment>> getlistcomment(String token, dynamic postId) async {
   final response = await http.get(
       Uri.parse('http://10.0.2.2:8000/api/v1/postComment/list/' + postId),

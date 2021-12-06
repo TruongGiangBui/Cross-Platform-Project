@@ -88,7 +88,8 @@ class NewsFeed extends StatelessWidget {
                     return Container();
                   }
                   print(projectSnap.data[index]);
-                  return PostContainer(user:user,post: projectSnap.data[index]);
+                  return PostContainer(
+                      user: user, post: projectSnap.data[index]);
                 }, childCount: childCount),
               );
             },

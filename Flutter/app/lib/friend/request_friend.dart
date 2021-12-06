@@ -20,9 +20,10 @@ class _RequestWidgetState extends State<RequestWidget> {
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             List<Friend> data = snapshot.data;
+            print(data);
             return ListView(
               children: [
-                for (var i = 0; i < data.length; i++)
+                for (final request_data in data)
                   // id = data[i];
                   Padding(
                       padding: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
@@ -45,11 +46,11 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     radius: 50,
                                     backgroundImage: NetworkImage(
                                         "http://10.0.2.2:8000/files/" +
-                                            data[i].avt.toString())),
+                                            request_data.avt.toString())),
                               ),
                             ),
                             title: Text(
-                              data[i].username,
+                              request_data.username,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -60,7 +61,12 @@ class _RequestWidgetState extends State<RequestWidget> {
                                 padding: const EdgeInsets.fromLTRB(
                                     0.0, 0.0, 2.0, 0.0),
                                 child: TextButton(
-                                    onPressed: () => print('Accept'),
+                                    onPressed: () => setState(() {
+                                          data.removeWhere((friend) =>
+                                              friend.id == request_data.id);
+                                          setacceptfriend(widget.user.token,
+                                              request_data.id);
+                                        }),
                                     child: Text('Accept'),
                                     style: ButtonStyle(
                                       foregroundColor:
@@ -76,7 +82,8 @@ class _RequestWidgetState extends State<RequestWidget> {
                                     2.0, 0.0, 0.0, 0.0),
                                 child: TextButton(
                                     onPressed: () => setState(() {
-                                          data.removeAt(i);
+                                          data.removeWhere((friend) =>
+                                              friend.id == request_data.id);
                                         }),
                                     child: Text('Delete'),
                                     style: ButtonStyle(
