@@ -6,7 +6,7 @@ import 'post/screens/NewsFeed.dart';
 
 import 'chat/screens/chats/chats_screen.dart';
 
-
+import 'friend/request_friend.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:NewsFeed(user: user));
+        // home: NewsFeed(user: user));
+        home: RequestWidget());
   }
 }
