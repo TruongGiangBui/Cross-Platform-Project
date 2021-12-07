@@ -27,17 +27,21 @@ class MyApp extends StatelessWidget {
         "username": "KHANH DAO MINH",
         "avatar": {
           "type": "image",
-          "_id": "61ae4b11e0e78d2f93729b53",
-          "fileName": "20e4bb1f-4623-4e83-a603-a18fc8865a98.png",
-          "fileSize": 40575,
-          "createdAt": "2021-12-06T17:40:33.697Z",
-          "updatedAt": "2021-12-06T17:40:33.697Z",
+          "_id": "61aef38d5bd9b923656078e9",
+          "fileName": "908b116f-baf9-4a2b-ad04-5940d48836e3.jpeg",
+          "fileSize": 40540,
+          "createdAt": "2021-12-07T05:39:25.228Z",
+          "updatedAt": "2021-12-07T05:39:25.228Z",
           "__v": 0
         },
         "cover_image": {
-          "type": "other",
-          "_id": "60c39eb8f0b2c4268eb53366",
-          "fileName": "defaul_cover_image.jpg"
+          "type": "image",
+          "_id": "61aef5675445982d1b9eb4ce",
+          "fileName": "6ed0207f-8ae6-4085-ab0d-0974e747e817.jpeg",
+          "fileSize": 24983,
+          "createdAt": "2021-12-07T05:47:20.008Z",
+          "updatedAt": "2021-12-07T05:47:20.008Z",
+          "__v": 0
         }
       }
     });
