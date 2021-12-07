@@ -1,4 +1,6 @@
+import 'package:app/chat/screens/chats/chats_screen.dart';
 import 'package:app/friends/screen/friendslist_screen.dart';
+import 'package:app/friends/screen/request_screen.dart';
 import 'package:app/friends/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
@@ -23,9 +25,10 @@ class NavBarContainer extends StatelessWidget {
                 children: [
                   TextButton.icon(
                       onPressed: () => {
-                        Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => FriendListWidget(user: currentUser)))
-                      },
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    FriendListWidget(user: currentUser)))
+                          },
                       icon: const Icon(
                         Icons.people,
                         color: Colors.green,
@@ -33,7 +36,11 @@ class NavBarContainer extends StatelessWidget {
                       label: Text('Ban be')),
                   VerticalDivider(width: 11.0),
                   TextButton.icon(
-                      onPressed: () => print('Đăng video'),
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                               RequestWidget( user: currentUser)));
+                      },
                       icon: const Icon(
                         Icons.people,
                         color: Colors.green,
@@ -41,7 +48,11 @@ class NavBarContainer extends StatelessWidget {
                       label: Text('Ket ban')),
                   VerticalDivider(width: 11.0),
                   TextButton.icon(
-                      onPressed: () => print('Kỉ niệm'),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ChatScreen(user: currentUser)));
+                      },
                       icon: const Icon(
                         Icons.message,
                         color: Colors.green,

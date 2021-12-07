@@ -5,7 +5,6 @@ import 'package:app/post/screens/NewsFeed.dart';
 import 'package:flutter/material.dart';
 import 'post/screens/NewsFeed.dart';
 
-import 'chat/screens/chats/chats_screen.dart';
 
 
 

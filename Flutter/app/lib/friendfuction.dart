@@ -21,7 +21,7 @@ Future<dynamic> setrequestfriend(String token, dynamic receiver_id) async {
 } */
 }
 
-Future<dynamic> getrequestfriend(String token) async {
+Future<List<Friend>> getrequestfriend(String token) async {
   final response = await http.get(
       Uri.parse('http://10.0.2.2:8000/api/v1/friends/get-requested-friend'),
       headers: <String, String>{
@@ -30,20 +30,16 @@ Future<dynamic> getrequestfriend(String token) async {
         'Authorization': 'Bearer $token',
       });
 
-  var data = jsonDecode(response.body);
-  /*
-    example:{
-    "code": 200,
-    "message": "Danh sách lời mời kết bạn",
-    "data": {
-        "friends": []
-    }
-}
-  */
-  return data;
+  var data = jsonDecode(response.body)['data']['friends'];
+  List<Friend> friends = [];
+  data.forEach((element) {
+    Friend friend = Friend.fromJson(element);
+    friends.add(friend);
+  });
+  return friends;
 }
 
-Future<dynamic> setacceptfriend(String token, dynamic receiver_id) async {
+Future<dynamic> setacceptfriend(String token, dynamic receiverid) async {
   final response = await http.post(
       Uri.parse('http://10.0.2.2:8000/api/v1/friends/set-accept'),
       headers: <String, String>{
@@ -51,10 +47,8 @@ Future<dynamic> setacceptfriend(String token, dynamic receiver_id) async {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(<String, dynamic>{
-        "user_id": receiver_id,
-        "is_accept": "1"
-      }));
+      body: jsonEncode(
+          <String, dynamic>{"user_id": receiverid.toString(), "is_accept": "1"}));
 
   var data = jsonDecode(response.body);
   return data;
@@ -76,7 +70,6 @@ Future<dynamic> setacceptfriend(String token, dynamic receiver_id) async {
   */
 }
 
-
 Future<List<Friend>> getlistfriend(String token) async {
   final response = await http.get(
       Uri.parse('http://10.0.2.2:8000/api/v1/friends/list'),
@@ -86,11 +79,11 @@ Future<List<Friend>> getlistfriend(String token) async {
         'Authorization': 'Bearer $token',
       });
 
-    var data = jsonDecode(response.body)['data']['friends'];
+  var data = jsonDecode(response.body)['data']['friends'];
   List<Friend> friends = [];
   // print(response.body);
   data.forEach((element) {
-    Friend friend =Friend.fromJson(element);
+    Friend friend = Friend.fromJson(element);
     friends.add(friend);
   });
   return friends;

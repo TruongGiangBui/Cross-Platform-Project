@@ -1,15 +1,19 @@
 import 'package:app/chat/models/chat.dart';
+import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:app/chat/constants.dart';
+import 'package:app/model/chat.dart';
 
 class ChatCard extends StatelessWidget {
   final Chat chat;
   final VoidCallback press;
+  final User user;
 
   const ChatCard({
     Key? key,
     required this.chat,
     required this.press,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -27,9 +31,9 @@ class ChatCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: AssetImage(chat.image),
+                  backgroundImage: AssetImage("assets/images/user.png"), ///*******************////
                 ),
-                if(chat.isActive)
+                if(true)
                   Positioned(
                     right: 0,
                     bottom: 0,
@@ -55,26 +59,27 @@ class ChatCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      chat.name,
+                      //chat.name,
+                      "DEFAULT",
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500,
                     ),
                     ),
-                    const SizedBox(height: 8,),
-                    Opacity(
-                      opacity: 0.64,
-                      child: Text(
-                        chat.lastMessage,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
+                    // const SizedBox(height: 8,),
+                    // Opacity(
+                    //   opacity: 0.64,
+                    //   child: Text(
+                    //     "chat.lastMessage",
+                    //     maxLines: 1,
+                    //     overflow: TextOverflow.ellipsis,
+                    //   ),
+                    // )
                   ],
                 ),
               ),
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(chat.time),
+              child: Text(chat.updateAt),
             )
           ],
         ),
