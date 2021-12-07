@@ -7,28 +7,28 @@ import 'chat_card.dart';
 import 'package:app/chat/screens/messages/message_screen.dart';
 import 'package:app/model/user.dart';
 
+import 'package:app/model/chat.dart';
+
 class Body extends StatelessWidget {
   final User user;
-  const Body({Key? key, required this.user}) : super(key: key);
+  final List<Chat> listChats;
+  const Body({Key? key, required this.user, required this.listChats}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getlistchats(user.token).then((res) {
-      print(res[1].owner);
-    }).catchError((err) {
-      print(err);
-    });
-    getlistmessages(user.token, "61a4fc39ee2832211eb3826d").then((res) {
-      print(res[1].content);
-    }).catchError((err) {
-      print(err);
-    });
-    sendmessage(user.token, "618b246c6ba6431a5824931f",
-        "61a4fc39ee2832211eb3826d", "Chao ban ").then((res) {
-      print(res);
-    }).catchError((err) {
-      print(err);
-    });
+    // print("LENGTH");
+    // print(listChats.length);
+    // getlistmessages(user.token, "61a4fc39ee2832211eb3826d").then((res) {
+    //   print(res[1].content);
+    // }).catchError((err) {
+    //   print(err);
+    // });
+    // sendmessage(user.token, "618b246c6ba6431a5824931f",
+    //     "61a4fc39ee2832211eb3826d", "Chao ban ").then((res) {
+    //   print(res);
+    // }).catchError((err) {
+    //   print(err);
+    // });
     return Column(
       children: [
         Container(
@@ -51,17 +51,18 @@ class Body extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: chatsData.length,
+            itemCount: listChats.length,
             itemBuilder: (context, index) => ChatCard(
-              chat: chatsData[index],
+              chat: listChats[index],
               press: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MessageScreen(
                       user: user,
                       receiver: user,
+                      chatid: listChats[index].id,
                     ),
-                  )),
+                  )), user: user,
             ),
           ),
         )

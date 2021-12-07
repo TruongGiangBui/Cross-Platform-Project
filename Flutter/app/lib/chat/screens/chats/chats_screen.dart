@@ -1,10 +1,17 @@
+import 'dart:async';
+
 import 'package:app/chat/constants.dart';
+import 'package:app/chat/models/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:app/chat/screens/chats/components/body.dart';
 import 'package:app/model/user.dart';
 
+import 'package:app/model/chat.dart';
+import 'package:app/chat/chatfunction.dart';
+
 class ChatScreen extends StatefulWidget {
   final User user;
+
   const ChatScreen({
     Key? key,
     required this.user,
@@ -13,19 +20,55 @@ class ChatScreen extends StatefulWidget {
   @override
   _ChatsScreenState createState() {
     // TODO: implement createState
-    print("token:"+ user.token);
+    // print("token:"+ user.token);
     return _ChatsScreenState();
   }
+
 }
 
 class _ChatsScreenState extends State<ChatScreen> {
   int _selectedIndex = 1;
+  late List<Chat> listChats = [];
+  late Timer a;
+  //late List<Chat> tmp = [];
+  @override
+  void initState() {
+    // getlistchats(widget.user.token).then((res) {
+    //   print("--------HERE--------");
+    //   tmp = res.cast<Chat>();
+    //   // print(listChats.length);
+    // }).catchError((err) {
+    //   print(err);
+    // });
+
+    const fiveSec = const Duration(seconds: 5);
+    a = new Timer.periodic(fiveSec, (Timer t) {
+      getlistchats(widget.user.token).then((res) {
+        print("--------LOAD LIST CHATS--------");
+        setState(() {
+          listChats = res.cast<Chat>();
+        });
+        // print(listChats.length);
+      }).catchError((err) {
+        print(err);
+      });
+    });
+
+  }
+
+  @override
+  void dispose() {
+    a.cancel();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: buildAppBar(),
-      body: Body(user: widget.user,),
+      body: Body(user: widget.user, listChats: listChats,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: kPrimaryColor,
@@ -54,7 +97,7 @@ class _ChatsScreenState extends State<ChatScreen> {
         BottomNavigationBarItem(
           icon: CircleAvatar(
             radius: 14,
-            backgroundImage: AssetImage("assets/images/user_2.png"),
+            backgroundImage: AssetImage("assets/images/user_3.png"),
           ),
           label: "Profile"
         )

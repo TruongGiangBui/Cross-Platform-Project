@@ -36,25 +36,25 @@ class ListChats {
   }
 }
 
-Future<ListChats> getChats() async {
-  final response = await http.post(
-    Uri.parse('http://localhost:8001/api/v1/chats/getChats/61752df79ba82c3677e0f072'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA',
-    }
-  );
-  print(response.statusCode);
-  if (response.statusCode == 200) {
-    return ListChats.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception(jsonDecode(response.body)['message']);
-  }
-}
-
-void main() {
-  var a = getChats();
-  print(a);
-}
+// Future<ListChats> getChats() async {
+//   final response = await http.post(
+//     Uri.parse('http://localhost:8001/api/v1/chats/getChats/61752df79ba82c3677e0f072'),
+//     headers: <String, String>{
+//       'Content-Type': 'application/json; charset=UTF-8',
+//       'Accept': 'application/json',
+//       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA',
+//     }
+//   );
+//   print(response.statusCode);
+//   if (response.statusCode == 200) {
+//     return ListChats.fromJson(jsonDecode(response.body));
+//   } else {
+//     throw Exception(jsonDecode(response.body)['message']);
+//   }
+// }
+//
+// void main() {
+//   var a = getChats();
+//   print(a);
+// }
 

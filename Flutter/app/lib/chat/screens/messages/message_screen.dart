@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:app/chat/constants.dart';
+import 'package:app/chat/screens/messages/components/message.dart';
 import 'package:flutter/material.dart';
 import 'package:app/chat/screens/messages/components/body.dart';
 
@@ -7,16 +10,21 @@ import 'package:app/chat/screens/options/components/options.dart';
 import 'package:app/model/user.dart';
 import 'package:app/chat/screens/messages/components/chat_input_field.dart';
 import 'package:app/chat/models/chat_message.dart';
-import 'package:app/chat/screens/messages/components/message.dart';
 
+import 'package:app/model/message.dart';
+
+import '../../chatFunction.dart';
+import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
   final User user;
   final User receiver;
+  final String chatid;
   const MessageScreen({
     Key? key,
     required this.user,
     required this.receiver,
+    required this.chatid,
   }) : super(key: key);
 
   @override
@@ -29,11 +37,33 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+  late List<Message> listMessages = [];
+  late Timer a;
+  @override
+  void initState() {
+    const fiveSec = const Duration(seconds: 5);
+    a = new Timer.periodic(fiveSec, (Timer t) {
+      getlistmessages(widget.user.token, widget.chatid).then((res) {
+        print("--------LOAD LIST MESSAGE--------");
+        setState(() {
+          listMessages = res.cast<Message>();
+        });
+      }).catchError((err) {
+        print(err);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    a.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    var demoChat = demeChatMessages;
+    var demoChat = listMessages;
 
     return Scaffold(
       appBar: buildAppBar(context),
@@ -45,7 +75,7 @@ class _MessageScreenState extends State<MessageScreen> {
               child: ListView.builder(
                 itemCount: demoChat.length,
                 itemBuilder: (context, index) =>
-                    Message(message: demoChat[index]),
+                    MessageCard(message: demoChat[index], user: widget.user,),
               ),
             ),
           ),
@@ -53,7 +83,11 @@ class _MessageScreenState extends State<MessageScreen> {
             this.setState(() {
               demoChat.add(message);
             });
-          },),
+          },receiverId: widget.receiver.id,
+             receiverName: widget.receiver.username,
+             avatar: "assets/images/user_3.png",
+             update: DateTime.now(),
+               user: widget.user),
         ],
       ),
     );
@@ -68,7 +102,7 @@ class _MessageScreenState extends State<MessageScreen> {
         children: [
           const BackButton(),
           const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/user_2.png"),
+            backgroundImage: AssetImage("assets/images/user_3.png"),
           ),
           const SizedBox(width: kDefaultPadding * 0.75,),
           Column(
@@ -78,10 +112,10 @@ class _MessageScreenState extends State<MessageScreen> {
                 widget.user.username.toString(),
                 style: TextStyle(fontSize: 16),
               ),
-              Text(
-                "Active 3m ago",
-                style: TextStyle(fontSize: 12),
-              )
+              // Text(
+              //   "Active 3m ago",
+              //   style: TextStyle(fontSize: 12),
+              // )
             ],
           )
         ],

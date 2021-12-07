@@ -1,11 +1,24 @@
+import 'dart:math';
+
+import 'package:app/model/message.dart';
+import 'package:app/model/registerresponse.dart';
+import 'package:app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:app/chat/constants.dart';
 import 'package:app/chat/models/chat_message.dart';
 
+import '../../../chatfunction.dart';
+
 class ChatInputField extends StatelessWidget {
+  final User user;
   final Function send;
-  const ChatInputField({
+  String receiverId;
+  String receiverName;
+  dynamic update;
+  dynamic avatar;
+  ChatInputField({
     Key? key, required this.send,
+    required this.receiverId, required this.receiverName, required this.update, required this.avatar, required this.user
   }) : super(key: key);
 
   @override
@@ -77,11 +90,19 @@ class ChatInputField extends StatelessWidget {
 
                     IconButton(
                       onPressed: (){
-                        this.send(ChatMessage(
-                            text: sendMessageController.text,
-                            messageType: ChatMessageType.text,
-                            messageStatus: MessageStatus.not_view,
-                            isSender: true,
+                        sendmessage(user.token, "618b246c6ba6431a5824931f",
+                            "61a4fc39ee2832211eb3826d", sendMessageController.text).then((res) {
+                          print(res);
+                        }).catchError((err) {
+                          print(err);
+                        });
+                        this.send(Message(
+                          id: Random().nextDouble().toString(),
+                          sender: receiverId,
+                          sendername: receiverName,
+                          updateAt: update,
+                          content: sendMessageController.text,
+                          senderavt: avatar,
                         ));
                       },
                       icon: Icon(Icons.send, color: kPrimaryColor,),
