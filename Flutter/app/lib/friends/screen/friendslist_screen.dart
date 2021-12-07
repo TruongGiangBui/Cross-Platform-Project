@@ -77,7 +77,7 @@ class _FriendListWidgetState extends State<FriendListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Search"),
+        title: Text("Ban be"),
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: Container(

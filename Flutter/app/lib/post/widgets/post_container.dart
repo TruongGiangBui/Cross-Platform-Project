@@ -184,6 +184,7 @@ class _PostLike extends StatefulWidget {
 class _PostLikeState extends State<_PostLike> {
   bool islike = false;
   int countlike = 0;
+  String scount = "0";
   Color _colorContainer = Colors.grey;
   @override
   Widget build(BuildContext context) {
@@ -200,6 +201,7 @@ class _PostLikeState extends State<_PostLike> {
             likepost(widget.user.token, widget.post.id);
             setState(() {
               countlike = countlike + 1;
+              scount = countlike.toString();
               if (islike) {
                 islike = false;
                 _colorContainer = Colors.grey;
@@ -214,7 +216,7 @@ class _PostLikeState extends State<_PostLike> {
               height: 50.0,
               child: Column(
                 children: [
-                  Text(countlike.toString()),
+                  Text(scount),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -1,3 +1,4 @@
+import 'package:app/account/Screens/login/login.dart';
 import 'package:app/model/post.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/screens/NewsFeed.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        // home:LoginScreen());
         home:NewsFeed(user: user));
   }
 }
