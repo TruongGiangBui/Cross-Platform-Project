@@ -78,6 +78,19 @@ class LoginScreen extends StatelessWidget {
                       password: passwordController.text));
                   getUser(userdata.token)
                       .then((value) => {
+                            // if (value.token != "")
+                            //   {
+                                
+                            //     Navigator.of(context).push(
+                            //       MaterialPageRoute(
+                            //           builder: (context) => NewsFeed(user)),
+                            //     )
+                            //   }
+                            // else
+                            //   {
+                            //     showAlert(
+                            //         context, "wrong phone number or password")
+                            //   }
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) => NewsFeed(user: value)),

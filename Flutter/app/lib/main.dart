@@ -1,7 +1,9 @@
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/model/post.dart';
 import 'package:app/model/user.dart';
+import 'package:app/profile/profile_page.dart';
 import 'package:app/post/screens/NewsFeed.dart';
+import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 import 'post/screens/NewsFeed.dart';
 
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2MzgxMTkwfQ.GcvfpsrphUAcvhp42FzKD3Kii8RtNh9MG2dqKgVu5-Q";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYW5nIGJ1aSIsImlkIjoiNjE3NTJkZjc5YmE4MmMzNjc3ZTBmMDcyIiwiaWF0IjoxNjM2NTA3NjcyfQ.H2P43Eb_3yv2ICVpzSWQFcsehOep3w4gtGbyCvRf_hA";
     User user = User.fromJson({
-      "data": {
+       "data": {
         "gender": "secret",
         "blocked_inbox": [],
         "blocked_diary": [],
@@ -40,12 +42,13 @@ class MyApp extends StatelessWidget {
       }
     });
     user.setToken = token;
+
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        // home:LoginScreen());
-        home:NewsFeed(user: user));
+        home:LoginScreen());
+        // home:NewsFeed(user: user));
   }
 }

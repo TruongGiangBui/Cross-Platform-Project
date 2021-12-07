@@ -2,6 +2,7 @@ import 'package:app/chat/screens/chats/chats_screen.dart';
 import 'package:app/friends/screen/friendslist_screen.dart';
 import 'package:app/friends/screen/request_screen.dart';
 import 'package:app/friends/screen/search_screen.dart';
+import 'package:app/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
 
@@ -51,13 +52,13 @@ class NavBarContainer extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                ChatScreen(user: currentUser)));
+                                Profile(user: currentUser)));
                       },
                       icon: const Icon(
                         Icons.message,
                         color: Colors.green,
                       ),
-                      label: Text('Tin nhan')),
+                      label: Text('Thong tin')),
                 ],
               ),
             )

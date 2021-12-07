@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/chat/screens/chats/chats_screen.dart';
 import 'package:app/friends/screen/search_screen.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/postsfuction.dart';
@@ -42,6 +43,16 @@ class _SearchWidgetState extends State<SearchWidget> {
                 },
                 icon: const Icon(
                   Icons.search,
+                  color: Colors.green,
+                ),
+                label: Text('')),
+            TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChatScreen(user:widget.user)));
+                },
+                icon: const Icon(
+                  Icons.message,
                   color: Colors.green,
                 ),
                 label: Text('')),

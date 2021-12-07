@@ -12,18 +12,18 @@ class User {
    List<dynamic> blockeddiary;
   User(
       {required this.id,
-      required this.phonenumber,
-      required this.username,
-      required this.token,
-      required this.gender,
-      required this.avatarModel,
-      required this.coverImageModel,
-      required this.blockedinbox,
-      required this.blockeddiary});
+        required this.phonenumber,
+        required this.username,
+        required this.token,
+        required this.gender,
+        required this.avatarModel,
+        required this.coverImageModel,
+        required this.blockedinbox,
+        required this.blockeddiary});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        id: json['data']['_id'],
+        id: json['data']['id'],
         phonenumber: json['data']['phonenumber'],
         username: json['data']['username'],
         token: "",
@@ -39,9 +39,19 @@ class User {
         blockeddiary: json['data']['blocked_diary'],
         blockedinbox: json['data']['blocked_inbox']);
   }
-  void set setToken(String newtoken) {
-    token = newtoken;
+
+  set setToken(String newToken){
+    token = newToken;
   }
+
+  set setUsername(String userName){
+    username = userName;
+  }
+
+  void set setGender(String gender){
+    gender = gender;
+  }
+
 }
 
 class AvatarModel {
