@@ -22,25 +22,25 @@ class MyApp extends StatelessWidget {
         "gender": "male",
         "blocked_inbox": [],
         "blocked_diary": [],
-        "id": "61a24ce8f31a9a001ab3ef62",
+        "_id": "61a24ce8f31a9a001ab3ef62",
         "phonenumber": "0932",
         "username": "KHANH DAO MINH",
         "avatar": {
           "type": "image",
-          "_id": "61aef38d5bd9b923656078e9",
-          "fileName": "908b116f-baf9-4a2b-ad04-5940d48836e3.jpeg",
-          "fileSize": 40540,
-          "createdAt": "2021-12-07T05:39:25.228Z",
-          "updatedAt": "2021-12-07T05:39:25.228Z",
+          "_id": "61b49955b0812dedd139b5d7",
+          "fileName": "93e1154e-c348-4710-a098-6f69bf4a22dd.png",
+          "fileSize": 40663,
+          "createdAt": "2021-12-11T12:28:05.410Z",
+          "updatedAt": "2021-12-11T12:28:05.410Z",
           "__v": 0
         },
         "cover_image": {
           "type": "image",
-          "_id": "61aef5675445982d1b9eb4ce",
-          "fileName": "6ed0207f-8ae6-4085-ab0d-0974e747e817.jpeg",
-          "fileSize": 24983,
-          "createdAt": "2021-12-07T05:47:20.008Z",
-          "updatedAt": "2021-12-07T05:47:20.008Z",
+          "_id": "61b49c68b0812dedd139b5ea",
+          "fileName": "145f422a-1fc1-4fba-8f32-f3432e142cf1.null",
+          "fileSize": 40663,
+          "createdAt": "2021-12-11T12:41:12.665Z",
+          "updatedAt": "2021-12-11T12:41:12.665Z",
           "__v": 0
         }
       }
