@@ -111,12 +111,17 @@ class Profile extends StatelessWidget {
 
     return Container(
         color: Colors.grey,
-        child: Image.network(
+        child: InkWell(
+          onTap: (){
+            print("CLick background");
+          },
+          child: Image.network(
             url,
             width: double.infinity,
-          height: coverImageHeight,
-          fit: BoxFit.cover,
-        ),
+            height: coverImageHeight,
+            fit: BoxFit.cover,
+          ),
+        )
     );
 
   }

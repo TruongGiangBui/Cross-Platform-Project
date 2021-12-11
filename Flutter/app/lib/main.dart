@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtoYW5oIiwiaWQiOiI2MWEyNGNlOGYzMWE5YTAwMWFiM2VmNjIiLCJpYXQiOjE2MzgwMjY0NzJ9.YhUZV7gQHRSzUezM8qdi_D5B3dC0yW0dYEo8ixF8gAQ";
     User user = User.fromJson({
       "data": {
-        "gender": "secret",
+        "gender": "male",
         "blocked_inbox": [],
         "blocked_diary": [],
         "id": "61a24ce8f31a9a001ab3ef62",
