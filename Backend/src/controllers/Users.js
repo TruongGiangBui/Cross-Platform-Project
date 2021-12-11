@@ -349,7 +349,7 @@ usersController.setBlockDiary = async (req, res, next) => {
 usersController.searchUser = async (req, res, next) => {
     try {
         let searchKey = new RegExp(req.body.keyword, 'i')
-        let result = await UserModel.find({phonenumber: searchKey}).limit(10).populate('avatar').populate('cover_image').exec();
+        let result = await UserModel.find({username: searchKey}).limit(10).populate('avatar').populate('cover_image').exec();
 
         res.status(200).json({
             code: 200,
@@ -360,6 +360,7 @@ usersController.searchUser = async (req, res, next) => {
     } catch (e) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
             message: e.message
+        
         });
     }
 }
