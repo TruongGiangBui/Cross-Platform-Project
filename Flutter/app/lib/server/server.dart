@@ -2,32 +2,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:app/model/response_signin.dart';
 
-// Future<String> getTokenId(String phoneNumber, String password, String username) async{
-//   var data = {
-//     'phonenumber': phoneNumber,
-//     'password': password,
-//     'username': username
-//   };
-//   var header = {
-//     'content-type': "application/json"
-//   };
-//
-//   var response = await http.post(
-//       Uri.http('10.0.2.2:8000', '/api/v1/users/login'),
-//       body: json.encode(data),
-//       headers: header
-//   );
-//   if(response.statusCode==200){
-//     ResponseSignIn res = responseFromJson(response.body);
-//     return res.token;
-//   }
-//   return "";
-// }
 
-Future<bool> updatePhoto(String baseEncode64, String token) async{
-  var data = {
-    "avatar": baseEncode64
-  };
+Future<bool> updatePhoto(String baseEncode64, String token, [bool isAvatar=true]) async{
+  var data = {};
+  if(isAvatar){
+   data['avatar'] = baseEncode64;
+  }
+  else{
+    data['cover_image'] = baseEncode64;
+  }
   print(data);
   var response = await http.post(
       Uri.http('10.0.2.2:8000', '/api/v1/users/edit'),
@@ -79,22 +62,6 @@ Future<bool> changeProfile(Map<String, String>dataChange, String token) async{
   if(dataChange['gender']!=null){
     data['gender'] = dataChange['gender'];
   }
-
-  // if(dataChange['description']!=null){
-  //   data['description'] = dataChange['description'];
-  // }
-  //
-  // if(dataChange['address']!=null){
-  //   data['address'] = dataChange['address'];
-  // }
-  //
-  // if(dataChange['city']!=null){
-  //   data['city'] = dataChange['city'];
-  // }
-  //
-  // if(dataChange['country']!=null){
-  //   data['country'] = dataChange['country'];
-  // }
 
   var response = await http.post(
       Uri.http('10.0.2.2:8000', '/api/v1/users/edit'),

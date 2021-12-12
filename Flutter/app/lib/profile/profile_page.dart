@@ -1,40 +1,28 @@
+import 'dart:io' as Io;
 import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 import 'setting_profile.dart';
 import 'package:app/model/user.dart';
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
-
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   final double coverImageHeight = 300;
   final double profileHeight = 50;
   final User user;
   Profile({required this.user});
-  
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  late PickedFile? _imageFile = PickedFile('assets/images/image.jpg');
+  final ImagePicker _picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
 
-    // final User this.user = User.fromJson({
-    //   "data": {
-    //     "gender": "secret",
-    //     "blocked_inbox": [],
-    //     "blocked_diary": [],
-    //     "_id": "6187d8abe54eb0001ae17850",
-    //     "phonenumber": "0366928055",
-    //     "username": "Khanh",
-    //     "avatar": {
-    //       "type": "other",
-    //       "_id": "60c39f54f0b2c4268eb53367",
-    //       "fileName": "avatar_2.png"
-    //     },
-    //     "cover_image": {
-    //       "type": "other",
-    //       "_id": "60c39eb8f0b2c4268eb53366",
-    //       "fileName": "defaul_cover_image.jpg"
-    //     }
-    //   }
-    // }
-    // );
     return Scaffold(
 
       appBar: AppBar(
@@ -48,10 +36,10 @@ class Profile extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () async {
-              print("Token id: ${this.user.token}");
+              print("Token id: ${widget.user.token}");
               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>ProfileSetting(user: this.user,))
+                  context,
+                  MaterialPageRoute(builder: (context) =>ProfileSetting(user: widget.user,))
               );
             },
           )
@@ -61,8 +49,8 @@ class Profile extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          buildTop(this.user),
-          buildContent(this.user),
+          buildTop(widget.user),
+          buildContent(widget.user),
         ],
       ),
     );
@@ -74,11 +62,11 @@ class Profile extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: profileHeight+10),
+          margin: EdgeInsets.only(bottom: widget.profileHeight+10),
           child: buildCoverImage(),
         ),
         Positioned(
-          top:coverImageHeight - profileHeight,
+          top:widget.coverImageHeight - widget.profileHeight,
           child: buildProfileImage(user),
         ),
       ],
@@ -98,27 +86,129 @@ class Profile extends StatelessWidget {
     String fileName = user.avatarModel.fileName;
     String url = 'http://10.0.2.2:8000/files/' + fileName;
     return CircleAvatar(
-      radius: profileHeight,
+      radius: widget.profileHeight,
       backgroundColor: Colors.grey.shade800,
-      // backgroundImage: Image.asset('assets/images/image.jpg').image,
       backgroundImage: NetworkImage(url),
     );
   }
 
   Widget buildCoverImage(){
-    String fileName = user.coverImageModel.fileName;
+    String fileName = widget.user.coverImageModel.fileName;
+    bool isChange = false;
     String url = 'http://10.0.2.2:8000/files/' + fileName;
+    if(_imageFile!.path != 'assets/images/image.jpg'){
+      isChange=true;
+    }
 
     return Container(
         color: Colors.grey,
-        child: Image.network(
-            url,
-            width: double.infinity,
-          height: coverImageHeight,
-          fit: BoxFit.cover,
-        ),
+        child: InkWell(
+          onTap: (){
+            showModalBottomSheet(
+                context: context,
+                builder: (context){
+                  return Container(
+                    height: 200,
+                    child: Container(
+                      child: _bottomWidget(),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(30),
+                          topRight: const Radius.circular(30)
+                        )
+                      ),
+                    ),
+                  );
+                }
+            );
+          },
+          child: Container(
+            // child: coverImage(isChange, url)
+              child: isChange == false? Image.network(
+                url,
+                width: double.infinity,
+                height: widget.coverImageHeight,
+                fit: BoxFit.cover,
+              ): Image.file(
+                Io.File(_imageFile!.path),
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: widget.coverImageHeight,
+              )
+          )
+        )
     );
 
   }
 
+  // Widget coverImage(bool isChange, String url){
+  //   print(url);
+  //   print(isChange);
+  //   return BoxDecoration(
+  //       image: DecorationImage(
+  //           fit: BoxFit.cover,
+  //           image: isChange == false?
+  //           Image.network(
+  //             url,
+  //             // width: double.infinity,
+  //             // height: widget.coverImageHeight,
+  //             // fit: BoxFit.cover,
+  //           ).image:
+  //           FileImage(Io.File(_imageFile!.path))
+  //       )
+  //   );
+  // }
+
+  void takePhoto(ImageSource source) async{
+    final pickedfile = await _picker.getImage(
+        source: source,
+        imageQuality: 40
+    );
+    setState(() {
+      _imageFile = pickedfile!;
+      print(_imageFile!.path);
+      final bytes = Io.File(_imageFile!.path).readAsBytesSync();
+      String path = _imageFile!.path;
+      int lastDotIndex = path.lastIndexOf('.');
+      String extension = path.substring(lastDotIndex+1, path.length);
+      String base64 = 'data:image/$extension;base64,' + base64Encode(bytes);
+      updatePhoto(base64, widget.user.token, false);
+      Navigator.pop(context);
+    });
+  }
+
+  Widget _bottomWidget(){
+    return Column(
+        children: <Widget>[
+          SizedBox(height: 20,),
+          Text(
+              "Chọn ảnh ảnh nền",
+              style: TextStyle(
+                  fontSize: 20.0
+              )
+          ),
+          SizedBox(height: 20,),
+          Column(
+            children: <Widget>[
+              ListTile(
+                  leading: Icon(Icons.camera),
+                  title: Text("Chụp ảnh"),
+                  onTap: (){
+                    takePhoto(ImageSource.camera);
+                  }
+              ),
+              ListTile(
+                leading: Icon(Icons.source),
+                title: Text("Lấy ảnh từ thư viện"),
+                onTap: (){
+                  takePhoto(ImageSource.gallery);
+                },
+              )
+            ],
+
+          ),
+        ]
+    );
+  }
 }

@@ -30,7 +30,10 @@ class _EditProfileState extends State<EditProfile> {
       _imageFile = pickedfile!;
       print(_imageFile!.path);
       final bytes = Io.File(_imageFile!.path).readAsBytesSync();
-      String base64 = 'data:image/png;base64,' + base64Encode(bytes);
+      String path = _imageFile!.path;
+      int lastDotIndex = path.lastIndexOf('.');
+      String extension = path.substring(lastDotIndex+1, path.length);
+      String base64 = 'data:image/$extension;base64,' + base64Encode(bytes);
       updatePhoto(base64, widget.user.token);
       Navigator.pop(context);
     });

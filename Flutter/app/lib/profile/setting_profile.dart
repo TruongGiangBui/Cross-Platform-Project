@@ -31,12 +31,12 @@ class ProfileSetting extends StatelessWidget {
             height: 10,
             thickness: 0.5,
           ),
-          ListTile(
-            title: Text("Đổi ảnh bìa "),
-            onTap: (){
-              print("Đổi ảnh bìa ");
-            },
-          ),
+          // ListTile(
+          //   title: Text("Đổi ảnh bìa "),
+          //   onTap: (){
+          //     print("Đổi ảnh bìa ");
+          //   },
+          // ),
           Divider(
             height: 10,
             thickness: 0.5,
