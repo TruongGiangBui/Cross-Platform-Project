@@ -14,12 +14,10 @@ Future<List<Chat>> getlistchats(String token) async {
       });
   var data = jsonDecode(response.body)['data'];
   List<Chat> chats = [];
-  // print(response.body);
   data.forEach((element) {
     Chat chat = Chat.fromJson(element);
     chats.add(chat);
   });
-  //print(chats);
   return chats;
 }
 

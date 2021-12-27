@@ -1,3 +1,4 @@
+import 'package:app/account/Screens/login/login.dart';
 import 'package:app/model/user.dart';
 import 'package:app/profile/widget/change_password_widget.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,9 @@ class ProfileSetting extends StatelessWidget {
           ListTile(
             title: Text("Logout"),
             onTap: (){
-              print("Logout");
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context)=> LoginScreen())
+              );
             },
           ),
           Divider(

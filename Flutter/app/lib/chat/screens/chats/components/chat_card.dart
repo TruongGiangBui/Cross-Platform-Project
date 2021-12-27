@@ -31,7 +31,7 @@ class ChatCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: AssetImage("assets/images/user.png"), ///*******************////
+                  backgroundImage:NetworkImage("http://10.0.2.2:8000/files/" +chat.guestavt.toString()), ///*******************////
                 ),
                 if(true)
                   Positioned(
@@ -60,7 +60,7 @@ class ChatCard extends StatelessWidget {
                   children: [
                     Text(
                       //chat.name,
-                      "DEFAULT",
+                      chat.guestname,
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500,
                     ),
                     ),

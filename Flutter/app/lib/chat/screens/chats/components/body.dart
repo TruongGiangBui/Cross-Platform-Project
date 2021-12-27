@@ -9,26 +9,28 @@ import 'package:app/model/user.dart';
 
 import 'package:app/model/chat.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final User user;
-  final List<Chat> listChats;
-  const Body({Key? key, required this.user, required this.listChats}) : super(key: key);
+  const Body({Key? key, required this.user})
+      : super(key: key);
+  @override
+  _BodyState createState() {
+    return _BodyState();
+  }
+}
 
+class _BodyState extends State<Body> {
+    late List<Chat> listChats = [];
   @override
   Widget build(BuildContext context) {
-    // print("LENGTH");
-    // print(listChats.length);
-    // getlistmessages(user.token, "61a4fc39ee2832211eb3826d").then((res) {
-    //   print(res[1].content);
-    // }).catchError((err) {
-    //   print(err);
-    // });
-    // sendmessage(user.token, "618b246c6ba6431a5824931f",
-    //     "61a4fc39ee2832211eb3826d", "Chao ban ").then((res) {
-    //   print(res);
-    // }).catchError((err) {
-    //   print(err);
-    // });
+
+      getlistchats(widget.user.token).then((res) {
+      print(res);
+      listChats = res;
+    }).catchError((err) {
+      print(err);
+    });
+    print(listChats);
     return Column(
       children: [
         Container(
@@ -58,11 +60,12 @@ class Body extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MessageScreen(
-                      user: user,
-                      receiver: user,
+                      user: widget.user,
+                      receiver: widget.user,
                       chatid: listChats[index].id,
                     ),
-                  )), user: user,
+                  )),
+              user: widget.user,
             ),
           ),
         )

@@ -29,8 +29,6 @@ class MessageScreen extends StatefulWidget {
 
   @override
   _MessageScreenState createState() {
-    // TODO: implement createState
-    //print("token:"+ user.token);
     return _MessageScreenState();
   }
 
@@ -38,33 +36,20 @@ class MessageScreen extends StatefulWidget {
 
 class _MessageScreenState extends State<MessageScreen> {
   late List<Message> listMessages = [];
-  late Timer a;
-  @override
-  void initState() {
-    const fiveSec = const Duration(seconds: 5);
-    a = new Timer.periodic(fiveSec, (Timer t) {
-      getlistmessages(widget.user.token, widget.chatid).then((res) {
-        print("--------LOAD LIST MESSAGE--------");
-        setState(() {
-          listMessages = res.cast<Message>();
-        });
-      }).catchError((err) {
-        print(err);
-      });
-    });
-  }
 
-  @override
-  void dispose() {
-    a.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    var demoChat = listMessages;
 
+getlistmessages(widget.user.token, "61a4fc39ee2832211eb3826d").then((res) {
+        print("--------LOAD LIST MESSAGE--------");
+          listMessages = res;
+
+      }).catchError((err) {
+        print(err);
+      });
+          var demoChat = listMessages;
     return Scaffold(
       appBar: buildAppBar(context),
       body: Column(
