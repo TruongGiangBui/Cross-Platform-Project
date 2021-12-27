@@ -1,3 +1,4 @@
+import 'package:app/post/screens/CreatePost.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
 
@@ -39,7 +40,10 @@ class CreatePostContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton.icon(
-                      onPressed: () => print('Đăng hình'),
+                      onPressed: ()  {
+                        Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CreatePost(user:currentUser)));
+                      },
                       icon: const Icon(
                         Icons.photo_library,
                         color: Colors.green,

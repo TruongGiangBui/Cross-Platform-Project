@@ -22,6 +22,7 @@ postsController.create = async (req, res, next) => {
         let dataImages = [];
         if (Array.isArray(images)) {
             for (const image of images) {
+                console.log(image);
                 if (uploadFile.matchesFileBase64(image) !== false) {
                     const imageResult = uploadFile.uploadFile(image);
                     if (imageResult !== false) {

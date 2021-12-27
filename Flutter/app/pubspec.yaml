@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   intl: ^0.17.0
+  file_picker: ^4.2.7
+  open_file: ^3.2.1
 
 dev_dependencies:
   json_serializable: ^3.5.1

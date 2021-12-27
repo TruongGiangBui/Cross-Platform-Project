@@ -5,9 +5,6 @@ import 'package:app/profile/profile_page.dart';
 import 'package:app/post/screens/NewsFeed.dart';
 import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
-import 'post/screens/NewsFeed.dart';
-
-
 
 
 void main() {
@@ -41,6 +38,7 @@ class MyApp extends StatelessWidget {
         }
       }
     });
+
     user.setToken = token;
 
     return MaterialApp(

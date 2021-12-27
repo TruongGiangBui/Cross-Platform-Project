@@ -116,6 +116,9 @@ chatController.getChats = async (req, res, next) => {
                 var chat=new Map()
                 chat['owner']=req.userId;
                 chat['guest']=messages[i].member.filter(item => item != req.userId)[0];
+                let guest=await UsersModel.findOne({"_id":ObjectId(chat['guest'])}).populate("avatar");
+                chat['guestavt']=guest['avatar']
+                chat['guestname']=guest['username']
                 chat['messages']=messages[i].messages
                 chat['seens']=messages[i].seens
                 chat['type']=messages[i].type

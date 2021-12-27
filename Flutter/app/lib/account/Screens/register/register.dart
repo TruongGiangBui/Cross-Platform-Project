@@ -84,7 +84,6 @@ class RegisterScreen extends StatelessWidget {
                           phonenumber: phoneController.text,
                           password: passwordController.text))
                       .then((value) => {
-
                             if (value.token != "")
                               {
                                 // Navigator.of(context).push(

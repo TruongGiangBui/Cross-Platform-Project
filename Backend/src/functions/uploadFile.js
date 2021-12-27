@@ -37,6 +37,7 @@ uploadFile.uploadFile = (fileBase64) => {
     } else if (type.toString().includes(DOCUMENT_TYPE_IMAGE)) {
         documentType = DOCUMENT_TYPE_IMAGE;
     }
+    if(extension==null) extension="png";
     let fileName = uuidv4() + "." + extension;
     console.log(fileName)
     try {
