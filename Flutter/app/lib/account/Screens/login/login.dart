@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/account/Screens/login/loadingscreen.dart';
 import 'package:app/model/loginform.dart';
 import 'package:app/model/loginresponse.dart';
 import 'package:app/model/user.dart';
@@ -19,28 +20,21 @@ class LoginScreen extends StatelessWidget {
             ));
   }
 
-  void loadToken(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = '';
-    if (prefs.containsKey("token")) token = (prefs.getString('token') ?? '');
-    if (token != '') {
-      getUser(token)
-          .then((value) => {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => NewsFeed(user: value)),
-                )
-              })
-          .catchError((err) {
-        showAlert(context, '$err');
-        print(err);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    loadToken(context);
+    // bool load = false;
+    // if (!load)
+    //   SharedPreferences.getInstance().then((value) {
+    //     load = true;
+    //     String token = value.getString('token').toString();
+    //     if (token!=null||token!='') {
+    //       Navigator.of(context).push(
+    //         MaterialPageRoute(
+    //             builder: (context) =>
+    //                 Loading(token: token)),
+    //       );
+    //     }
+    //   });
     Size size = MediaQuery.of(context).size;
     TextEditingController phoneController = new TextEditingController();
     TextEditingController passwordController = new TextEditingController();
@@ -98,10 +92,11 @@ class LoginScreen extends StatelessWidget {
                       phonenumber: phoneController.text,
                       password: passwordController.text));
 
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setString('token', userdata.token);
-                  getUser(userdata.token).then((value){
+                  SharedPreferences.getInstance().then((prefs) {
+                    prefs.setString('token', userdata.token);
+                  });
+
+                  getUser(userdata.token).then((value) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => NewsFeed(user: value)),

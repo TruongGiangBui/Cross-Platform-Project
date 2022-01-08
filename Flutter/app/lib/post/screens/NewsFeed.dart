@@ -78,6 +78,7 @@ class NewsFeedState extends State<NewsFeed> {
   late Future<List<Post>> posts;
 
   void refresh() {
+    print("Call refresh page");
     setState(() {
       posts = getlistpost(widget.user.token);
     });
@@ -104,7 +105,6 @@ class NewsFeedState extends State<NewsFeed> {
                 child: NavBarContainer(currentUser: widget.user)),
             SliverToBoxAdapter(
                 child: CreatePostContainer(currentUser: widget.user)),
-            
             FutureBuilder(
               future: posts,
               builder: (context, AsyncSnapshot projectSnap) {
@@ -133,7 +133,6 @@ class NewsFeedState extends State<NewsFeed> {
                 );
               },
             ),
-    
           ],
         ),
       ),

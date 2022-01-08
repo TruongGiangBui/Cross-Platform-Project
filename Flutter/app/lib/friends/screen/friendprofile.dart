@@ -84,6 +84,7 @@ class _FriendProfileState extends State<FriendProfile> {
                               getChatWithUser(
                                       widget.user.token, widget.friendid)
                                   .then((value) {
+                                
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => MessageScreen(
                                         user: widget.user,
