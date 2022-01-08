@@ -2,11 +2,13 @@ import 'package:app/account/Screens/login/login.dart';
 import 'package:app/comment/screen/comment_screen.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/postsfuction.dart';
+import 'package:app/post/screens/ViewPost.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/profile_avatar.dart';
 import 'package:app/post/widgets/update_post.dart';
 import 'package:intl/intl.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class PostContainer extends StatefulWidget {
   final Post post;
@@ -19,9 +21,13 @@ class PostContainer extends StatefulWidget {
 }
 
 class _PostContainerState extends State<PostContainer> {
+  var index = 0;
+  var img = '';
   @override
   Widget build(BuildContext context) {
-    if (widget.post.images.length > 0) print(widget.post.images[0]['fileName']);
+    setState(() {
+      img = widget.post.images.length>0?widget.post.images[index]['fileName']:null;
+    });
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -33,20 +39,47 @@ class _PostContainerState extends State<PostContainer> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _PostHeader(post: widget.post),
+                  _PostHeader(
+                    post: widget.post,
+                    user: widget.user,
+                  ),
                   const SizedBox(height: 4.0),
-                  Text(widget.post.described),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              ViewPost(user: widget.user, post: widget.post)));
+                    },
+                    child: Text(widget.post.described),
+                  ),
                   const SizedBox.shrink(),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: widget.post.images.length > 0
-                  ? Image.network("http://10.0.2.2:8000/files/" +
-                      widget.post.images[0]['fileName'].toString())
-                  : null,
-            ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: widget.post.images.length > 0?
+                SwipeDetector(
+                  onSwipeLeft: () {
+                    setState(() {
+                        index=(index+1)%widget.post.images.length as int;
+                       img = widget.post.images[index]['fileName'];
+                    });
+                  },
+                  onSwipeRight: () {
+                    setState(() {
+                        index=(index-1)%widget.post.images.length as int;
+                       img = widget.post.images[index]['fileName'];
+                    });
+                  },
+                  child:Image.network(
+                          "http://10.0.2.2:8000/files/" + img.toString())
+                ):null
+                ),
+                // child: widget.post.images.length > 0
+                //       ? Image.network(
+                //           "http://10.0.2.2:8000/files/" + img.toString())
+                //       : null,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: _PostStats(user: widget.user, post: widget.post),
@@ -58,8 +91,9 @@ class _PostContainerState extends State<PostContainer> {
 
 class _PostHeader extends StatelessWidget {
   final Post post;
-
-  const _PostHeader({Key? key, required this.post}) : super(key: key);
+  final User user;
+  const _PostHeader({Key? key, required this.post, required this.user})
+      : super(key: key);
   String readTimestamp(String timestamp) {
     var time = DateTime.parse(timestamp);
 
@@ -94,7 +128,7 @@ class _PostHeader extends StatelessWidget {
                 ),
                 Icon(
                   Icons.public,
-                  color: Colors.grey[200],
+                  color: Colors.grey[600],
                   size: 12.0,
                 )
               ],
@@ -103,42 +137,62 @@ class _PostHeader extends StatelessWidget {
         )),
         Container(
             child: PopupMenuButton(
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              child: TextButton(
-                onPressed: () => print('helo'),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.change_circle,
-                      color: Colors.grey[600],
-                      size: 20.0,
+          itemBuilder: (context) => user.id == post.authorid
+              ? [
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: () => print('helo'),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.change_circle,
+                            color: Colors.grey[600],
+                            size: 20.0,
+                          ),
+                          Text('Chỉnh sửa'),
+                        ],
+                      ),
                     ),
-                    Text('Chỉnh sửa'),
-                  ],
-                ),
-              ),
-              value: 1,
-              onTap: () => print('hi'),
-            ),
-            PopupMenuItem(
-              child: TextButton(
-                onPressed: () => showAlertDialog(context),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.grey[600],
-                      size: 20.0,
+                    value: 1,
+                    onTap: () => print('hi'),
+                  ),
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: () => showAlertDialog(context, user, post),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.delete,
+                            color: Colors.grey[600],
+                            size: 20.0,
+                          ),
+                          Text('Xóa bài viết'),
+                        ],
+                      ),
                     ),
-                    Text('Xóa bài viết'),
-                  ],
-                ),
-              ),
-              value: 2,
-              onTap: () => print('hi'),
-            ),
-          ],
+                    value: 2,
+                    onTap: () => print('hi'),
+                  ),
+                ]
+              : [
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: () => print('helo'),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.report,
+                            color: Colors.grey[600],
+                            size: 20.0,
+                          ),
+                          Text('Báo cáo'),
+                        ],
+                      ),
+                    ),
+                    value: 1,
+                    onTap: () => print('hi'),
+                  ),
+                ],
         ))
       ],
     );
@@ -187,12 +241,16 @@ class _PostLikeState extends State<_PostLike> {
   String scount = "0";
   Color _colorContainer = Colors.grey;
   @override
+  void initState() {
+    super.initState();
+    islike = widget.post.isLike;
+    countlike = widget.post.likes.length;
+    scount = countlike.toString();
+    if (islike) _colorContainer = Colors.red;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    setState(() {
-      bool islike = widget.post.isLike;
-      countlike = widget.post.likes.length;
-      if (islike) _colorContainer = Colors.red;
-    });
     return Expanded(
       child: Material(
         color: Colors.white,
@@ -200,15 +258,16 @@ class _PostLikeState extends State<_PostLike> {
           onTap: () {
             likepost(widget.user.token, widget.post.id);
             setState(() {
-              countlike = countlike + 1;
-              scount = countlike.toString();
               if (islike) {
+                countlike = countlike - 1;
                 islike = false;
                 _colorContainer = Colors.grey;
               } else {
+                countlike = countlike + 1;
                 islike = true;
                 _colorContainer = Colors.red;
               }
+              scount = countlike.toString();
             });
           },
           child: Container(
@@ -283,15 +342,20 @@ class _PostComment extends StatelessWidget {
   }
 }
 
-showAlertDialog(BuildContext context) {
+showAlertDialog(BuildContext context, User user, Post post) {
   // set up the buttons
   Widget cancelButton = TextButton(
     child: Text("Cancel"),
-    onPressed: () {},
+    onPressed: () {
+      Navigator.pop(context);
+    },
   );
   Widget continueButton = TextButton(
     child: Text("OK"),
-    onPressed: () {},
+    onPressed: () {
+      deletepost(user.token, post.id);
+      Navigator.pop(context);
+    },
   );
 
   // set up the AlertDialog

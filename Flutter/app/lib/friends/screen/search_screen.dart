@@ -1,4 +1,5 @@
 import 'package:app/friendfuction.dart';
+import 'package:app/friends/screen/friendprofile.dart';
 import 'package:app/model/comment.dart';
 import 'package:app/model/friend.dart';
 import 'package:app/post/postsfuction.dart';
@@ -42,8 +43,10 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                   child: ListTile(
                     leading: GestureDetector(
                       onTap: () async {
-                        // Display the image in large form.
-                        print("Comment Clicked");
+                           Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FriendProfile(
+                                user: user, friendid: data[i].id,isfriend: true,)));
+         
                       },
                       child: Container(
                         height: 50.0,

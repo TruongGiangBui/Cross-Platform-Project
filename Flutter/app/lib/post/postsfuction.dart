@@ -30,8 +30,8 @@ Future<Post> createpost(
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        "image": images,
-        "video": videos,
+        "images": images,
+        "videos": videos,
         "described": described
       }));
 

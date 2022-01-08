@@ -28,7 +28,7 @@ Future<User> getuser(String token, dynamic userid) async {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       });
-  User user = User.fromJson(jsonDecode(response.body)['data']);
+  User user = User.fromJson(jsonDecode(response.body));
   return user;
 }
 
@@ -40,12 +40,24 @@ Future<bool> setblockuser(String token, dynamic userId) async {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(<String, dynamic>{
-        "user_id": "618b246c6ba6431a5824931f",
-        "type": true
-      }));
+      body: jsonEncode(<String, dynamic>{"user_id": userId, "type": true}));
   if (response.statusCode == 200) return true;
   return false;
+}
+
+Future<String> getChatWithUser(String token, dynamic userId) async {
+  final response = await http.get(
+      Uri.parse('http://10.0.2.2:8000/api/v1/chats/getChatwithuser/' + userId),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+  var chatid = jsonDecode(response.body)['data'].toString();
+  if (chatid != null && chatid != '') {
+    return chatid;
+  } else
+    return '';
 }
 
 Future<List<Friend>> searchUser(String token, dynamic keyword) async {

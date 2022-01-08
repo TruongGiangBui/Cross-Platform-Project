@@ -42,7 +42,7 @@ class CreatePostContainer extends StatelessWidget {
                   TextButton.icon(
                       onPressed: ()  {
                         Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CreatePost(user:currentUser)));
+                        builder: (context) => CreatePost(user:currentUser)));
                       },
                       icon: const Icon(
                         Icons.photo_library,

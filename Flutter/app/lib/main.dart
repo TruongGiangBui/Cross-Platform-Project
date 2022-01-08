@@ -6,7 +6,7 @@ import 'package:app/post/screens/NewsFeed.dart';
 import 'package:app/server/server.dart';
 import 'package:flutter/material.dart';
 
-
+//--no-sound-null-safety
 void main() {
   runApp(MyApp());
 }
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         "avatar": {
           "type": "other",
           "_id": "60c39f54f0b2c4268eb53367",
-          "fileName": "avatar_2.png"
+          "fileName": "3a3f48a8-8516-4ca9-9069-defbd0ac1edf.png"
         },
         "cover_image": {
           "type": "other",

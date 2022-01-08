@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:app/account/Screens/register/register.dart';
 import 'package:app/account/components/background.dart';
 import 'package:app/account/Screens/login/loginfunction.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   void showAlert(BuildContext context, String message) {
@@ -18,8 +19,28 @@ class LoginScreen extends StatelessWidget {
             ));
   }
 
+  void loadToken(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = '';
+    if (prefs.containsKey("token")) token = (prefs.getString('token') ?? '');
+    if (token != '') {
+      getUser(token)
+          .then((value) => {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => NewsFeed(user: value)),
+                )
+              })
+          .catchError((err) {
+        showAlert(context, '$err');
+        print(err);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadToken(context);
     Size size = MediaQuery.of(context).size;
     TextEditingController phoneController = new TextEditingController();
     TextEditingController passwordController = new TextEditingController();
@@ -76,27 +97,16 @@ class LoginScreen extends StatelessWidget {
                   var userdata = await login(new LoginForm(
                       phonenumber: phoneController.text,
                       password: passwordController.text));
-                  getUser(userdata.token)
-                      .then((value) => {
-                            // if (value.token != "")
-                            //   {
-                                
-                            //     Navigator.of(context).push(
-                            //       MaterialPageRoute(
-                            //           builder: (context) => NewsFeed(user)),
-                            //     )
-                            //   }
-                            // else
-                            //   {
-                            //     showAlert(
-                            //         context, "wrong phone number or password")
-                            //   }
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => NewsFeed(user: value)),
-                            )
-                          })
-                      .catchError((err) {
+
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setString('token', userdata.token);
+                  getUser(userdata.token).then((value){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => NewsFeed(user: value)),
+                    );
+                  }).catchError((err) {
                     showAlert(context, '$err');
                     print(err);
                   });

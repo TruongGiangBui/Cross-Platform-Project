@@ -20,6 +20,7 @@ postsController.create = async (req, res, next) => {
             videos,
         } = req.body;
         let dataImages = [];
+        console.log(req.body)
         if (Array.isArray(images)) {
             for (const image of images) {
                 console.log(image);
@@ -252,7 +253,7 @@ postsController.list = async (req, res, next) => {
                 }
             ])
             let listIdFriends = [];
-            console.log(friends)
+            // console.log(friends)
             for (let i = 0; i < friends.length; i++) {
                 if (friends[i].sender.toString() === userId.toString()) {
                     listIdFriends.push(friends[i].receiver);
@@ -261,7 +262,7 @@ postsController.list = async (req, res, next) => {
                 }
             }
             listIdFriends.push(userId);
-            console.log(listIdFriends);
+            // console.log(listIdFriends);
             // get post of friends of 1 user
             posts = await PostModel.find({
                 "author": listIdFriends

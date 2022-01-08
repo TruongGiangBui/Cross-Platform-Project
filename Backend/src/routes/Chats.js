@@ -20,5 +20,14 @@ chatsRoutes.get(
     auth,
     asyncWrapper(chatController.getChats),
 );
-
+chatsRoutes.get(
+    "/getChatwithuser/:receiverid",
+    auth,
+    asyncWrapper(chatController.getChatwithuser)
+)
+chatsRoutes.get(
+    "/delete/:chatId",
+    auth,
+    asyncWrapper(chatController.deletechat)
+)
 module.exports = chatsRoutes;

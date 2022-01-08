@@ -9,6 +9,7 @@ const DocumentModel=require("../models/Documents")
 const httpStatus = require("../utils/httpStatus");
 const chatController = {};
 var ObjectId = require('mongodb').ObjectId;      
+const { chat } = require('googleapis/build/src/apis/chat');
 
 chatController.send = async (req, res, next) => {
     try {
@@ -105,6 +106,38 @@ chatController.getMessages = async (req, res, next) => {
         });
     }
 }
+chatController.getChatwithuser = async (req, res, next) => {
+    try {
+        var chatid='';
+        let chats = await ChatModel.find({});
+        for(var i=0;i<chats.length;i++){
+            if(chats[i].member.includes(req.params.receiverid)&&chats[i].member.includes(req.userId)){            
+                chatid=chats[i]._id;
+                return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                    data: chatid
+                });
+            }
+        }
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            data: chatid
+        });
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+}
+chatController.deletechat= async (req, res, next) => {
+    console.log("1212")
+    try {
+        await ChatModel.findByIdAndDelete({
+            _id: req.params.chatId
+        });
+        return res.status(httpStatus.OK);
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 chatController.getChats = async (req, res, next) => {
     try {
         let messages = await    ChatModel.find({});
@@ -130,7 +163,7 @@ chatController.getChats = async (req, res, next) => {
         }
         console.log(data);
         return res.status(httpStatus.ACCEPTED).json({
-            data: data
+            data: data.reverse()
         });
     } catch (e) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({

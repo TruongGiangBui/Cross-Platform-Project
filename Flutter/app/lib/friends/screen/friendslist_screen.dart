@@ -1,4 +1,5 @@
 import 'package:app/friendfuction.dart';
+import 'package:app/friends/screen/friendprofile.dart';
 import 'package:app/model/comment.dart';
 import 'package:app/model/friend.dart';
 import 'package:app/post/postsfuction.dart';
@@ -35,7 +36,9 @@ class _FriendListWidgetState extends State<FriendListWidget> {
                     leading: GestureDetector(
                       onTap: () async {
                         // Display the image in large form.
-                        print("Comment Clicked");
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FriendProfile(
+                                user: user, friendid: data[i].id,isfriend: true,)));
                       },
                       child: Container(
                         height: 50.0,
@@ -47,8 +50,7 @@ class _FriendListWidgetState extends State<FriendListWidget> {
                         child: CircleAvatar(
                             radius: 50,
                             backgroundImage: NetworkImage(
-                                "http://10.0.2.2:8000/files/" +
-                                    data[i].avt)),
+                                "http://10.0.2.2:8000/files/" + data[i].avt)),
                       ),
                     ),
                     title: Text(

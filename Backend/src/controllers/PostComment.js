@@ -27,8 +27,8 @@ postCommentController.create = async (req, res, next) => {
 
         let postCommentSaved = await postComment.save();
         // update countComments post
-        console.log(req.params.postId)
-        console.log(post.countComments ? post.countComments + 1 : 1)
+        // console.log(req.params.postId)
+        // console.log(post.countComments ? post.countComments + 1 : 1)
         let postSaved = await PostModel.findByIdAndUpdate(req.params.postId, {
             countComments: post.countComments ? post.countComments + 1 : 1
         })
@@ -48,7 +48,7 @@ postCommentController.create = async (req, res, next) => {
 
 postCommentController.list = async (req, res, next) => {
     try {
-        console.log(req.params.postId);
+        // console.log(req.params.postId);
         let postComments = await PostCommentModel.find({
             post: req.params.postId
         }).populate({

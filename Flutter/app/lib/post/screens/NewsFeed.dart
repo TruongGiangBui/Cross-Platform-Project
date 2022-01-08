@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:app/model/post.dart';
 import 'package:app/post/widgets/create_post_container.dart';
 import 'package:app/post/widgets/post_container.dart';
+import 'package:swipedetector/swipedetector.dart';
 
 class SearchWidget extends StatefulWidget {
   final User user;
@@ -49,7 +50,7 @@ class _SearchWidgetState extends State<SearchWidget> {
             TextButton.icon(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChatScreen(user:widget.user)));
+                      builder: (context) => ChatScreen(user: widget.user)));
                 },
                 icon: const Icon(
                   Icons.message,
@@ -65,49 +66,76 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 }
 
-class NewsFeed extends StatelessWidget {
+class NewsFeed extends StatefulWidget {
   final User user;
 
   const NewsFeed({Key? key, required this.user}) : super(key: key);
+  @override
+  NewsFeedState createState() => NewsFeedState();
+}
+
+class NewsFeedState extends State<NewsFeed> {
+  late Future<List<Post>> posts;
+
+  void refresh() {
+    setState(() {
+      posts = getlistpost(widget.user.token);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Future<List<Post>> posts = getlistpost(user.token);
-    // print(posts[0]);
+    setState(() {
+      posts = getlistpost(widget.user.token);
+    });
+
     final TextEditingController controller = TextEditingController();
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SearchWidget(user: user),
-          SliverToBoxAdapter(child: NavBarContainer(currentUser: user)),
-          SliverToBoxAdapter(child: CreatePostContainer(currentUser: user)),
-          FutureBuilder(
-            future: getlistpost(user.token),
-            builder: (context, AsyncSnapshot projectSnap) {
-              //                Whether project = projectSnap.data[index]; //todo check your model
-              var childCount = 0;
-              if (projectSnap.connectionState != ConnectionState.done ||
-                  projectSnap.hasData == null)
-                childCount = 1;
-              else
-                childCount = projectSnap.data.length;
-              return SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  if (projectSnap.connectionState != ConnectionState.done) {
-                    //todo handle state
-                    return CircularProgressIndicator(); //todo set progress bar
-                  }
-                  if (projectSnap.hasData == null) {
-                    return Container();
-                  }
-                  print(projectSnap.data[index]);
-                  return PostContainer(
-                      user: user, post: projectSnap.data[index]);
-                }, childCount: childCount),
-              );
-            },
-          ),
-        ],
+      body: SwipeDetector(
+        onSwipeRight: () {
+          setState(() {
+            refresh();
+          });
+        },
+        child: CustomScrollView(
+          slivers: [
+            SearchWidget(user: widget.user),
+            SliverToBoxAdapter(
+                child: NavBarContainer(currentUser: widget.user)),
+            SliverToBoxAdapter(
+                child: CreatePostContainer(currentUser: widget.user)),
+            
+            FutureBuilder(
+              future: posts,
+              builder: (context, AsyncSnapshot projectSnap) {
+                //                Whether project = projectSnap.data[index]; //todo check your model
+                var childCount = 0;
+                if (projectSnap.connectionState != ConnectionState.done ||
+                    projectSnap.hasData == null)
+                  childCount = 1;
+                else
+                  childCount = projectSnap.data.length;
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    if (projectSnap.connectionState != ConnectionState.done) {
+                      //todo handle state
+                      return CircularProgressIndicator(); //todo set progress bar
+                    }
+                    if (projectSnap.hasData == null) {
+                      return Container();
+                    }
+                    print(projectSnap.data[index]);
+                    return PostContainer(
+                      user: widget.user,
+                      post: projectSnap.data[index],
+                    );
+                  }, childCount: childCount),
+                );
+              },
+            ),
+    
+          ],
+        ),
       ),
     );
   }

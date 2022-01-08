@@ -29,13 +29,7 @@ class _ChatsScreenState extends State<ChatScreen> {
   //late List<Chat> tmp = [];
   @override
   void initState() {
-    // getlistchats(widget.user.token).then((res) {
-    //   print("--------HERE--------");
-    //   tmp = res.cast<Chat>();
-    //   // print(listChats.length);
-    // }).catchError((err) {
-    //   print(err);
-    // });
+
   }
 
   @override

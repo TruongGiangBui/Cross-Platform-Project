@@ -1,33 +1,41 @@
+import 'package:app/comment/screen/comment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/widgets/post_container.dart';
 import 'package:app/model/post.dart';
 import 'package:app/account/Screens/login/login.dart';
+import 'dart:io' as Io;
 
 class ViewPost extends StatelessWidget {
   final User user;
-  const ViewPost({Key? key, required this.user}) : super(key: key);
+  final Post post;
+  const ViewPost({Key? key, required this.user, required this.post})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<String> image_urls = [
-      'https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg',
-      'https://photo-cms-plo.zadn.vn/w800/Uploaded/2021/bivxpcwk/2021_08_30/rooney-2_ifdi.jpg',
-      ''
-    ];
+    var imgs = [];
+    for (int i = 0; i < post.images.length; i++) {
+      imgs.add(post.images[i]['fileName'].toString());
+    }
+  String readTimestamp(String timestamp) {
+    var time = DateTime.parse(timestamp);
+
+    return time.day.toString() +
+        "/" +
+        time.month.toString() +
+        " " +
+        time.hour.toString() +
+        "-" +
+        time.minute.toString();
+  }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            IconButton(onPressed: () {}, icon: Icon(Icons.cancel_outlined)),
             const Text('Xem bài viết'),
-            IconButton(
-              icon: const Icon(Icons.report),
-              tooltip: 'Report',
-              onPressed: () {},
-            ),
           ],
         ),
       ),
@@ -48,29 +56,44 @@ class ViewPost extends StatelessWidget {
                           user.avatarModel.fileName)
                       .image,
                 ),
-                const SizedBox(width: 8.0),
-                Expanded(child: Text("Rooney va Ronaldo da chay vcl")),
+                const SizedBox(width: 20.0),
+               Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(post.authorname),
+            Row(
+              children: [
+                Text(
+                  readTimestamp(post.createAt.toString()),
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 15.0,
+                  ),
+                ),
+                Icon(
+                  Icons.public,
+                  color: Colors.grey,
+                  size: 16.0,
+                )
+              ],
+            )
+          ],
+        )),
               ],
             ),
+            const Divider(height: 10.0, thickness: 0.5),
+            Text(post.described,textAlign:TextAlign.left),
             const Divider(height: 10.0, thickness: 0.5),
             Expanded(
                 child: SingleChildScrollView(
               child: Column(
-                children: [
-                  Card(
+                  children: imgs.map((e) {
+                var card = new Card(
                     elevation: 10,
-                    child: Image.network(image_urls[0]),
-                  ),
-                  Card(
-                    elevation: 10,
-                    child: Image.network(image_urls[1]),
-                  ),
-                  Card(
-                    elevation: 10,
-                    child: Image.network(image_urls[0]),
-                  )
-                ],
-              ),
+                    child: Image.network("http://10.0.2.2:8000/files/" + e));
+                return card;
+              }).toList()),
             )),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -85,13 +108,15 @@ class ViewPost extends StatelessWidget {
                             height: 50.0,
                             child: Column(
                               children: [
-                                Text('100'),
+                                Text(post.likes.length.toString()),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       Icons.favorite_rounded,
-                                      color: Colors.red[600],
+                                      color: post.isLike == true
+                                          ? Colors.red
+                                          : Colors.grey,
                                       size: 20.0,
                                     ),
                                     const SizedBox(width: 4.0),
@@ -100,27 +125,36 @@ class ViewPost extends StatelessWidget {
                                 ),
                               ],
                             )),
-                        Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            height: 50.0,
-                            child: Column(
-                              children: [
-                                Text('10'),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.mode_comment,
-                                      color: Colors.red[600],
-                                      size: 20.0,
-                                    ),
-                                    const SizedBox(width: 4.0),
-                                    Text('Comments'),
-                                  ],
-                                ),
-                              ],
-                            )),
+                        InkWell(
+                          child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              height: 50.0,
+                              child: Column(
+                                children: [
+                                  Text(post.countComments.toString()),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.mode_comment,
+                                        color: Colors.grey,
+                                        size: 20.0,
+                                      ),
+                                      const SizedBox(width: 4.0),
+                                      Text('Comments'),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => CommentWidget(
+                                      user: user,
+                                      post: post,
+                                    )));
+                          },
+                        ),
                         Container(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),

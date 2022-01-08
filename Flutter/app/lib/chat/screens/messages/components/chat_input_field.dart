@@ -90,12 +90,6 @@ class ChatInputField extends StatelessWidget {
 
                     IconButton(
                       onPressed: (){
-                        sendmessage(user.token, "618b246c6ba6431a5824931f",
-                            "61a4fc39ee2832211eb3826d", sendMessageController.text).then((res) {
-                          print(res);
-                        }).catchError((err) {
-                          print(err);
-                        });
                         this.send(Message(
                           id: Random().nextDouble().toString(),
                           sender: receiverId,

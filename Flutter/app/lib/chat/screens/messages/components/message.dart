@@ -13,25 +13,14 @@ class MessageCard extends StatelessWidget {
     Key? key,
     required this.message,
     required this.user,
+    required this.receivertavt
   }) : super(key: key);
 
   final Message message;
   final User user;
-
+  final String receivertavt;
   @override
   Widget build(BuildContext context) {
-    // Widget messageContaint(ChatMessage message) {
-    //   switch (message.messageType) {
-    //     case ChatMessageType.text:
-    //       return TextMessage(message: message);
-    //     case ChatMessageType.audio:
-    //       return AudioMessage(message: message);
-    //     case ChatMessageType.video:
-    //       return VideoMessage();
-    //     default:
-    //       return SizedBox();
-    //   }
-    // }
 
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
@@ -40,9 +29,11 @@ class MessageCard extends StatelessWidget {
         message.sender==user.id ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!(message.sender==user.id)) ...[
-            const CircleAvatar(
+            CircleAvatar(
               radius: 12,
-              backgroundImage: AssetImage("assets/images/user_2.png"),
+              backgroundImage: Image.network("http://10.0.2.2:8000/files/" +
+                         receivertavt )
+                      .image,
             ),
             const SizedBox(width: kDefaultPadding / 2),
           ],

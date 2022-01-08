@@ -13,17 +13,21 @@ import 'package:app/chat/screens/messages/components/chat_input_field.dart';
 import 'package:app/chat/models/chat_message.dart';
 
 import 'package:app/model/message.dart';
-
+import 'package:swipedetector/swipedetector.dart';
 import 'package:intl/intl.dart';
 
 class MessageScreen extends StatefulWidget {
   final User user;
-  final User receiver;
+  final dynamic receiverid;
+  final dynamic receiveravt;
+  final dynamic receivername;
   final String chatid;
   const MessageScreen({
     Key? key,
     required this.user,
-    required this.receiver,
+    required this.receiverid,
+    required this.receiveravt,
+    required this.receivername,
     required this.chatid,
   }) : super(key: key);
 
@@ -31,25 +35,21 @@ class MessageScreen extends StatefulWidget {
   _MessageScreenState createState() {
     return _MessageScreenState();
   }
-
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  late List<Message> listMessages = [];
-
+  late Future<List<Message>> listMessages;
+  void refresh() {
+    setState(() {
+      listMessages : getlistmessages(widget.user.token, widget.chatid);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
-getlistmessages(widget.user.token, "61a4fc39ee2832211eb3826d").then((res) {
-        print("--------LOAD LIST MESSAGE--------");
-          listMessages = res;
-
-      }).catchError((err) {
-        print(err);
-      });
-          var demoChat = listMessages;
+    setState(() {
+      listMessages = getlistmessages(widget.user.token, widget.chatid);
+    });
     return Scaffold(
       appBar: buildAppBar(context),
       body: Column(
@@ -57,27 +57,66 @@ getlistmessages(widget.user.token, "61a4fc39ee2832211eb3826d").then((res) {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: ListView.builder(
-                itemCount: demoChat.length,
-                itemBuilder: (context, index) =>
-                    MessageCard(message: demoChat[index], user: widget.user,),
+              child: SwipeDetector(
+                onSwipeRight: () {
+                  setState(() {
+                    refresh();
+                  });
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    FutureBuilder(
+                      future: listMessages,
+                      builder: (context, AsyncSnapshot projectSnap) {
+                        //                Whether project = projectSnap.data[index]; //todo check your model
+                        var childCount = 0;
+                        if (projectSnap.connectionState !=
+                                ConnectionState.done ||
+                            projectSnap.hasData == null)
+                          childCount = 1;
+                        else
+                          childCount = projectSnap.data.length;
+                        return SliverList(
+                          delegate:
+                              SliverChildBuilderDelegate((context, index) {
+                            if (projectSnap.connectionState !=
+                                ConnectionState.done) {
+                              //todo handle state
+                              return CircularProgressIndicator(); //todo set progress bar
+                            }
+                            if (projectSnap.hasData == null) {
+                              return Container();
+                            }
+
+                            return MessageCard(
+                              message: projectSnap.data[index],
+                              user: widget.user,
+                              receivertavt: widget.receiveravt,
+                            );
+                          }, childCount: childCount),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-           ChatInputField(send: (message){
-            this.setState(() {
-              demoChat.add(message);
-            });
-          },receiverId: widget.receiver.id,
-             receiverName: widget.receiver.username,
-             avatar: "assets/images/user_3.png",
-             update: DateTime.now(),
-               user: widget.user),
+          ChatInputField(
+              send: (Message message) async{
+                await sendmessage(widget.user.token, widget.receiverid, widget.chatid,
+                    message.content);
+                refresh();
+              },
+              receiverId: widget.receiverid,
+              receiverName: widget.receivername,
+              avatar: "assets/images/user_3.png",
+              update: DateTime.now(),
+              user: widget.user),
         ],
       ),
     );
   }
-
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -86,35 +125,40 @@ getlistmessages(widget.user.token, "61a4fc39ee2832211eb3826d").then((res) {
       title: Row(
         children: [
           const BackButton(),
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/user_3.png"),
+          CircleAvatar(
+            backgroundImage: NetworkImage(
+                "http://10.0.2.2:8000/files/" + widget.receiveravt.toString()),
           ),
-          const SizedBox(width: kDefaultPadding * 0.75,),
+          const SizedBox(
+            width: kDefaultPadding * 0.75,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.user.username.toString(),
+                widget.receivername.toString(),
                 style: TextStyle(fontSize: 16),
               ),
-              // Text(
-              //   "Active 3m ago",
-              //   style: TextStyle(fontSize: 12),
-              // )
             ],
           )
         ],
       ),
       actions: [
-        IconButton(onPressed: (){}, icon: const Icon(Icons.local_phone)),
-        IconButton(onPressed: (){}, icon: const Icon(Icons.videocam)),
-        IconButton(onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OptionScreen(options: optionsDEMO, user: widget.user,),
-            )
-        ), icon: const Icon(Icons.dehaze_sharp)),
-        const SizedBox(width: kDefaultPadding / 2,)
+        IconButton(onPressed: () {}, icon: const Icon(Icons.local_phone)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.videocam)),
+        IconButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OptionScreen(
+                    options: optionsDEMO,
+                    user: widget.user,
+                  ),
+                )),
+            icon: const Icon(Icons.dehaze_sharp)),
+        const SizedBox(
+          width: kDefaultPadding / 2,
+        )
       ],
     );
   }
