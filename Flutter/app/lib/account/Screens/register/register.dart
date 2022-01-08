@@ -86,10 +86,10 @@ class RegisterScreen extends StatelessWidget {
                       .then((value) => {
                             if (value.token != "")
                               {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //       builder: (context) => ViewPost()),
-                                // )
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()),
+                                )
                               }
                             else
                               {showAlert(context, "something wrong")}
