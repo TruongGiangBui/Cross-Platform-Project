@@ -41,7 +41,8 @@ class _MessageScreenState extends State<MessageScreen> {
   late Future<List<Message>> listMessages;
   void refresh() {
     setState(() {
-      listMessages : getlistmessages(widget.user.token, widget.chatid);
+      listMessages=
+      getlistmessages(widget.user.token, widget.chatid);
     });
   }
 
@@ -50,6 +51,7 @@ class _MessageScreenState extends State<MessageScreen> {
     setState(() {
       listMessages = getlistmessages(widget.user.token, widget.chatid);
     });
+    
     return Scaffold(
       appBar: buildAppBar(context),
       body: Column(
@@ -103,9 +105,9 @@ class _MessageScreenState extends State<MessageScreen> {
             ),
           ),
           ChatInputField(
-              send: (Message message) async{
-                await sendmessage(widget.user.token, widget.receiverid, widget.chatid,
-                    message.content);
+              send: (Message message) async {
+                await sendmessage(widget.user.token, widget.receiverid,
+                    widget.chatid, message.content);
                 refresh();
               },
               receiverId: widget.receiverid,
