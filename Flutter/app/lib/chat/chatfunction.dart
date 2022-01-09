@@ -40,7 +40,7 @@ Future<List<Message>> getlistmessages(String token, dynamic chatid) async {
   return messages;
 }
 
-Future<bool> sendmessage(
+Future<String> sendmessage(
     dynamic token, dynamic receiver, dynamic chatid, dynamic content) async {
   final response =
       await http.post(Uri.parse('http://10.0.2.2:8000/api/v1/chats/send'),
@@ -56,6 +56,6 @@ Future<bool> sendmessage(
             "type": "PRIVATE_CHAT",
             "content": content
           }));
-  if (response.statusCode == 200) return true;
-  return false;
+  if (response.statusCode == 200) return jsonDecode(response.body)['data']['chat'].toString();
+  return '';
 }

@@ -1,4 +1,5 @@
 import 'dart:io' as Io;
+import 'package:app/chat/chatfunction.dart';
 import 'package:app/chat/screens/messages/message_screen.dart';
 import 'package:app/friendfuction.dart';
 import 'package:app/model/friend.dart';
@@ -84,15 +85,29 @@ class _FriendProfileState extends State<FriendProfile> {
                               getChatWithUser(
                                       widget.user.token, widget.friendid)
                                   .then((value) {
-                                
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => MessageScreen(
-                                        user: widget.user,
-                                        receiverid: friend.id,
-                                        receiveravt:
-                                            friend.avatarModel.fileName,
-                                        receivername: friend.username,
-                                        chatid: value)));
+                                if (value == '') {
+                                  sendmessage(widget.user.token,
+                                          widget.friendid, '', "Hi")
+                                      .then((value) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => MessageScreen(
+                                                user: widget.user,
+                                                receiverid: friend.id,
+                                                receiveravt:
+                                                    friend.avatarModel.fileName,
+                                                receivername: friend.username,
+                                                chatid: value)));
+                                  });
+                                } else
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => MessageScreen(
+                                          user: widget.user,
+                                          receiverid: friend.id,
+                                          receiveravt:
+                                              friend.avatarModel.fileName,
+                                          receivername: friend.username,
+                                          chatid: value)));
                               })
                             },
                         icon: const Icon(

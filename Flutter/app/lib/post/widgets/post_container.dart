@@ -1,5 +1,6 @@
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/comment/screen/comment_screen.dart';
+import 'package:app/friends/screen/friendprofile.dart';
 import 'package:app/model/user.dart';
 import 'package:app/post/postsfuction.dart';
 import 'package:app/post/screens/ViewPost.dart';
@@ -26,7 +27,9 @@ class _PostContainerState extends State<PostContainer> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      img = widget.post.images.length>0?widget.post.images[index]['fileName']:null;
+      img = widget.post.images.length > 0
+          ? widget.post.images[index]['fileName']
+          : null;
     });
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -58,28 +61,29 @@ class _PostContainerState extends State<PostContainer> {
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: widget.post.images.length > 0?
-                SwipeDetector(
-                  onSwipeLeft: () {
-                    setState(() {
-                        index=(index+1)%widget.post.images.length as int;
-                       img = widget.post.images[index]['fileName'];
-                    });
-                  },
-                  onSwipeRight: () {
-                    setState(() {
-                        index=(index-1)%widget.post.images.length as int;
-                       img = widget.post.images[index]['fileName'];
-                    });
-                  },
-                  child:Image.network(
-                          "http://10.0.2.2:8000/files/" + img.toString())
-                ):null
-                ),
-                // child: widget.post.images.length > 0
-                //       ? Image.network(
-                //           "http://10.0.2.2:8000/files/" + img.toString())
-                //       : null,),
+                child: widget.post.images.length > 0
+                    ? SwipeDetector(
+                        onSwipeLeft: () {
+                          setState(() {
+                            index =
+                                (index + 1) % widget.post.images.length as int;
+                            img = widget.post.images[index]['fileName'];
+                          });
+                        },
+                        onSwipeRight: () {
+                          setState(() {
+                            index =
+                                (index - 1) % widget.post.images.length as int;
+                            img = widget.post.images[index]['fileName'];
+                          });
+                        },
+                        child: Image.network(
+                            "http://10.0.2.2:8000/files/" + img.toString()))
+                    : null),
+            // child: widget.post.images.length > 0
+            //       ? Image.network(
+            //           "http://10.0.2.2:8000/files/" + img.toString())
+            //       : null,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: _PostStats(user: widget.user, post: widget.post),
@@ -110,7 +114,15 @@ class _PostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(imageUrl: "http://10.0.2.2:8000/files/" + post.authoravt),
+        GestureDetector(
+          child: ProfileAvatar(
+              imageUrl: "http://10.0.2.2:8000/files/" + post.authoravt),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => FriendProfile(user: user, friendid: post.authorid, isfriend: true)),
+            );
+          },
+        ),
         const SizedBox(width: 8.0),
         Expanded(
             child: Column(
