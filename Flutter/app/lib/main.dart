@@ -1,3 +1,4 @@
+import 'package:app/account/Screens/login/loadingscreen.dart';
 import 'package:app/account/Screens/login/login.dart';
 import 'package:app/account/Screens/login/loginfunction.dart';
 import 'package:app/model/post.dart';
@@ -17,20 +18,16 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  void load() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  }
-
   @override
   Widget build(BuildContext context) {
-    load();
+
 
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen());
+        home: Loading());
     // home:NewsFeed(user: user));
   }
 }
