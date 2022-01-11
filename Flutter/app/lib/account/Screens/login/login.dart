@@ -88,6 +88,10 @@ class LoginScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () async {
+                  if (phoneController.text == ''||passwordController.text=='') {
+                    showAlert(context, "Vui lòng nhập đủ thông tin");
+                    return;
+                  }
                   var userdata = await login(new LoginForm(
                       phonenumber: phoneController.text,
                       password: passwordController.text));
@@ -95,7 +99,6 @@ class LoginScreen extends StatelessWidget {
                   SharedPreferences.getInstance().then((prefs) {
                     prefs.setString('token', userdata.token);
                   });
-
                   getUser(userdata.token).then((value) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
