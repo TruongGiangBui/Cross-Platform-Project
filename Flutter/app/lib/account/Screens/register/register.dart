@@ -79,6 +79,10 @@ class RegisterScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
                 onPressed: () {
+                  if (phoneController.text == ''||passwordController.text==''||usernameController.text=='') {
+                    showAlert(context, "Vui lòng nhập đủ thông tin");
+                    return;
+                  }
                   register(new RegisterForm(
                           username: usernameController.text,
                           phonenumber: phoneController.text,
